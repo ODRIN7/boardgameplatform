@@ -18,6 +18,7 @@
         <module>bga-discovery</module>
         <module>bga-gateway</module>
         <module>bga-auth</module>
+        <module>bga-api</modules>
     </modules>
 
     <properties>
