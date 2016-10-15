@@ -1,0 +1,29 @@
+### idea
+.idea/
+*.iml
+
+### sts
+.settings
+.classpath
+.project
+
+### maven
+bga-common/target/
+bga-discovery/target/
+bga-auth/target/
+bga-api/target/
+bga-ui/target/
+bga-admin/target/
+bga-gateway/target/
+bga-config/target/
+
+### node
+npm-debug.log
+npm-debug.log*
+bga-ui/etc/
+bga-ui/node/
+bga-ui/node_modules/
+### coverage
+bga-ui/coverage/
+### dist
+bga-ui/src/main/resources/static/
