@@ -1,4 +1,5 @@
-FROM anapsix/alpine-java:8
+FROM java:8-jre
+MAINTAINER ODRIN7 <sz.danix6@gmail.com>
 VOLUME /tmp
 ADD bga-gateway-1.0.0.jar app.jar
 ADD wait-for-service.sh wait-for-service.sh

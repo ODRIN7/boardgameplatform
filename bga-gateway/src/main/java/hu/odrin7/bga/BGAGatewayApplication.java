@@ -10,12 +10,8 @@ import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 
-/**
- * Created by Tomasz Kucharzyk
- */
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableCaching
 @EnableZuulProxy
 public class BGAGatewayApplication {
 

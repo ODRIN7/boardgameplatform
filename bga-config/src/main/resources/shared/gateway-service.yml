@@ -18,26 +18,14 @@ zuul:
 
   routes:
     auth-service:
-        path: /uaa/**
+        path: /auth-service/**
         url: http://auth-service:5000
         stripPrefix: false
         sensitiveHeaders:
 
     account-service:
-        path: /accounts/**
-        serviceId: account-service
-        stripPrefix: false
-        sensitiveHeaders:
-
-    statistics-service:
-        path: /statistics/**
-        serviceId: statistics-service
-        stripPrefix: false
-        sensitiveHeaders:
-
-    notification-service:
-        path: /notifications/**
-        serviceId: notification-service
+        path: /api/**
+        serviceId: api-service
         stripPrefix: false
         sensitiveHeaders:
 
