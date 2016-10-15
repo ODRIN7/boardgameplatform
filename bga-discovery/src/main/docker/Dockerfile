@@ -1,4 +1,4 @@
-FROM java:8-jre
+FROM anapsix/alpine-java:8
 MAINTAINER ODRIN7 <sz.danix6@gmail.com>
 VOLUME /tmp
 ADD bga-discovery-1.0.0.jar app.jar

@@ -1,0 +1,35 @@
+version: '2'
+services:
+
+  config-service:
+    build: bga-config
+    ports:
+      - 8888:8888
+
+  discovery-service:
+    build: bga-discovery
+    ports:
+      - 8081:8081
+
+  gateway-service:
+    build: bga-gateway
+
+  auth-service:
+    build: bga-auth
+    ports:
+      - 8083:8083
+
+  auth-mongodb:
+    build: bga-mongodb
+    ports:
+      - 25000:27017
+
+  api-service:
+    build: bga-api
+    ports:
+      - 6000:8082
+
+  api-mongodb:
+    build: bga-mongodb
+    ports:
+      - 26000:27017

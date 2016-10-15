@@ -19,7 +19,7 @@ zuul:
   routes:
     auth-service:
         path: /auth-service/**
-        url: http://auth-service:5000
+        url: http://auth-service:8083
         stripPrefix: false
         sensitiveHeaders:
 
@@ -30,4 +30,4 @@ zuul:
         sensitiveHeaders:
 
 server:
-  port: 4000
+  port: 8090
