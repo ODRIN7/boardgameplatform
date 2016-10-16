@@ -8,12 +8,10 @@
 .project
 
 ### maven
-bga-common/target/
 bga-discovery/target/
 bga-auth/target/
 bga-api/target/
 bga-ui/target/
-bga-admin/target/
 bga-gateway/target/
 bga-config/target/
 
@@ -27,3 +25,9 @@ bga-ui/node_modules/
 bga-ui/coverage/
 ### dist
 bga-ui/src/main/resources/static/
+bga-api/src/main/java/
+bga-api/src/test/java/hu/
+bga-auth/src/test/java/odrin7/
+bga-config/src/main/java/odrin7/
+bga-discovery/src/test/java/odrin7/
+bga-ui/src/main/java/hu/odrin7/bga/ui/
