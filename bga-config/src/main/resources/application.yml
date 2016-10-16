@@ -1,15 +1,17 @@
 # PROFILES
 spring:
-    application.name: config-service
-    profiles.active: @default.spring.profiles@
-    aop:
-        proxyTargetClass: true
+  application.name: config-service
+  profiles.active: @default.spring.profiles@
+  aop:
+    proxyTargetClass: true
 # CONFIGURATION REPO
-    cloud:
-      config:
-        server:
-          native:
-            search-locations: classpath:/shared
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: classpath:/shared
+  profiles:
+     active: native
 
 # SERVICE VERSION
 info:
@@ -18,7 +20,6 @@ info:
 # EMBEDDED SERVER CONFIGURATION
 server:
     port: ${port:8888}
-
 ---
 
 spring:
