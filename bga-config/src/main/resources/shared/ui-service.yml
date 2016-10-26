@@ -1,10 +1,18 @@
+
 # EMBEDDED SERVER CONFIGURATION
 server:
-    port: ${port:8090}
+    port: ${port:8080}
+    context-path: /
+    error.whitelabel.enabled: false
+    compression:
+      enabled: true
+      min-response-size: 1024
+      mime-types: text/html, text/xml, text/plain, text/css, application/javascript, application/json
 
 spring:
     aop:
         proxyTargetClass: true
+
 # EUREKA
 eureka:
   client:
@@ -13,11 +21,11 @@ eureka:
 # ZULL
 zuul:
   routes:
-    auth-service:
-        path: /uaa/**
-        url: http://auth-service:8083
-        stripPrefix: false
-        sensitiveHeaders:
+     gateway-service:
+          sensitiveHeaders:
+          path: /api/**
+          stripPrefix: true
+  add-proxy-headers: true
 #SECURITY
 security:
   basic:
@@ -34,7 +42,11 @@ security:
       id: openid
       serviceId: ${PREFIX:}resource
 
+# LOGGING
+#logging.level.org.springframework.security: DEBUG
+
 ---
+
 spring:
   profiles: docker
 
@@ -44,7 +56,16 @@ eureka:
     serviceUrl:
       defaultZone: http://discovery-service:8081/eureka/
 
+# ZULL
+zuul:
+  routes:
+     gateway-service:
+          url: http://gateway-service:8090
+     auth-service:
+          url: http://auth-service:8083
+
 ---
+
 spring:
   profiles: standalone
 
@@ -56,3 +77,11 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://${eureka.instance.hostname}:${eureka.instance.port}/eureka/
+
+# ZULL
+zuul:
+  routes:
+     gateway-service:
+          url: http://${eureka.instance.hostname}:8090
+     auth-service:
+          url: http://${eureka.instance.hostname}:8083

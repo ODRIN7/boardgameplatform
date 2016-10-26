@@ -12,10 +12,20 @@ import org.springframework.http.HttpStatus;
 
 @SpringBootApplication
 @EnableDiscoveryClient
+@EnableCaching
 @EnableZuulProxy
 public class BGAGatewayApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(BGAGatewayApplication.class, args);
+    }
+
+    @Bean
+    public EmbeddedServletContainerCustomizer containerCustomizer() {
+
+        return (container -> {
+            ErrorPage error404Page = new ErrorPage(HttpStatus.NOT_FOUND, "/");
+            container.addErrorPages(error404Page);
+        });
     }
 }

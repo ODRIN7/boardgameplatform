@@ -33,6 +33,6 @@ spring:
 
 
 ---
-security:
-  user:
-    password: ${CONFIG_SERVICE_PASSWORD}
+#security:
+ #   user: odrin7
+  #  password:  #${CONFIG_SERVICE_PASSWORD}

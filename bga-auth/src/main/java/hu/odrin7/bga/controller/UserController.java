@@ -20,6 +20,8 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 
+
+
 	@RequestMapping(value = "/current", method = RequestMethod.GET)
 	public Principal getUser(Principal principal) {
 		return principal;

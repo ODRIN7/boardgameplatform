@@ -89,3 +89,10 @@ db.accounts.update(
 );
 
 print('dump complete');
+print('MY passwords');
+print('$CONFIG_SERVICE_PASSWORD');
+print('$NOTIFICATION_SERVICE_PASSWORD');
+print('$STATISTICS_SERVICE_PASSWORD');
+print('$ACCOUNT_SERVICE_PASSWORD');
+print('MONGODB_PASSWORD');
+
