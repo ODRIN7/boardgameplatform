@@ -9,6 +9,11 @@ import {NotFoundComponent} from './not-found/not-found.component';
 
 export const routes: Routes = [
   {
+    path: 'store',
+    pathMatch: 'prefix',
+    loadChildren: 'app/store/store.module#StoreModule'
+  },
+  {
     path: '',
     pathMatch: 'prefix',
     redirectTo: 'home'
