@@ -1,35 +1,38 @@
+///<reference path="recipes/recipes.component.ts"/>
 import {NgModule} from '@angular/core';
-import {AppComponent} from './app.component';
-import {HomeComponent} from './home/home.component';
-import {NotFoundComponent} from './not-found/not-found.component';
-import {AccessDeniedComponent} from './access-denied/access-denied.component';
-import {AuthService} from './shared/auth/auth.service';
-import {AdminGuard} from './shared/guards/admin.guard';
-import {AuthenticatedGuard} from './shared/guards/authenticated.guard';
-import {UnauthenticatedGuard} from './shared/guards/unauthenticated.guard';
-import {TitleService} from './home/shared/title.service';
-import {AppRoutingModule} from './app-routing.module';
-import {COMMON_ROOT_MODULES} from './shared';
+import { BGAMyAppComponent} from './app.component';
+import {FormsModule} from '@angular/forms';
+import {HttpModule} from '@angular/http';
+import {BrowserModule} from '@angular/platform-browser';
+import {RecipesComponent} from "./recipes";
+import {HeaderComponent} from "./header";
+import {RecipeItemComponent} from "./recipes/recipe-list/recipe-item.component";
+import {RecipeDetailComponent} from "./recipes/recipe-detail/recipe-detail.component";
+import {RecipeListComponent} from "./recipes/recipe-list/recipe-list.component";
+import {ShoppingListComponent} from "./shopping-list/shopping-list.component";
+import {ShoppingListAddComponent} from "./shopping-list/shopping-list-add.component";
+
 
 @NgModule({
   declarations: [
-    AppComponent,
-    HomeComponent,
-    NotFoundComponent,
-    AccessDeniedComponent
+    BGAMyAppComponent,
+    HeaderComponent,
+    RecipesComponent,
+    ShoppingListAddComponent,
+    ShoppingListComponent,
+    RecipesComponent,
+    RecipeListComponent,
+    RecipeDetailComponent,
+    RecipeItemComponent,
   ],
   imports: [
-    ...COMMON_ROOT_MODULES,
-    AppRoutingModule
+    BrowserModule,
+    FormsModule,
+    HttpModule
   ],
   providers: [
-    AuthService,
-    AdminGuard,
-    AuthenticatedGuard,
-    UnauthenticatedGuard,
-    TitleService
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [BGAMyAppComponent]
 })
 export class AppModule {
 

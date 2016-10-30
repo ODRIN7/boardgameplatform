@@ -93,21 +93,20 @@
       "check-type"
     ],
 
-    "directive-selector-prefix": [true, "shardis"],
-    "component-selector-prefix": [true, "shardis"],
+    "directive-selector-prefix": [true, "app"],
+    "component-selector-prefix": [true, "app"],
     "directive-selector-name": [true, "camelCase"],
     "component-selector-name": [true, "kebab-case"],
     "directive-selector-type": [true, "attribute"],
-    "component-selector-type": [true, "element"]
-//    TEMPORARY DISABLED: https://github.com/mgechev/codelyzer/issues/107
-//    "use-input-property-decorator": true,
-//    "use-output-property-decorator": true,
-//    "use-host-property-decorator": true,
-//    "no-input-rename": true,
-//    "no-output-rename": true,
-//    "use-life-cycle-interface": true,
-//    "use-pipe-transform-interface": true,
-//    "component-class-suffix": true,
-//    "directive-class-suffix": true
+    "component-selector-type": [true, "element"],
+    "use-input-property-decorator": true,
+    "use-output-property-decorator": true,
+    "use-host-property-decorator": true,
+    "no-input-rename": true,
+    "no-output-rename": true,
+    "use-life-cycle-interface": true,
+    "use-pipe-transform-interface": true,
+    "component-class-suffix": true,
+    "directive-class-suffix": true
   }
 }

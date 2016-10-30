@@ -1,30 +1,13 @@
-import {Component, OnInit} from '@angular/core';
-import {AuthService} from './shared/auth/auth.service';
-import {Router} from '@angular/router';
-import {APP_MENU, AppMenuItem} from './app.menu';
+import {Component} from '@angular/core';
 
 @Component({
-  selector: 'shardis-app',
+  selector: 'bga-app',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
-  public name: String = 'Spring Boot Angular 2 Webpack Starter';
-  public url: String = 'https://github.com/shardis';
-  public loading: boolean = false;
 
-  views: AppMenuItem[] = APP_MENU;
+export class BGAMyAppComponent {
 
-  constructor(public authService: AuthService, public router: Router) {
+  constructor() {
   }
-
-  logMeOut(): void {
-    this.authService.logout();
-    this.router.navigate(['']);
-  }
-
-  ngOnInit(): any {
-    console.log('app on init');
-  }
-
 }

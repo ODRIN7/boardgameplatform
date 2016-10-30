@@ -1,2 +1,2 @@
-export * from './app.component';
-export * from './app.module';
+export {BGAMyAppComponent} from './app.component';
+export {AppModule} from './app.module';
