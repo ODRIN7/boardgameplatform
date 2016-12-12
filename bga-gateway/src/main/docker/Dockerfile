@@ -8,3 +8,5 @@ RUN bash -c 'touch /wait-for-service.sh'
 RUN bash -c 'chmod +x /wait-for-service.sh'
 RUN apk --no-cache add curl
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+
+

@@ -1,8 +1,8 @@
 <div class="row">
   <div class="col-md-5">
-    <bga-recipe-list (recipeSelected)="selectedRecipe = $event"></bga-recipe-list>
+    <bga-recipe-list></bga-recipe-list>
   </div>
   <div class="col-md-7">
-    <bga-recipe-detail [selectedRecipe]="selectedRecipe"></bga-recipe-detail>
+    <router-outlet></router-outlet>
   </div>
 </div>

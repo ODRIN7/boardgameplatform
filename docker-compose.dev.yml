@@ -19,7 +19,7 @@ services:
     ports:
       - 8083:8083
 
-  auth-mongodb:
+  bga-mongodb:
     build: bga-mongodb
     ports:
       - 25000:27017
