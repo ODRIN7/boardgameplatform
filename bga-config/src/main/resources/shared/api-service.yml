@@ -1,21 +1,8 @@
-security:
-  oauth2:
-    client:
-      clientId: api-service
-    #  clientSecret: ${ACCOUNT_SERVICE_PASSWORD}
-      accessTokenUri: http://auth-service:8083/uaa/oauth/token
-      grant-type: client_credentials
-      scope: server
-
 spring:
   data:
     mongodb:
-      host: api-mongodb
-      username: user
-      password: ${MONGODB_PASSWORD}
-      database: piggymetrics
+      host: bga-mongodb
+      username: admin
+      password: odrin7
+      database: BoardGameArena
       port: 27017
-
-server:
-  context-path: /accounts
-  port: 6000

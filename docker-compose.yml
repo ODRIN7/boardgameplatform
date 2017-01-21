@@ -69,22 +69,6 @@ services:
        - config-service
     entrypoint: ./wait-for-service.sh http://discovery-service:8081/health
 
-  auth-mongodb:
-    environment:
-      MONGODB_PASSWORD: $MONGODB_PASSWORD
-    image: boardgamearena/bga-auth-mongodb
-    restart: always
-    logging:
-      options:
-        max-size: "10m"
-        max-file: "10"
-    depends_on:
-      - discovery-service
-      - auth-service
-    links:
-      - discovery-service
-      - auth-service
-      - config-service
   ui-service:
     image: boardgamearena/bga-ui
     ports:

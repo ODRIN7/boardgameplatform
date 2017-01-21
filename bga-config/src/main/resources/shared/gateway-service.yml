@@ -14,10 +14,14 @@ eureka:
 zuul:
   routes:
     auth-service:
-        path: /uaa/**
+        path: /oauth/**
         url: http://auth-service:8083
         stripPrefix: false
         sensitiveHeaders:
+    ui-service:
+        sensitiveHeaders:
+        path: /api/**
+        stripPrefix: true
 #SECURITY
 security:
   basic:

@@ -10,8 +10,6 @@ eureka:
     fetchRegistry: false
   server:
     waitTimeInMsWhenSyncEmpty: 0
-# LOGGING
-#logging.level.org.springframework.security: DEBUG
 
 ---
 
