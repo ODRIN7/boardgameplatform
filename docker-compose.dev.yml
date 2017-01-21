@@ -24,9 +24,4 @@ services:
     ports:
        - 8080:8080
 
-  api-service:
-    build: bga-api
-    ports:
-       - 8092:8092
-
 
