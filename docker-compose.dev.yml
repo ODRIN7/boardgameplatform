@@ -19,14 +19,14 @@ services:
     ports:
       - 8083:8083
 
-  bga-mongodb:
-    build: bga-mongodb
-    ports:
-      - 25000:27017
-
   ui-service:
     build: bga-ui
     ports:
        - 8080:8080
+
+  api-service:
+    build: bga-api
+    ports:
+       - 8092:8092
 
 

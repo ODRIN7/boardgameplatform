@@ -2,8 +2,6 @@ version: '2'
 services:
 
   config-service:
-    environment:
-      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
     image: boardgamearena/bga-config
     ports:
          - 8888:8888
@@ -14,8 +12,6 @@ services:
         max-file: "10"
 
   discovery-service:
-    environment:
-      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
     image: boardgamearena/bga-discovery
     ports:
         - 8081:8081
@@ -31,8 +27,6 @@ services:
     entrypoint: ./wait-for-service.sh http://config-service:8888/health
 
   gateway-service:
-    environment:
-      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
     image: boardgamearena/bga-gateway
     ports:
       - 8090:8090
@@ -48,12 +42,7 @@ services:
       - config-service
     entrypoint: ./wait-for-service.sh http://discovery-service:8081/health
 
-
   auth-service:
-    environment:
-      CONFIG_SERVICE_PASSWORD: $CONFIG_SERVICE_PASSWORD
-      API_SERVICE_PASSWORD: $ACCOUNT_SERVICE_PASSWORD
-      MONGODB_PASSWORD: $MONGODB_PASSWORD
     image: boardgamearena/bga-auth
     ports:
       - 8083:8083
@@ -82,4 +71,21 @@ services:
      - gateway-service
      - auth-service
      - config-service
+    entrypoint: ./wait-for-service.sh http://discovery-service:8081/health
+
+  api-service:
+    image: boardgamearena/bga-api
+    ports:
+      - 8092:8092
+    restart: always
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+    depends_on:
+        - discovery-service
+        - config-service
+    links:
+        - discovery-service
+        - config-service
     entrypoint: ./wait-for-service.sh http://discovery-service:8081/health

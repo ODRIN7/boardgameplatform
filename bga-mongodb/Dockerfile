@@ -1,4 +1,5 @@
 FROM mongo:3
+
 MAINTAINER ODRIN7 <sz.danix6@gmail.com>
 
 ADD init.sh /init.sh

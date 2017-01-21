@@ -24,11 +24,4 @@ bga-ui/node/
 bga-ui/node_modules/
 ### coverage
 bga-ui/coverage/
-### dist
-bga-ui/src/main/resources/static/
-bga-api/src/main/java/
-bga-api/src/test/java/hu/
-bga-auth/src/test/java/odrin7/
-bga-config/src/main/java/odrin7/
-bga-discovery/src/test/java/odrin7/
-bga-ui/src/main/java/hu/odrin7/bga/ui/
+bga-ui/src/main/resources/static
