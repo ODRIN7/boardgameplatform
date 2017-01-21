@@ -2,7 +2,7 @@ version: '2'
 services:
 
   config-service:
-    image: boardgamearena/bga-config
+    image: bga/bga-config
     ports:
          - 8888:8888
     restart: always
@@ -12,7 +12,7 @@ services:
         max-file: "10"
 
   discovery-service:
-    image: boardgamearena/bga-discovery
+    image: bga/bga-discovery
     ports:
         - 8081:8081
     restart: always
@@ -27,7 +27,7 @@ services:
     entrypoint: ./wait-for-service.sh http://config-service:8888/health
 
   gateway-service:
-    image: boardgamearena/bga-gateway
+    image: bga/bga-gateway
     ports:
       - 8090:8090
     restart: always
@@ -43,7 +43,7 @@ services:
     entrypoint: ./wait-for-service.sh http://discovery-service:8081/health
 
   auth-service:
-    image: boardgamearena/bga-auth
+    image: bga/bga-auth
     ports:
       - 8083:8083
     restart: always
@@ -59,7 +59,7 @@ services:
     entrypoint: ./wait-for-service.sh http://discovery-service:8081/health
 
   ui-service:
-    image: boardgamearena/bga-ui
+    image: bga/bga-ui
     ports:
      - 8080:8080
     depends_on:
@@ -72,3 +72,12 @@ services:
      - auth-service
      - config-service
     entrypoint: ./wait-for-service.sh http://discovery-service:8081/health
+
+  auth-mongodb:
+    image: bga/bga-mongodb
+    restart: always
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+

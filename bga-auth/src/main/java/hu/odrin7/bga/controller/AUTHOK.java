@@ -17,8 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/ok")
 public class AUTHOK {
 
-    @RequestMapping(value = "/szia", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<String> getOK() {
-        return new ResponseEntity<String>("szia",HttpStatus.OK);
+        return new ResponseEntity<String>(
+            "szia",HttpStatus.OK);
     }
 }

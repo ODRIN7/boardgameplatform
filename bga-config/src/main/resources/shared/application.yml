@@ -5,6 +5,3 @@ eureka:
     serviceUrl:
       defaultZone: http://registry:8081/eureka/
 
-logging:
-  level:
-    org.springframework.security: debug

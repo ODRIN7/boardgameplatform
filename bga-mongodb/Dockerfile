@@ -1,6 +1,4 @@
-FROM mongo:3
-
-MAINTAINER ODRIN7 <sz.danix6@gmail.com>
+FROM mongo:4
 
 ADD init.sh /init.sh
 ADD ./dump /
