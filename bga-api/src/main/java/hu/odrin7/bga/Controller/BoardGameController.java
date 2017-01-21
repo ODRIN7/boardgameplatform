@@ -19,11 +19,11 @@ public class BoardGameController {
 	private BoardGameService boardGameService;
 
 	@RequestMapping(method = RequestMethod.POST)
-	public void createBoardGame(@Valid @RequestBody BoardGame boardGame) {
+	public void createBoardGame( @Valid @RequestBody BoardGame boardGame) {
         boardGameService.create(boardGame);
 	}
 
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(path = "/all", method = RequestMethod.GET)
 	public void getBoardGames() {
         boardGameService.getBoardGames();
 	}

@@ -10,7 +10,6 @@ spring:
         config:
             failFast: true
 ---
-
 spring:
     profiles: docker
     cloud:
