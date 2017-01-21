@@ -23,10 +23,6 @@ services:
     build: bga-mongodb
     ports:
       - 25000:27017
-  api-mongodb:
-    build: bga-mongodb
-    ports:
-      - 26000:27017
 
   ui-service:
     build: bga-ui
