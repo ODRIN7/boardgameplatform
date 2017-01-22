@@ -1,16 +1,30 @@
 #!/bin/bash
+if test -z "$MONGODB_USER"; then
+    echo "MONGODB_USER not defined"
+    exit 1
+fi
+
 if test -z "$MONGODB_PASSWORD"; then
     echo "MONGODB_PASSWORD not defined"
     exit 1
 fi
 
-auth="-u user -p $MONGODB_PASSWORD"
+if test -z "$MONGODB_NAME"; then
+    echo "MONGODB_NAME not defined"
+    exit 1
+fi
+
+auth="-u $MONGODB_USER -p $MONGODB_PASSWORD"
+
+
 
 # MONGODB USER CREATION
 (
 echo "setup mongodb auth"
-create_user="if (!db.getUser('user')) { db.createUser({ user: 'user', pwd: '$MONGODB_PASSWORD', roles: [ {role:'readWrite', db:'piggymetrics'} ]}) }"
-until mongo piggymetrics --eval "$create_user" || mongo piggymetrics $auth --eval "$create_user"; do sleep 5; done
+echo "---------User: $MONGODB_USER , pwd: $MONGODB_PASSWORD, role: $MONGODB_ROLE, on: $MONGODB_NAME-----------"
+create_user="if (!db.getUser('$MONGODB_USER')) { db.createUser({ user: '$MONGODB_USER', pwd: '$MONGODB_PASSWORD', roles: [ {role:'$MONGODB_ROLE', db:'$MONGODB_NAME'} ]}) }"
+until mongo $MONGODB_NAME --eval "$create_user" ||
+mongo $MONGODB_NAME $auth --eval "$create_user"; do sleep 5; done
 killall mongod
 sleep 1
 killall -9 mongod
@@ -20,7 +34,7 @@ killall -9 mongod
 (
 if test -n "$INIT_DUMP"; then
     echo "execute dump file"
-	until mongo piggymetrics $auth $INIT_DUMP; do sleep 5; done
+	until mongo $MONGODB_NAME $auth $INIT_DUMP; do sleep 5; done
 fi
 ) &
 

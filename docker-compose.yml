@@ -43,6 +43,8 @@ services:
     entrypoint: ./wait-for-service.sh http://discovery-service:8081/health
 
   auth-service:
+    environment:
+      MONGODB_PASSWORD: odrin7
     image: boardgamearena/bga-auth
     ports:
       - 8083:8083
@@ -74,6 +76,12 @@ services:
     entrypoint: ./wait-for-service.sh http://discovery-service:8081/health
 
   auth-mongodb:
+    environment:
+      INIT_DUMP: account-service-dump.js
+      MONGODB_NAME: boardGameArena
+      MONGODB_ROLE: readWrite
+      MONGODB_PASSWORD: odrin7
+      MONGODB_USER: odrin7
     image: boardgamearena/bga-auth-mongodb
     restart: always
     logging:
