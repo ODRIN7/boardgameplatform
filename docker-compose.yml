@@ -2,7 +2,7 @@ version: '2'
 services:
 
   config-service:
-    image: boardgamearena/bga-config
+    image: bga/bga-config
     ports:
          - 8888:8888
     restart: always
@@ -12,7 +12,7 @@ services:
         max-file: "10"
 
   discovery-service:
-    image: boardgamearena/bga-discovery
+    image: bga/bga-discovery
     ports:
         - 8081:8081
     restart: always
@@ -27,7 +27,7 @@ services:
     entrypoint: ./wait-for-service.sh http://config-service:8888/health
 
   gateway-service:
-    image: boardgamearena/bga-gateway
+    image: bga/bga-gateway
     ports:
       - 8090:8090
     restart: always
@@ -45,7 +45,7 @@ services:
   auth-service:
     environment:
       MONGODB_PASSWORD: odrin7
-    image: boardgamearena/bga-auth
+    image: bga/bga-auth
     ports:
       - 8083:8083
     restart: always
@@ -60,8 +60,22 @@ services:
        - config-service
     entrypoint: ./wait-for-service.sh http://discovery-service:8081/health
 
+  auth-mongodb:
+    environment:
+      INIT_DUMP: account-service-dump.js
+      MONGODB_NAME: boardGameArena
+      MONGODB_ROLE: readWrite
+      MONGODB_PASSWORD: odrin7
+      MONGODB_USER: odrin7
+    image: bga/bga-auth-mongodb
+    restart: always
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+
   ui-service:
-    image: boardgamearena/bga-ui
+    image: bga/bga-ui
     ports:
      - 8080:8080
     depends_on:
@@ -75,14 +89,32 @@ services:
      - config-service
     entrypoint: ./wait-for-service.sh http://discovery-service:8081/health
 
-  auth-mongodb:
+  api-service:
+    environment:
+      MONGODB_PASSWORD: odrin7
+    image: bga/bga-api
+    ports:
+      - 8092:8092
+    restart: always
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+    depends_on:
+       - discovery-service
+    links:
+       - discovery-service
+       - config-service
+    entrypoint: ./wait-for-service.sh http://discovery-service:8081/health
+
+  api-mongodb:
     environment:
       INIT_DUMP: account-service-dump.js
       MONGODB_NAME: boardGameArena
       MONGODB_ROLE: readWrite
       MONGODB_PASSWORD: odrin7
       MONGODB_USER: odrin7
-    image: boardgamearena/bga-auth-mongodb
+    image: bga/bga-api-mongodb
     restart: always
     logging:
       options:

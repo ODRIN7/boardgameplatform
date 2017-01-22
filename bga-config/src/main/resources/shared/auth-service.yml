@@ -17,7 +17,7 @@ server:
 spring:
   data:
     mongodb:
-      host: bga-auth-mongodb
+      host: auth-mongodb
       username: odrin7
       password: odrin7
       database: boardGameArena

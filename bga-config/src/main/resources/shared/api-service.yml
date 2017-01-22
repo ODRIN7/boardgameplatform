@@ -1,10 +1,27 @@
 # EMBEDDED SERVER CONFIGURATION
 server:
-    port: ${port:8092}
-
+    port: ${port:8085}
+    context-path: /
+    use-forward-headers: true
+    error.whitelabel.enabled: false
+    compression:
+      enabled: true
+      min-response-size: 1024
+      mime-types:
+          - text/html
+          - text/css
+          - text/plain
+          - text/xml
+          - application/json
+          - application/javascript
 spring:
-    aop:
-        proxyTargetClass: true
+  data:
+    mongodb:
+      host: api-mongodb
+      username: odrin7
+      password: odrin7
+      database: boardGameArena
+      port: 27017
 
 # EUREKA
 eureka:
@@ -13,6 +30,7 @@ eureka:
     fetchRegistry: true
 
 ---
+
 spring:
   profiles: docker
 
@@ -21,7 +39,9 @@ eureka:
   client:
     serviceUrl:
       defaultZone: http://discovery-service:8081/eureka/
+
 ---
+
 spring:
   profiles: standalone
 
