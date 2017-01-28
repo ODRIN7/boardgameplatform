@@ -11,11 +11,15 @@ import java.util.List;
 public class User implements UserDetails {
 
 	@Id
+    private Long id;
+
 	private String username;
 
 	private String password;
 
-	@Override
+	private List<Authority> authority;
+
+    @Override
 	public String getPassword() {
 		return password;
 	}
@@ -26,8 +30,8 @@ public class User implements UserDetails {
 	}
 
 	@Override
-	public List<GrantedAuthority> getAuthorities() {
-		return null;
+	public List<Authority> getAuthorities() {
+		return authority;
 	}
 
 	public void setUsername(String username) {
@@ -38,23 +42,42 @@ public class User implements UserDetails {
 		this.password = password;
 	}
 
-	@Override
-	public boolean isAccountNonExpired() {
-		return true;
-	}
+    public void setAuthority(List<Authority> authority) {
+        this.authority = authority;
+    }
 
-	@Override
-	public boolean isAccountNonLocked() {
-		return true;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return true;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	@Override
-	public boolean isEnabled() {
-		return true;
-	}
+    public User(String username, String password, List<Authority> authority) {
+        this.username = username;
+        this.password = password;
+        this.authority = authority;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
 }
