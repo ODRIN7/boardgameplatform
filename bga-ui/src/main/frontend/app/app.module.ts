@@ -17,6 +17,9 @@ import {ShoppingListService} from "./shopping-list/shopping-list.service";
 import {routing} from "./app.routing";
 import {RecipeStartComponent} from "./recipes/recipe-start/recipe-start.component";
 import {RecipeEditComponent} from "./recipes/recipe-edit/recipe-edit.component";
+import {NotFoundComponent} from "./not-found/not-found.component";
+import {HomeComponent} from "./home/home.component";
+import {AuthService} from "./shared/auth/auth.service";
 
 
 @NgModule({
@@ -31,7 +34,9 @@ import {RecipeEditComponent} from "./recipes/recipe-edit/recipe-edit.component";
     RecipeItemComponent,
     DropdownDirective,
     RecipeStartComponent,
-    RecipeEditComponent
+    RecipeEditComponent,
+    NotFoundComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +47,8 @@ import {RecipeEditComponent} from "./recipes/recipe-edit/recipe-edit.component";
   ],
   providers: [
     RecipeService,
-    ShoppingListService
+    ShoppingListService,
+    AuthService
   ],
   bootstrap: [BGAMyAppComponent]
 })

@@ -2,6 +2,7 @@ import {Routes, RouterModule} from "@angular/router";
 import {RecipesComponent} from "./recipes/recipes.component";
 import {ShoppingListComponent} from "./shopping-list/shopping-list.component";
 import {RECIPE_ROUTES} from "./recipes/recipes.routes";
+import {HomeComponent} from "./home/home.component";
 
 const APP_ROUTES: Routes = [
   {
@@ -17,6 +18,10 @@ const APP_ROUTES: Routes = [
   {
     path: 'shopping-list',
     component: ShoppingListComponent
+  },
+  {
+    path: 'home',
+    component: HomeComponent
   }
 
 ];
