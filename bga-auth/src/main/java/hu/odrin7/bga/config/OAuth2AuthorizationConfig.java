@@ -35,15 +35,20 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private MongoUserDetailsService userDetailsService;
 
-    @Autowired
-    private Environment env;
-
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 
         clients.inMemory()
             .withClient("browser")
-            .authorizedGrantTypes("refresh_token", "password");
+            .secret("odrin7")
+            .authorizedGrantTypes("refresh_token", "password")
+            .scopes("ui")
+            .and()
+            .withClient("api-service")
+            .secret("odrin7")
+            .authorizedGrantTypes("client_credentials", "refresh_token")
+            .scopes("server");
+
     }
 
     @Override
@@ -51,8 +56,7 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
         endpoints
             .tokenStore(tokenStore)
             .authenticationManager(authenticationManager)
-            .userDetailsService(userDetailsService)
-            .accessTokenConverter(jwtAccessTokenConverter());
+            .userDetailsService(userDetailsService);
     }
 
     @Override
@@ -60,15 +64,6 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
         oauthServer
             .tokenKeyAccess("permitAll()")
             .checkTokenAccess("isAuthenticated()");
-    }
-
-    @Bean
-    public JwtAccessTokenConverter jwtAccessTokenConverter() {
-        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        KeyPair keyPair = new KeyStoreKeyFactory(new ClassPathResource("keystore.jks"), "foobar".toCharArray())
-            .getKeyPair("test");
-        converter.setKeyPair(keyPair);
-        return converter;
     }
 }
 

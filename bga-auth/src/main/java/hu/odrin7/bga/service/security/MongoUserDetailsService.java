@@ -26,4 +26,7 @@ public class MongoUserDetailsService implements UserDetailsService {
 
 		return user;
 	}
+
+    public MongoUserDetailsService() {
+    }
 }

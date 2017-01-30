@@ -22,6 +22,14 @@ spring:
       password: odrin7
       database: boardGameArena
       port: 27017
+security:
+  oauth2:
+    client:
+      clientId: api-service
+      clientSecret: odrin7
+      accessTokenUri: http://auth-service:8083/oauth/token
+      grant-type: client_credentials
+      scope: server
 
 # EUREKA
 eureka:
