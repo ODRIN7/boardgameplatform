@@ -9,4 +9,7 @@ security:
   oauth2:
     resource:
       user-info-uri: http://auth-service:8083/uaa/users/current
+spring:
+  rabbitmq:
+    host: rabbitmq
 

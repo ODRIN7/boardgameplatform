@@ -1,0 +1,39 @@
+0.
+	docker-machine ls
+1.
+	docker-machine rm default
+2.
+	docker-machine create  --virtualbox-cpu-count "2" --virtualbox-disk-size "8800" --virtualbox-memory "3000"   -d virtualbox default
+3.
+	cd C:/Dani/07/szakdoga/boardgameplatform/
+4.
+	mvn install -P dev -DskipTests
+5.
+	docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+
+
+
+mvn install -P dev -DskipTests
+docker build -t "simple_flask:dockerfile" .
+docker-machine create  --virtualbox-cpu-count "2" --virtualbox-disk-size "8800" --virtualbox-memory "3000"  --swarm-host "tcp://192.168.99.100:2376" --engine-env="CONFIG_SERVICE_PASSWORD=odrin7" --engine-env="NOTIFICATION_SERVICE_PASSWORD=odrin7" --engine-env="STATISTICS_SERVICE_PASSWORD=odrin7"  --engine-env="ACCOUNT_SERVICE_PASSWORD=odrin7" --engine-env="MONGODB_PASSWORD=odrin7" --engine-env="USERCODE=odrin7" -d virtualbox default
+docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+
+
+mvn clean package -P prod-standalone -DskipTests
+java -jar ./target/bga-auth-1.0.0.jar
+
+Config:
+  http://192.168.99.100:8888/config-service/master
+discovery
+  http://192.168.99.100:8081/
+Gateway
+  http://192.168.99.100:8090/
+Auth:
+  http://192.168.99.100:8083/uaa/users/current
+  http://192.168.99.100:8083/uaa/auth/token  username: api-service, browser
+UI
+  http://192.168.99.100:8080/recipes
+Api
+  http://192.168.99.100:8085/demo
+  http://192.168.99.100:8085/boardGame/all
+  http://192.168.99.100:8085/uaa/oauth/token

@@ -25,7 +25,7 @@ public class SecurityConfig implements ResourceServerConfigurer {
         resources.resourceId("bga-gateway");
     }
 
-    
+
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
@@ -37,28 +37,7 @@ public class SecurityConfig implements ResourceServerConfigurer {
             .and()
             .authorizeRequests()
             .antMatchers("/api/**").permitAll()
-            .antMatchers("/test").authenticated()
-
-            .antMatchers("/actuator").permitAll()
-            .antMatchers("/autoconfig").permitAll()
-            .antMatchers("/beans").permitAll()
-            .antMatchers("/configprops").permitAll()
-            .antMatchers("/dump").permitAll()
-            .antMatchers("/env").permitAll()
-            .antMatchers("/flyway").permitAll()
-            .antMatchers("/health").permitAll()
-            .antMatchers("/info").permitAll()
-            .antMatchers("/liquibase").permitAll()
-            .antMatchers("/metrics").permitAll()
-            .antMatchers("/mappings").permitAll()
-            .antMatchers("/shutdown").denyAll()
-            .antMatchers("/trace").permitAll()
-            .antMatchers("/docs").permitAll()
-            .antMatchers("/heapdump").permitAll()
-            .antMatchers("/jolokia").permitAll()
-            .antMatchers("/logfile").permitAll()
-
-            .anyRequest().permitAll()
+            .anyRequest().authenticated()
             .and()
             .csrf().disable()
             .exceptionHandling()

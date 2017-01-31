@@ -12,19 +12,24 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/boardGame")
+@RequestMapping("/")
 public class BoardGameController {
 
 	@Autowired
 	private BoardGameService boardGameService;
 
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(path = "/boardGame",  method = RequestMethod.POST )
 	public void createBoardGame( @Valid @RequestBody BoardGame boardGame) {
         boardGameService.create(boardGame);
 	}
 
-	@RequestMapping(path = "/all", method = RequestMethod.GET)
-	public void getBoardGames() {
-        boardGameService.getBoardGames();
+	@RequestMapping(path = "/boardGame/all", method = RequestMethod.GET)
+	public String getBoardGames() {
+        return boardGameService.getBoardGames();
 	}
+
+    @RequestMapping(path = "/demo", method = RequestMethod.GET)
+    public String getHello() {
+         return "hello";
+    }
 }
