@@ -26,12 +26,10 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
 
     private TokenStore tokenStore = new InMemoryTokenStore();
 
-    @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
     @Qualifier("authenticationManagerBean")
     private AuthenticationManager authenticationManager;
 
-    @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
     private MongoUserDetailsService userDetailsService;
 
@@ -40,12 +38,10 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
 
         clients.inMemory()
             .withClient("browser")
-            .secret("odrin7")
             .authorizedGrantTypes("refresh_token", "password")
             .scopes("ui")
             .and()
             .withClient("api-service")
-            .secret("odrin7")
             .authorizedGrantTypes("client_credentials", "refresh_token")
             .scopes("server");
 

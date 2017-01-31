@@ -26,8 +26,7 @@ security:
   oauth2:
     client:
       clientId: api-service
-      clientSecret: odrin7
-      accessTokenUri: http://auth-service:8083/oauth/token
+      accessTokenUri: http://auth-service:8083/uaa/oauth/token
       grant-type: client_credentials
       scope: server
 

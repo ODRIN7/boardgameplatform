@@ -33,12 +33,12 @@ import org.springframework.security.oauth2.provider.token.ResourceServerTokenSer
 @Configuration
 public class BGAApiApplication extends ResourceServerConfigurerAdapter {
 
+    @Autowired
+    private ResourceServerProperties sso;
+
     public static void main(String[] args) {
         SpringApplication.run(BGAApiApplication.class, args);
     }
-
-    @Autowired
-    private ResourceServerProperties sso;
 
     @Bean
     @ConfigurationProperties(prefix = "security.oauth2.client")

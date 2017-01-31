@@ -54,11 +54,6 @@ public class User implements UserDetails {
         this.id = id;
     }
 
-    public User(String username, String password, List<Authority> authority) {
-        this.username = username;
-        this.password = password;
-        this.authority = authority;
-    }
 
     @Override
     public boolean isAccountNonExpired() {

@@ -94,7 +94,7 @@ services:
       MONGODB_PASSWORD: odrin7
     image: bga/bga-api
     ports:
-      - 8092:8092
+      - 8085:8085
     restart: always
     logging:
       options:

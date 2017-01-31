@@ -32,7 +32,7 @@ services:
   api-service:
     build: bga-api
     ports:
-      - 8092:8092
+      - 8085:8085
 
   api-mongodb:
     build: bga-mongodb
