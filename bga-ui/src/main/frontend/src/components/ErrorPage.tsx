@@ -23,7 +23,7 @@ export default class ErrorPage extends React.Component<void, IErrorPageState> {
     const { error } = this.state;
 
     return <span>
-      <img src='/images/pets.png' />
+      <img src='public/images/pets.png' />
 
       <h2>Something happened...</h2>
       { error ?
