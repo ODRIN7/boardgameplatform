@@ -12,6 +12,7 @@ bga-discovery/target/
 bga-auth/target/
 bga-api/target/
 bga-ui/target/
+bga-ui/src/main/resources/templates/bundle.js
 bga-gateway/target/
 bga-config/target/
 target/image_info.json
