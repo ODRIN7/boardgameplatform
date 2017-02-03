@@ -8,22 +8,15 @@ import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-/**
- * Created by Tomasz Kucharzyk
- */
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableCaching
 @EnableZuulProxy
-public class BGAUiApplication extends WebMvcConfigurerAdapter {
+public class BGAUiApplication{
 
     public static void main(String[] args) {
         SpringApplication.run(BGAUiApplication.class, args);
     }
 
-    @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("templates/public/index.html");
-    }
+
 
 }

@@ -12,7 +12,7 @@ module.exports = {
   devtool: 'source-map',
   entry: entries,
   output: {
-    path: path.join(__dirname, 'src/main/resources/templates/public/dist/'),
+    path: path.join(__dirname, 'src/main/resources/static/public/dist/'),
     filename: 'bundle.js',
     publicPath: '/dist/'
   },
@@ -56,7 +56,7 @@ module.exports = {
       {
         test: /\.tsx?$/,
         loader: 'babel!ts',
-        include: path.join(__dirname, 'src/main/frontend/src')
+        include: path.join(__dirname, 'src/main/frontend/src/')
       }
     ]
   },
