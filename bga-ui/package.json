@@ -53,8 +53,8 @@
     "webpack-dev-server": "^1.14.1"
   },
   "scripts": {
-    "clean": "npm cache clean && rimraf ./src/main/resources/templates/bundle.js",
-    "clean:dist": "rimraf ./src/main/resources/templates/bundle.js",
+    "clean": "npm cache clean && rimraf ./src/main/resources/templates/public/dist/*",
+    "clean:dist": "rimraf ./src/main/resources/templates/public/dist/*",
     "preclean:install": "npm run clean",
     "clean:install": "npm set progress=false && npm install",
     "preclean:start": "npm run clean",
@@ -69,8 +69,8 @@
     "start": "node server.js",
     "server": "npm run server:dev",
     "ng:upgrade": "ng init -n bga-ui -sd src/main/frontend --style scss --prefix bga --routing",
-    "build:clean": "rimraf ./src/main/resources/templates/bundle.js && webpack --config webpack.config.js",
-    "build:prod": "rimraf ./src/main/resources/templates/bundle.js && NODE_ENV=production webpack --config webpack.config.prod.js"
+    "build:clean": "rimraf ./src/main/resources/templates/public/dist && webpack --config webpack.config.js",
+    "build:prod": "rimraf ./src/main/resources/templates/public/dist && NODE_ENV=production webpack --config webpack.config.prod.js"
   },
   "engines": {
     "node": ">= 6.0.0",

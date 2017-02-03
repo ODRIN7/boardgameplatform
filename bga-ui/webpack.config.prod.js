@@ -12,10 +12,9 @@ module.exports = {
   devtool: 'source-map',
   entry: entries,
   output: {
-    path: path.join(__dirname, 'src/main/resources/templates/'),
+    path: path.join(__dirname, 'src/main/resources/templates/public/dist/'),
     filename: 'bundle.js',
-    /* redbox-react/README.md */
-    // ,devtoolModuleFilenameTemplate: '/[absolute-resource-path]'
+    publicPath: '/dist/'
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -36,20 +35,18 @@ module.exports = {
       {
         test: /\.tsx?$/,
         loader: 'tslint',
-        include: path.join(__dirname, 'src/main/frontend/src/')
+        include: path.join(__dirname, 'src/main/frontend/src')
       }
     ],
     loaders: [
       {
         test: /\.less$/,
         loader: 'style!css!less',
-        include: path.join(__dirname, 'src/main/frontend/src/styles/')
+        include: path.join(__dirname, 'src/main/frontend/src/styles')
       },
       {
         test: /\.(png|jpg)$/,
         loader: 'url?limit=25000',
-        include: path.join(__dirname, 'src/main/frontend/src/styles/images/')
-
       },
       {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
@@ -59,7 +56,7 @@ module.exports = {
       {
         test: /\.tsx?$/,
         loader: 'babel!ts',
-        include: path.join(__dirname, 'src/main/frontend/src/')
+        include: path.join(__dirname, 'src/main/frontend/src')
       }
     ]
   },

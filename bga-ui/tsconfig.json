@@ -7,7 +7,7 @@
     "removeComments": true,
     "target": "ES6",
     "allowJs": true,
-    "outDir": "src/main/resources/templates/",
+    "outDir": "src/main/resources/templates/public/dist",
     "sourceMap": true
   },
   "exclude": [

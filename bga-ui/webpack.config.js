@@ -16,9 +16,9 @@ module.exports = {
   entry: entries,
   loader: 'style-loader',
   output: {
-    path: path.join(__dirname, 'src/main/resources/templates/'),
+    path: path.join(__dirname, 'src/main/resources/templates/public/dist/'),
     filename: 'bundle.js',
-    publicPath: '/'
+    publicPath: '/dist/'
     /* redbox-react/README.md */
     // ,devtoolModuleFilenameTemplate: '/[absolute-resource-path]'
   },
@@ -39,7 +39,7 @@ module.exports = {
       {
         test: /\.tsx?$/,
         loader: 'tslint',
-        include: path.join(__dirname, 'src/main/frontend/src/')
+        include: path.join(__dirname, 'src/main/frontend/src')
       }
     ],
     loaders: [
@@ -50,7 +50,7 @@ module.exports = {
       {
         test: /\.less$/,
         loader: 'style!css!less',
-        include: path.join(__dirname, 'src/main/frontend/src/styles/')
+        include: path.join(__dirname, 'src/main/frontend/src/styles')
       },
       {
         test: /\.(png|jpg)$/,
@@ -64,7 +64,7 @@ module.exports = {
       {
         test: /\.tsx?$/,
         loader: 'babel!ts',
-        include: path.join(__dirname, 'src/main/frontend/src/')
+        include: path.join(__dirname, 'src/main/frontend/src')
       }
     ]
   },

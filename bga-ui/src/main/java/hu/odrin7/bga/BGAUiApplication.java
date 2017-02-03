@@ -23,8 +23,7 @@ public class BGAUiApplication extends WebMvcConfigurerAdapter {
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController("/").setViewName("index");
-        registry.addViewController("/static/bundle.js").setViewName("bundle");
+        registry.addViewController("/").setViewName("templates/public/index.html");
     }
 
 }
