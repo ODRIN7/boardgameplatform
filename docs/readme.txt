@@ -14,3 +14,6 @@ spring boot discory server
 spring boot Gateway
  https://spring.io/guides/gs/routing-and-filtering/
 
+ sequence gen
+ https://www.mkyong.com/mongodb/spring-data-mongodb-auto-sequence-id-example/
+

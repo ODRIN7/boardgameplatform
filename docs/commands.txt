@@ -22,6 +22,12 @@ docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
 mvn clean package -P prod-standalone -DskipTests
 java -jar ./target/bga-auth-1.0.0.jar
 
+scope=ui&username=user1&password=pwd1&client_id=browser&grant_type=password
+
+UI-dev mode
+mvn spring-boot:run -P dev-standalone
+mvn spring-boot:run -Drun.jvmArguments="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,address=8787 -Dserver.port=9090 -Dpath.to.config.dir=/var/data/my/config/dir" -P dev-standalone
+
 Config:
   http://192.168.99.100:8888/config-service/master
 discovery

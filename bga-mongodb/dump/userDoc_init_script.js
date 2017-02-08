@@ -1,12 +1,18 @@
 print('user creates init script start');
 
-db.boardgames.update(
-  {"username": "user1"},
+db.users.insert(
   {
+    "id": 100000,
     "username": "user1",
     "password": "pwd1"
   },
-  { upsert: true }
+  {upsert: true}
 );
-
-print('user creates init script start');
+db.sequence.insert(
+  {
+  _id: "user",
+    seq: 0
+  },
+  {upsert: true}
+);
+print('user creates init script end');

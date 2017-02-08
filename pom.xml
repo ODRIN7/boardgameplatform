@@ -13,12 +13,12 @@
     <description>bga</description>
 
     <modules>
-        <module>bga-ui</module>
         <module>bga-config</module>
         <module>bga-discovery</module>
         <module>bga-gateway</module>
         <module>bga-auth</module>
         <module>bga-api</module>
+        <module>bga-ui</module>
     </modules>
 
     <properties>

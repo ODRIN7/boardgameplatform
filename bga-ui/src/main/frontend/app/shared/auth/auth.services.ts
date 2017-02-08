@@ -1,9 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
-//import {AppMenuItem} from '../../app.menu';
 
 @Injectable()
-export class AuthService {
+export class AuthServices {
 
   private authenticated: boolean = false;
   private tokenExpirationDate: Date = null;
@@ -20,7 +19,7 @@ export class AuthService {
     this.tokenData = JSON.parse(localStorage.getItem('tokenData'));
     if (this.tokenData && this.tokenData.access_token) {
       this.authenticated = true;
-      this.userData = AuthService.decodeAccessToken(this.tokenData.access_token);
+      this.userData = AuthServices.decodeAccessToken(this.tokenData.access_token);
       this.tokenExpirationDate = new Date(this.userData.exp * 1000);
       if (this.authenticated && this.tokenExpirationDate < new Date()) {
         console.log('Session timeout');
@@ -34,48 +33,49 @@ export class AuthService {
     return this.authenticated;
   }
 
-  public authenticate(username: string, password: string): Promise<string> {
+  public authenticate(username: string, password: string) {
 
-    console.log('Authentication pending...');
+  console.log('Authentication pending...');
 
-    return new Promise<string>((resolve, reject) => {
+  return new Promise<string>((resolve, reject) => {
 
-      if (!username.trim()) {
-        reject('Username cannot be blank');
-      }
-      if (!password.trim()) {
-        reject('Password cannot be blank');
-      }
+    if (!username.trim()) {
+      reject('Username cannot be blank');
+    }
+    if (!password.trim()) {
+      reject('Password cannot be blank');
+    }
+    let basicAuthHeader = 'YnJvd3Nlcjo=';
+    let scope = 'ui'
+    let grant_type = 'refresh_token&password';
 
-      let basicAuthHeader = btoa(`acme:acmesecret`);
+    let headers = new Headers();
+    headers.append('Authorization', `Basic  ${basicAuthHeader}`);
+    headers.append('Accept', `application/json`);
+    headers.append('Content-Type', `application/x-www-form-urlencoded`);
 
-      let headers = new Headers();
-      headers.append('Authorization', `Basic  ${basicAuthHeader}`);
-      headers.append('Accept', `application/json`);
-      headers.append('Content-Type', `application/x-www-form-urlencoded`);
+    let payload = 'username=' + encodeURIComponent(username) + '&password='
+      + encodeURIComponent(password) +'&scope=' + scope +  '&grant_type=' + grant_type;
 
-      let payload = 'username=' + encodeURIComponent(username) + '&password='
-        + encodeURIComponent(password) + '&grant_type=password';
+    this.http
+      .post('uaa/oauth/token', payload, {headers: headers})
+      .subscribe(
+        data => {
+          this.tokenData = data.json();
+          this.authenticated = true;
+          this.userData = AuthServices.decodeAccessToken(this.tokenData.access_token);
+          this.tokenExpirationDate = new Date(this.userData.exp * 1000);
+          resolve('OK');
+          localStorage.setItem('tokenData', JSON.stringify(this.tokenData));
+        },
+        err => {
+          console.log(err);
+          reject('Username and password doesn\'t match');
+        }
+      );
 
-      this.http
-        .post('/oauth/token', payload, {headers: headers})
-        .subscribe(
-          data => {
-            this.tokenData = data.json();
-            this.authenticated = true;
-            this.userData = AuthService.decodeAccessToken(this.tokenData.access_token);
-            this.tokenExpirationDate = new Date(this.userData.exp * 1000);
-            resolve('OK');
-            localStorage.setItem('tokenData', JSON.stringify(this.tokenData));
-          },
-          err => {
-            console.log(err);
-            reject('Username and password doesn\'t match');
-          }
-        );
-
-    });
-  }
+  });
+}
 
   public tryCreateUser(username: string, password: string): Promise<string> {
 
@@ -106,7 +106,7 @@ export class AuthService {
           data => {
             this.tokenData = data.json();
             this.authenticated = true;
-            this.userData = AuthService.decodeAccessToken(this.tokenData.access_token);
+            this.userData = AuthServices.decodeAccessToken(this.tokenData.access_token);
             this.tokenExpirationDate = new Date(this.userData.exp * 1000);
             resolve('OK');
             localStorage.setItem('tokenData', JSON.stringify(this.tokenData));
@@ -138,7 +138,7 @@ export class AuthService {
           data => {
             this.tokenData = data.json();
             this.authenticated = true;
-            this.userData = AuthService.decodeAccessToken(this.tokenData.access_token);
+            this.userData = AuthServices.decodeAccessToken(this.tokenData.access_token);
             this.tokenExpirationDate = new Date(this.userData.exp * 1000);
           },
           err => {

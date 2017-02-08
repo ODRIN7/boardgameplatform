@@ -24,7 +24,6 @@ import java.security.KeyPair;
 @EnableAuthorizationServer
 public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
 
-    private TokenStore tokenStore = new InMemoryTokenStore();
 
     @Autowired
     @Qualifier("authenticationManagerBean")
@@ -33,12 +32,24 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
     @Autowired
     private MongoUserDetailsService userDetailsService;
 
+    private TokenStore tokenStore = new InMemoryTokenStore();
+
+    @Bean
+    public JwtAccessTokenConverter jwtAccessTokenConverter() {
+        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+        KeyPair keyPair = new KeyStoreKeyFactory(new ClassPathResource("keystore.jks"), "foobar".toCharArray())
+            .getKeyPair("test");
+        converter.setKeyPair(keyPair);
+        return converter;
+    }
+
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 
         clients.inMemory()
             .withClient("browser")
             .authorizedGrantTypes("refresh_token", "password")
+            .accessTokenValiditySeconds(6000)
             .scopes("ui")
             .and()
             .withClient("api-service")
@@ -50,8 +61,6 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints
-            .tokenStore(tokenStore)
-            .authenticationManager(authenticationManager)
             .userDetailsService(userDetailsService);
     }
 

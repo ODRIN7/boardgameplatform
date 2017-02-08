@@ -9,13 +9,7 @@ spring:
     cloud:
         config:
             failFast: true
----
 
-spring:
-    profiles: docker
-    cloud:
-        config:
-            uri: http://config-service:8888
 
 ---
 
@@ -23,5 +17,15 @@ spring:
     profiles: standalone
     cloud:
         config:
-            uri: http://localhost:8888
+            uri: http://192.168.99.100:8888
+logging:
+  level: debug
 
+
+---
+
+spring:
+    profiles: docker
+    cloud:
+        config:
+            uri: http://config-service:8888

@@ -38,8 +38,6 @@ import java.util.concurrent.TimeUnit;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableResourceServer
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-@EnableFeignClients
 public class BGAAuthApplication {
 
     public static void main(String[] args) {

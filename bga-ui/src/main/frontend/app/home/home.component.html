@@ -6,18 +6,4 @@
   <span class="fill"></span>
   <span class="user-info"
         *ngIf="authService.isAuthenticated()">Current user: {{ authService.getUserData().user_name }}</span>
-  <button onclick="">Click me </button>
-
-  <br/>
-  <br/>
-  <br/>
-  <br/>
-  <a md-raised-button color="primary" routerLinkActive="active" [routerLink]="['login']"
-     [hidden]="authService.isAuthenticated()">Login</a>
-  <br/>
-  <button md-raised-button color="primary" (click)="logMeOut()" [hidden]="!authService.isAuthenticated()">Logout
-  </button>
-  <br/>
-  <button md-raised-button color="primary" (click)="authService.refreshToken()" [hidden]="true">Refresh token
-  </button>
-
+</div>

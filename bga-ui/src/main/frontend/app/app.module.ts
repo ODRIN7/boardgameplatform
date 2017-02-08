@@ -11,7 +11,7 @@ import {RecipeDetailComponent} from "./recipes/recipe-detail/recipe-detail.compo
 import {RecipeListComponent} from "./recipes/recipe-list/recipe-list.component";
 import {ShoppingListComponent} from "./shopping-list/shopping-list.component";
 import {ShoppingListAddComponent} from "./shopping-list/shopping-list-add.component";
-import {DropdownDirective} from "./shared/dropdown.directive";
+import {DropdownDirective} from "./header/dropdown.directive";
 import {RecipeService} from "./recipes/recipe.service";
 import {ShoppingListService} from "./shopping-list/shopping-list.service";
 import {routing} from "./app.routing";
@@ -19,7 +19,32 @@ import {RecipeStartComponent} from "./recipes/recipe-start/recipe-start.componen
 import {RecipeEditComponent} from "./recipes/recipe-edit/recipe-edit.component";
 import {NotFoundComponent} from "./not-found/not-found.component";
 import {HomeComponent} from "./home/home.component";
-import {AuthService} from "./shared/auth/auth.service";
+import {AuthServices} from "./shared/auth/auth.services";
+import {LoginComponent} from "./login/login.component";
+import {
+  MdInputModule,
+  MdIconModule,
+  MdSidenavModule,
+  MdCardModule,
+  MdButtonModule,
+  MdCheckboxModule,
+  MdCoreModule,
+  MdGridListModule,
+  MdListModule,
+  MdMenuModule,
+  MdProgressBarModule,
+  MdProgressCircleModule,
+  MdRadioModule,
+  MdSlideToggleModule,
+  MdSliderModule,
+  MdTabsModule,
+  MdToolbarModule,
+  MdTooltipModule,
+  MdButtonToggleModule,
+  MdDialogModule,
+  MdSelectModule,
+  MdSnackBarModule
+} from '@angular/material';
 
 
 @NgModule({
@@ -36,19 +61,41 @@ import {AuthService} from "./shared/auth/auth.service";
     RecipeStartComponent,
     RecipeEditComponent,
     NotFoundComponent,
-    HomeComponent
+    HomeComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     ReactiveFormsModule,
-    routing
+    routing,
+    MdButtonModule,
+    MdButtonToggleModule,
+    MdCardModule,
+    MdCheckboxModule,
+    MdCoreModule,
+    MdDialogModule,
+    MdGridListModule,
+    MdIconModule,
+    MdInputModule,
+    MdListModule,
+    MdMenuModule,
+    MdProgressBarModule,
+    MdProgressCircleModule,
+    MdRadioModule,
+    MdSelectModule,
+    MdSidenavModule,
+    MdSlideToggleModule,
+    MdSliderModule,
+    MdSnackBarModule,
+    MdTabsModule,
+    MdToolbarModule
   ],
   providers: [
     RecipeService,
     ShoppingListService,
-    AuthService
+    AuthServices
   ],
   bootstrap: [BGAMyAppComponent]
 })

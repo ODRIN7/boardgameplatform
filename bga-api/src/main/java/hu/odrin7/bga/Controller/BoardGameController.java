@@ -2,6 +2,7 @@ package hu.odrin7.bga.Controller;
 
 
 import hu.odrin7.bga.domain.BoardGame;
+import hu.odrin7.bga.domain.User;
 import hu.odrin7.bga.service.BoardGameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/")
 public class BoardGameController {
 
 	@Autowired
@@ -31,5 +31,10 @@ public class BoardGameController {
     @RequestMapping(path = "/demo", method = RequestMethod.GET)
     public String getHello() {
          return "hello";
+    }
+
+    @RequestMapping(path = "/",  method = RequestMethod.POST )
+    public void createUser( @Valid @RequestBody User user) {
+        boardGameService.createUser(user);
     }
 }

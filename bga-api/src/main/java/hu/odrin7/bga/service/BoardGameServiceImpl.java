@@ -1,6 +1,8 @@
 package hu.odrin7.bga.service;
 
+import hu.odrin7.bga.client.AuthServiceClient;
 import hu.odrin7.bga.domain.BoardGame;
+import hu.odrin7.bga.domain.User;
 import hu.odrin7.bga.repository.BoardGameRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +14,9 @@ import org.springframework.util.Assert;
 public class BoardGameServiceImpl implements BoardGameService {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
+
+    @Autowired
+    private AuthServiceClient authServiceClient;
 
     @Autowired
     private BoardGameRepository repository;
@@ -30,6 +35,11 @@ public class BoardGameServiceImpl implements BoardGameService {
     @Override
     public String getBoardGames() {
         return "hello boardgames";
+    }
+
+    @Override
+    public void createUser(User user) {
+        authServiceClient.createUser(user);
     }
 
 

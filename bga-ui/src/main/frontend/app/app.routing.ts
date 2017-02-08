@@ -3,6 +3,7 @@ import {RecipesComponent} from "./recipes/recipes.component";
 import {ShoppingListComponent} from "./shopping-list/shopping-list.component";
 import {RECIPE_ROUTES} from "./recipes/recipes.routes";
 import {HomeComponent} from "./home/home.component";
+import {LoginComponent} from "./login/login.component";
 
 const APP_ROUTES: Routes = [
   {
@@ -22,6 +23,14 @@ const APP_ROUTES: Routes = [
   {
     path: 'home',
     component: HomeComponent
+  },
+  {
+    path: 'login',
+    component: LoginComponent
+  },
+  {
+    path: 'signup',
+    component: LoginComponent
   }
 
 ];

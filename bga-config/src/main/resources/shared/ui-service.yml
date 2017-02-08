@@ -19,17 +19,14 @@ eureka:
     registerWithEureka: true
     fetchRegistry: true
 # ZULL
+# ZULL
 zuul:
   routes:
-     gateway-service-oauth:
-          sensitiveHeaders:
-          path: /oauth/**
-          stripPrefix: false
-          serviceId: gateway-service
-     gateway-service:
-          sensitiveHeaders:
-          path: /api/**
-          stripPrefix: true
+    auth-service:
+        path: /uaa/**
+        url: http://192.168.99.100:8083
+        stripPrefix: false
+        sensitiveHeaders:
   add-proxy-headers: true
 #SECURITY
 security:
@@ -47,9 +44,6 @@ security:
       id: openid
       serviceId: ${PREFIX:}resource
 
-# LOGGING
-#logging.level.org.springframework.security: DEBUG
-
 ---
 
 spring:
@@ -61,32 +55,15 @@ eureka:
     serviceUrl:
       defaultZone: http://discovery-service:8081/eureka/
 
-# ZULL
-zuul:
-  routes:
-     gateway-service:
-          url: http://gateway-service:8090
-     auth-service:
-          url: http://auth-service:8083
-
 ---
-
 spring:
   profiles: standalone
 
 # EUREKA
 eureka:
   instance:
-    hostname: localhost
+    hostname: 192.168.99.100
     port: 8081
   client:
     serviceUrl:
       defaultZone: http://${eureka.instance.hostname}:${eureka.instance.port}/eureka/
-
-# ZULL
-zuul:
-  routes:
-     gateway-service:
-          url: http://${eureka.instance.hostname}:8090
-     auth-service:
-          url: http://${eureka.instance.hostname}:8083
