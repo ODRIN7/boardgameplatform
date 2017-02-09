@@ -1,6 +1,5 @@
 package hu.odrin7.bga.service;
 
-
 import hu.odrin7.bga.domain.User;
 import hu.odrin7.bga.repository.UserRepository;
 import hu.odrin7.bga.seq.dao.SequenceDao;
@@ -21,21 +20,19 @@ public class UserServiceImpl implements UserService {
 
     private static final String USER_SEQ_KEY = "user";
     private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    private final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
-	private final Logger log = LoggerFactory.getLogger(getClass());
+    @Override
+    public void create(User user) {
+        User existing = repository.findOne(user.getUsername());
+        Assert.isNull(existing, "user already exists: " + user.getUsername());
 
-	@Override
-	public void create(User user) {
+        String hash = encoder.encode(user.getPassword());
+        user.setPassword(hash);
 
-		User existing = repository.findOne(user.getUsername());
-		Assert.isNull(existing, "user already exists: " + user.getUsername());
+        user.setId(sequenceDao.getNextSequenceId(USER_SEQ_KEY));
+        repository.save(user);
 
-		String hash = encoder.encode(user.getPassword());
-		user.setPassword(hash);
-
-		user.setId(sequenceDao.getNextSequenceId(USER_SEQ_KEY));
-		repository.save(user);
-
-		log.info("new user has been created: {}", user.getUsername());
-	}
+        log.info("new user has been created: {}", user.getUsername());
+    }
 }

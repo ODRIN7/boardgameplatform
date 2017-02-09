@@ -7,8 +7,8 @@ import {AuthServices} from "../shared/auth/auth.services";
 })
 export class HomeComponent {
 
-  constructor(authService: AuthServices) {
-    authService.tryCreateUser("aaa", "bbb");
+  constructor( public authService: AuthServices) {
+
   }
 
 }

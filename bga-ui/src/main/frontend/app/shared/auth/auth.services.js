@@ -16,7 +16,7 @@ var AuthServices = (function () {
         this.tokenData = JSON.parse(localStorage.getItem('tokenData'));
         if (this.tokenData && this.tokenData.access_token) {
             this.authenticated = true;
-            this.userData = AuthServices.decodeAccessToken(this.tokenData.access_token);
+            this.userData = this.tokenData.access_token;
             this.tokenExpirationDate = new Date(this.userData.exp * 1000);
             if (this.authenticated && this.tokenExpirationDate < new Date()) {
                 console.log('Session timeout');
@@ -24,9 +24,6 @@ var AuthServices = (function () {
             }
         }
     }
-    AuthServices.decodeAccessToken = function (access_token) {
-        return JSON.parse(window.atob(access_token.split('.')[1]));
-    };
     AuthServices.prototype.isAuthenticated = function () {
         this.checkTokenExpirationDate();
         return this.authenticated;
@@ -41,19 +38,20 @@ var AuthServices = (function () {
             if (!password.trim()) {
                 reject('Password cannot be blank');
             }
-            var basicAuthHeader = btoa("acme:acmesecret");
+            var basicAuthHeader = 'YXBpLXNlcnZpY2U6';
+            var grant_type = 'client_credentials&refresh_token';
             var headers = new http_1.Headers();
             headers.append('Authorization', "Basic  " + basicAuthHeader);
             headers.append('Accept', "application/json");
             headers.append('Content-Type', "application/x-www-form-urlencoded");
             var payload = 'username=' + encodeURIComponent(username) + '&password='
-                + encodeURIComponent(password) + '&grant_type=password';
+                + encodeURIComponent(password) + '&grant_type=' + grant_type;
             _this.http
-                .post('/oauth/token', payload, { headers: headers })
+                .post('uaa/oauth/token', payload, { headers: headers })
                 .subscribe(function (data) {
                 _this.tokenData = data.json();
                 _this.authenticated = true;
-                _this.userData = AuthServices.decodeAccessToken(_this.tokenData.access_token);
+                _this.userData = _this.tokenData.access_token;
                 _this.tokenExpirationDate = new Date(_this.userData.exp * 1000);
                 resolve('OK');
                 localStorage.setItem('tokenData', JSON.stringify(_this.tokenData));
@@ -65,7 +63,6 @@ var AuthServices = (function () {
     };
     AuthServices.prototype.tryCreateUser = function (username, password) {
         var _this = this;
-        console.log('Authentication pending...');
         return new Promise(function (resolve, reject) {
             if (!username.trim()) {
                 reject('Username cannot be blank');
@@ -85,7 +82,7 @@ var AuthServices = (function () {
                 .subscribe(function (data) {
                 _this.tokenData = data.json();
                 _this.authenticated = true;
-                _this.userData = AuthServices.decodeAccessToken(_this.tokenData.access_token);
+                _this.userData = _this.tokenData.access_token;
                 _this.tokenExpirationDate = new Date(_this.userData.exp * 1000);
                 resolve('OK');
                 localStorage.setItem('tokenData', JSON.stringify(_this.tokenData));
@@ -109,7 +106,7 @@ var AuthServices = (function () {
                 .subscribe(function (data) {
                 _this.tokenData = data.json();
                 _this.authenticated = true;
-                _this.userData = AuthServices.decodeAccessToken(_this.tokenData.access_token);
+                _this.userData = _this.tokenData.access_token;
                 _this.tokenExpirationDate = new Date(_this.userData.exp * 1000);
             }, function (err) {
                 console.log(err);

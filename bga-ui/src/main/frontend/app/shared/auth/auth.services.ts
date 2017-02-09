@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Http, Headers} from '@angular/http';
 
+
 @Injectable()
 export class AuthServices {
 
@@ -11,15 +12,11 @@ export class AuthServices {
   // @LocalStorage()
   private tokenData: Oauth2TokenData;
 
-  public static decodeAccessToken(access_token: string) {
-    return JSON.parse(window.atob(access_token.split('.')[1]));
-  }
-
   constructor(public http: Http) {
     this.tokenData = JSON.parse(localStorage.getItem('tokenData'));
     if (this.tokenData && this.tokenData.access_token) {
       this.authenticated = true;
-      this.userData = AuthServices.decodeAccessToken(this.tokenData.access_token);
+      this.userData = this.tokenData.access_token;
       this.tokenExpirationDate = new Date(this.userData.exp * 1000);
       if (this.authenticated && this.tokenExpirationDate < new Date()) {
         console.log('Session timeout');
@@ -45,9 +42,8 @@ export class AuthServices {
     if (!password.trim()) {
       reject('Password cannot be blank');
     }
-    let basicAuthHeader = 'YnJvd3Nlcjo=';
-    let scope = 'ui'
-    let grant_type = 'refresh_token&password';
+    let basicAuthHeader = 'YXBpLXNlcnZpY2U6';
+    let grant_type = 'client_credentials&refresh_token';
 
     let headers = new Headers();
     headers.append('Authorization', `Basic  ${basicAuthHeader}`);
@@ -55,7 +51,7 @@ export class AuthServices {
     headers.append('Content-Type', `application/x-www-form-urlencoded`);
 
     let payload = 'username=' + encodeURIComponent(username) + '&password='
-      + encodeURIComponent(password) +'&scope=' + scope +  '&grant_type=' + grant_type;
+      + encodeURIComponent(password) +  '&grant_type=' + grant_type;
 
     this.http
       .post('uaa/oauth/token', payload, {headers: headers})
@@ -63,7 +59,7 @@ export class AuthServices {
         data => {
           this.tokenData = data.json();
           this.authenticated = true;
-          this.userData = AuthServices.decodeAccessToken(this.tokenData.access_token);
+          this.userData = this.tokenData.access_token;
           this.tokenExpirationDate = new Date(this.userData.exp * 1000);
           resolve('OK');
           localStorage.setItem('tokenData', JSON.stringify(this.tokenData));
@@ -78,8 +74,6 @@ export class AuthServices {
 }
 
   public tryCreateUser(username: string, password: string): Promise<string> {
-
-    console.log('Authentication pending...');
 
     return new Promise<string>((resolve, reject) => {
 
@@ -106,7 +100,7 @@ export class AuthServices {
           data => {
             this.tokenData = data.json();
             this.authenticated = true;
-            this.userData = AuthServices.decodeAccessToken(this.tokenData.access_token);
+            this.userData = this.tokenData.access_token;
             this.tokenExpirationDate = new Date(this.userData.exp * 1000);
             resolve('OK');
             localStorage.setItem('tokenData', JSON.stringify(this.tokenData));
@@ -138,7 +132,7 @@ export class AuthServices {
           data => {
             this.tokenData = data.json();
             this.authenticated = true;
-            this.userData = AuthServices.decodeAccessToken(this.tokenData.access_token);
+            this.userData = this.tokenData.access_token;
             this.tokenExpirationDate = new Date(this.userData.exp * 1000);
           },
           err => {

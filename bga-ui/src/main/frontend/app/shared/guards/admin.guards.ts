@@ -4,7 +4,7 @@ import {Injectable} from '@angular/core';
 
 
 @Injectable()
-export class AdminGuard implements CanActivate {
+export class AdminGuards implements CanActivate {
   constructor(private authService: AuthServices, private router: Router) {
   }
 
