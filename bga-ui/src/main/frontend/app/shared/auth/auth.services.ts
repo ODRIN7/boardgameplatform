@@ -1,10 +1,11 @@
 import {Injectable} from "@angular/core";
 import {Http, Headers} from "@angular/http";
 import {User} from "../common/user";
+import {AppMenuItem} from "../../app.menu";
 
 
 @Injectable()
-export class AuthServices {
+export class AuthService {
 
   private authenticated: boolean = false;
   private tokenExpirationDate: Date = null;
@@ -64,7 +65,7 @@ export class AuthServices {
           data => {
             this.tokenData = data.json();
             this.authenticated = true;
-            this.userData = AuthServices.decodeAccessToken(this.tokenData.access_token);
+            this.userData = AuthService.decodeAccessToken(this.tokenData.access_token);
             this.tokenExpirationDate = new Date(this.userData.exp * 1000);
             resolve('OK');
             localStorage.setItem('tokenData', JSON.stringify(this.tokenData));
@@ -183,25 +184,15 @@ export class AuthServices {
     }
   }
 
-  // private fetchUserData() {
-  //   this.http.get('/api/user', {headers: this.getAuthorizationHeaders()})
-  //       .subscribe(
-  //           data => {
-  //             this.userData = data.json();
-  //           },
-  //           err => this.authenticated = false
-  //       );
-  // }
-
-  // public canView(view: AppMenuItem): boolean {
-  //   let ok = false;
-  //   if (!view.roles) {
-  //    ok = true;
-  //  } else {
-  //    ok = this.hasAnyRole(view.roles);
-  //  }
-  //  return ok;
-  // }
+  public canView(view: AppMenuItem): boolean {
+    let ok = false;
+    if (!view.roles) {
+     ok = true;
+   } else {
+     ok = this.hasAnyRole(view.roles);
+   }
+   return ok;
+  }
 
 }
 

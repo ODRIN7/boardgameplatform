@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthServices} from '../shared/auth/auth.services';
+import {AuthService} from '../shared/auth/auth.services';
 import {Router} from '@angular/router';
 
 @Component({
@@ -14,7 +14,7 @@ export class LoginComponent implements OnInit {
   private password;
   private message;
 
-  constructor(public authService: AuthServices, public router: Router) {
+  constructor(public authService: AuthService, public router: Router) {
   }
 
   logMeIn() {

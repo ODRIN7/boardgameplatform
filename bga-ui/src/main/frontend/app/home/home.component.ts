@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {AuthServices} from "../shared/auth/auth.services";
+import {AuthService} from "../shared/auth/auth.services";
 
 @Component({
   selector: 'bga-home',
@@ -7,7 +7,7 @@ import {AuthServices} from "../shared/auth/auth.services";
 })
 export class HomeComponent {
 
-  constructor( public authService: AuthServices) {
+  constructor( public authService: AuthService) {
 
   }
 

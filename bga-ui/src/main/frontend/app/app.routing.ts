@@ -9,8 +9,13 @@ import {SignupComponent} from "./signup/sign.up.component";
 const APP_ROUTES: Routes = [
   {
     path: '',
-    redirectTo: '/recipes',
-    pathMatch: 'full'
+    pathMatch: 'prefix',
+    redirectTo: 'home'
+  },
+  {
+    path: 'home',
+    pathMatch: 'prefix',
+    component: HomeComponent
   },
   {
     path: 'recipes',
@@ -22,18 +27,14 @@ const APP_ROUTES: Routes = [
     component: ShoppingListComponent
   },
   {
-    path: 'home',
-    component: HomeComponent
-  },
-  {
-    path: 'login',
+    path: 'singIn',
     component: LoginComponent
   },
   {
-    path: 'signup',
+    path: 'signUp',
     component: SignupComponent
   }
 
 ];
 
-export const routing = RouterModule.forRoot(APP_ROUTES);
+export const AppRoutingModule = RouterModule.forRoot(APP_ROUTES);

@@ -1,6 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {FormGroup} from "@angular/forms";
-import {AuthServices} from "../shared/auth/auth.services";
+import {AuthService} from "../shared/auth/auth.services";
 import {Router} from "@angular/router";
 
 
@@ -14,7 +14,7 @@ export class SignupComponent implements OnInit {
   private password;
   private message;
 
-  constructor(public authService: AuthServices, public router: Router) {
+  constructor(public authService: AuthService, public router: Router) {
   }
 
   onSignUp() {
