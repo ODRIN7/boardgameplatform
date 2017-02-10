@@ -4,6 +4,7 @@ import {ShoppingListComponent} from "./shopping-list/shopping-list.component";
 import {RECIPE_ROUTES} from "./recipes/recipes.routes";
 import {HomeComponent} from "./home/home.component";
 import {LoginComponent} from "./login/login.component";
+import {SignupComponent} from "./signup/sign.up.component";
 
 const APP_ROUTES: Routes = [
   {
@@ -30,7 +31,7 @@ const APP_ROUTES: Routes = [
   },
   {
     path: 'signup',
-    component: LoginComponent
+    component: SignupComponent
   }
 
 ];

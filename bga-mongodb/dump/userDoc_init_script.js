@@ -2,9 +2,8 @@ print('user creates init script start');
 
 db.users.insert(
   {
-    "id": 100000,
-    "username": "user1",
-    "password": "pwd1"
+    "username": "username0",
+    "password": "password0"
   },
   {upsert: true}
 );

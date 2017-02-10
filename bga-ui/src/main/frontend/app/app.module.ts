@@ -21,6 +21,7 @@ import {NotFoundComponent} from "./not-found/not-found.component";
 import {HomeComponent} from "./home/home.component";
 import {AuthServices} from "./shared/auth/auth.services";
 import {LoginComponent} from "./login/login.component";
+import {SignupComponent} from "./signup/sign.up.component";
 import {
   MdInputModule,
   MdIconModule,
@@ -46,7 +47,6 @@ import {
   MdSnackBarModule
 } from '@angular/material';
 
-
 @NgModule({
   declarations: [
     BGAMyAppComponent,
@@ -62,7 +62,8 @@ import {
     RecipeEditComponent,
     NotFoundComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    SignupComponent
   ],
   imports: [
     BrowserModule,

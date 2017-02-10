@@ -15,6 +15,7 @@ bga-ui/target/
 bga-gateway/target/
 bga-config/target/
 target/image_info.json
+configs
 
 ### node
 npm-debug.log

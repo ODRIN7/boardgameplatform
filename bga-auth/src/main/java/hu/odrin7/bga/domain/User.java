@@ -9,9 +9,8 @@ import java.util.List;
 @Document(collection = "users")
 public class User implements UserDetails {
 
-    @Id
-    private Long id;
 
+    @Id
     private String username;
 
     private String password;
@@ -44,15 +43,6 @@ public class User implements UserDetails {
     public void setAuthority(List<Authority> authority) {
         this.authority = authority;
     }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
 
     @Override
     public boolean isAccountNonExpired() {

@@ -24,6 +24,9 @@ var AuthServices = (function () {
             }
         }
     }
+    AuthServices.decodeAccessToken = function (access_token) {
+        return JSON.parse(window.atob(access_token.split('.')[1]));
+    };
     AuthServices.prototype.isAuthenticated = function () {
         this.checkTokenExpirationDate();
         return this.authenticated;
@@ -38,8 +41,9 @@ var AuthServices = (function () {
             if (!password.trim()) {
                 reject('Password cannot be blank');
             }
-            var basicAuthHeader = 'YXBpLXNlcnZpY2U6';
-            var grant_type = 'client_credentials&refresh_token';
+            var basicAuthHeader = btoa("ui-service:ui-service");
+            ;
+            var grant_type = 'password';
             var headers = new http_1.Headers();
             headers.append('Authorization', "Basic  " + basicAuthHeader);
             headers.append('Accept', "application/json");
@@ -47,11 +51,11 @@ var AuthServices = (function () {
             var payload = 'username=' + encodeURIComponent(username) + '&password='
                 + encodeURIComponent(password) + '&grant_type=' + grant_type;
             _this.http
-                .post('uaa/oauth/token', payload, { headers: headers })
+                .post('oauth/token', payload, { headers: headers })
                 .subscribe(function (data) {
                 _this.tokenData = data.json();
                 _this.authenticated = true;
-                _this.userData = _this.tokenData.access_token;
+                _this.userData = AuthServices.decodeAccessToken(_this.tokenData.access_token);
                 _this.tokenExpirationDate = new Date(_this.userData.exp * 1000);
                 resolve('OK');
                 localStorage.setItem('tokenData', JSON.stringify(_this.tokenData));
@@ -61,7 +65,7 @@ var AuthServices = (function () {
             });
         });
     };
-    AuthServices.prototype.tryCreateUser = function (username, password) {
+    AuthServices.prototype.registration = function (username, password) {
         var _this = this;
         return new Promise(function (resolve, reject) {
             if (!username.trim()) {
@@ -70,15 +74,18 @@ var AuthServices = (function () {
             if (!password.trim()) {
                 reject('Password cannot be blank');
             }
-            var basicAuthHeader = btoa("acme:acmesecret");
+            var basicAuthHeader = btoa("ui-service:ui-service");
+            var authorization = "authorization";
             var headers = new http_1.Headers();
             headers.append('Authorization', "Basic  " + basicAuthHeader);
             headers.append('Accept', "application/json");
             headers.append('Content-Type', "application/x-www-form-urlencoded");
-            var payload = 'username=' + encodeURIComponent(username) + '&password='
-                + encodeURIComponent(password) + '&grant_type=password';
+            var payload = 'username=' + encodeURIComponent(username) +
+                '&password=' + encodeURIComponent(password) +
+                'authorization' + encodeURIComponent(authorization) +
+                '&grant_type=client_credentials';
             _this.http
-                .post('/oauth/**', payload, { headers: headers })
+                .post('/api/**', payload, { headers: headers })
                 .subscribe(function (data) {
                 _this.tokenData = data.json();
                 _this.authenticated = true;
@@ -88,14 +95,14 @@ var AuthServices = (function () {
                 localStorage.setItem('tokenData', JSON.stringify(_this.tokenData));
             }, function (err) {
                 console.log(err);
-                reject('Username and password doesn\'t match');
+                reject('Cannot registration');
             });
         });
     };
     AuthServices.prototype.refreshToken = function () {
         var _this = this;
         if (this.isAuthenticated()) {
-            var basicAuthHeader = btoa("acme:acmesecret");
+            var basicAuthHeader = btoa("ui-service:ui-service");
             var headers = new http_1.Headers();
             headers.append('Authorization', "Basic  " + basicAuthHeader);
             headers.append('Accept', "application/json");
@@ -141,15 +148,6 @@ var AuthServices = (function () {
         });
         return ok;
     };
-    // public canView(view: AppMenuItem): boolean {
-    //   let ok = false;
-    //   if (!view.roles) {
-    //    ok = true;
-    //  } else {
-    //    ok = this.hasAnyRole(view.roles);
-    //  }
-    //  return ok;
-    // }
     AuthServices.prototype.getAuthorizationHeaders = function () {
         var authorizationHeaders = new http_1.Headers();
         if (this.authenticated) {

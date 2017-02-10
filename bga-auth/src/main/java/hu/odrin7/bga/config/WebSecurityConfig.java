@@ -11,17 +11,22 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+@SuppressWarnings("SpringFacetCodeInspection")
 @Configuration
 @EnableWebSecurity
-public  class   WebSecurityConfig extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private final MongoUserDetailsService mongoUserDetailsService;
 
     @SuppressWarnings("SpringJavaAutowiringInspection")
     @Autowired
-    MongoUserDetailsService mongoUserDetailsService;
+    public WebSecurityConfig(MongoUserDetailsService mongoUserDetailsService) {
+        this.mongoUserDetailsService = mongoUserDetailsService;
+    }
 
     @Bean()
     @Override
-    public  AuthenticationManager authenticationManagerBean() throws Exception {
+    public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
 

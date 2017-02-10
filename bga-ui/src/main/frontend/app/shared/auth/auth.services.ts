@@ -9,6 +9,10 @@ export class AuthServices {
   private tokenExpirationDate: Date = null;
   private userData: any = null;
 
+  public static decodeAccessToken(access_token: string) {
+    return JSON.parse(window.atob(access_token.split('.')[1]));
+  }
+
   // @LocalStorage()
   private tokenData: Oauth2TokenData;
 
@@ -32,48 +36,7 @@ export class AuthServices {
 
   public authenticate(username: string, password: string) {
 
-  console.log('Authentication pending...');
-
-  return new Promise<string>((resolve, reject) => {
-
-    if (!username.trim()) {
-      reject('Username cannot be blank');
-    }
-    if (!password.trim()) {
-      reject('Password cannot be blank');
-    }
-    let basicAuthHeader = 'YXBpLXNlcnZpY2U6';
-    let grant_type = 'client_credentials&refresh_token';
-
-    let headers = new Headers();
-    headers.append('Authorization', `Basic  ${basicAuthHeader}`);
-    headers.append('Accept', `application/json`);
-    headers.append('Content-Type', `application/x-www-form-urlencoded`);
-
-    let payload = 'username=' + encodeURIComponent(username) + '&password='
-      + encodeURIComponent(password) +  '&grant_type=' + grant_type;
-
-    this.http
-      .post('uaa/oauth/token', payload, {headers: headers})
-      .subscribe(
-        data => {
-          this.tokenData = data.json();
-          this.authenticated = true;
-          this.userData = this.tokenData.access_token;
-          this.tokenExpirationDate = new Date(this.userData.exp * 1000);
-          resolve('OK');
-          localStorage.setItem('tokenData', JSON.stringify(this.tokenData));
-        },
-        err => {
-          console.log(err);
-          reject('Username and password doesn\'t match');
-        }
-      );
-
-  });
-}
-
-  public tryCreateUser(username: string, password: string): Promise<string> {
+    console.log('Authentication pending...');
 
     return new Promise<string>((resolve, reject) => {
 
@@ -83,8 +46,9 @@ export class AuthServices {
       if (!password.trim()) {
         reject('Password cannot be blank');
       }
-
-      let basicAuthHeader = btoa(`acme:acmesecret`);
+      let basicAuthHeader = btoa(`ui-service:ui-service`);
+      ;
+      let grant_type = 'password';
 
       let headers = new Headers();
       headers.append('Authorization', `Basic  ${basicAuthHeader}`);
@@ -92,15 +56,15 @@ export class AuthServices {
       headers.append('Content-Type', `application/x-www-form-urlencoded`);
 
       let payload = 'username=' + encodeURIComponent(username) + '&password='
-        + encodeURIComponent(password) + '&grant_type=password';
+        + encodeURIComponent(password) + '&grant_type=' + grant_type;
 
       this.http
-        .post('/oauth/**', payload, {headers: headers})
+        .post('oauth/token', payload, {headers: headers})
         .subscribe(
           data => {
             this.tokenData = data.json();
             this.authenticated = true;
-            this.userData = this.tokenData.access_token;
+            this.userData = AuthServices.decodeAccessToken(this.tokenData.access_token);
             this.tokenExpirationDate = new Date(this.userData.exp * 1000);
             resolve('OK');
             localStorage.setItem('tokenData', JSON.stringify(this.tokenData));
@@ -114,10 +78,54 @@ export class AuthServices {
     });
   }
 
+  public registration(username: string, password: string): Promise<string> {
+
+    return new Promise<string>((resolve, reject) => {
+
+      if (!username.trim()) {
+        reject('Username cannot be blank');
+      }
+      if (!password.trim()) {
+        reject('Password cannot be blank');
+      }
+
+      let basicAuthHeader = btoa(`ui-service:ui-service`);
+      let authorization = "authorization";
+
+      let headers = new Headers();
+      headers.append('Authorization', `Basic  ${basicAuthHeader}`);
+      headers.append('Accept', `application/json`);
+      headers.append('Content-Type', `application/x-www-form-urlencoded`);
+
+      let payload = 'username=' + encodeURIComponent(username) +
+        '&password=' + encodeURIComponent(password) +
+        'authorization' + encodeURIComponent(authorization) +
+        '&grant_type=client_credentials';
+
+      this.http
+        .post('/api/**', payload, {headers: headers})
+        .subscribe(
+          data => {
+            this.tokenData = data.json();
+            this.authenticated = true;
+            this.userData = this.tokenData.access_token;
+            this.tokenExpirationDate = new Date(this.userData.exp * 1000);
+            resolve('OK');
+            localStorage.setItem('tokenData', JSON.stringify(this.tokenData));
+          },
+          err => {
+            console.log(err);
+            reject('Cannot registration');
+          }
+        );
+
+    });
+  }
+
   public refreshToken() {
     if (this.isAuthenticated()) {
 
-      let basicAuthHeader = btoa(`acme:acmesecret`);
+      let basicAuthHeader = btoa(`ui-service:ui-service`);
 
       let headers = new Headers();
       headers.append('Authorization', `Basic  ${basicAuthHeader}`);
@@ -143,7 +151,7 @@ export class AuthServices {
   }
 
   public logout(): any {
-    this.tokenData =  new Oauth2TokenData();
+    this.tokenData = new Oauth2TokenData();
     this.userData = null;
     this.authenticated = false;
     this.tokenExpirationDate = null;
@@ -174,16 +182,6 @@ export class AuthServices {
     return ok;
   }
 
- // public canView(view: AppMenuItem): boolean {
- //   let ok = false;
- //   if (!view.roles) {
-  //    ok = true;
-  //  } else {
-  //    ok = this.hasAnyRole(view.roles);
-  //  }
-  //  return ok;
- // }
-
   public getAuthorizationHeaders(): Headers {
     let authorizationHeaders = new Headers();
     if (this.authenticated) {
@@ -207,6 +205,16 @@ export class AuthServices {
   //           },
   //           err => this.authenticated = false
   //       );
+  // }
+
+  // public canView(view: AppMenuItem): boolean {
+  //   let ok = false;
+  //   if (!view.roles) {
+  //    ok = true;
+  //  } else {
+  //    ok = this.hasAnyRole(view.roles);
+  //  }
+  //  return ok;
   // }
 
 }
