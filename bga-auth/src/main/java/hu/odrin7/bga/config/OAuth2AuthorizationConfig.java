@@ -46,7 +46,13 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
             .authorizedGrantTypes("implicit", "authorization_code", "refresh_token", "password")
             .accessTokenValiditySeconds(600)
             .scopes("openid")
-            .autoApprove(true);
+            .autoApprove(true)
+            .and()
+            .withClient("boardgame-service")
+            .secret("boardgame-service")
+            .authorities("ROLE_TRUSTED_CLIENT")
+            .authorizedGrantTypes("client_credentials", "refresh_token")
+            .scopes("server");
 
     }
 

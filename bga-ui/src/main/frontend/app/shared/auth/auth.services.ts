@@ -1,5 +1,6 @@
-import {Injectable} from '@angular/core';
-import {Http, Headers} from '@angular/http';
+import {Injectable} from "@angular/core";
+import {Http, Headers} from "@angular/http";
+import {User} from "../common/user";
 
 
 @Injectable()
@@ -13,7 +14,6 @@ export class AuthServices {
     return JSON.parse(window.atob(access_token.split('.')[1]));
   }
 
-  // @LocalStorage()
   private tokenData: Oauth2TokenData;
 
   constructor(public http: Http) {
@@ -47,7 +47,7 @@ export class AuthServices {
         reject('Password cannot be blank');
       }
       let basicAuthHeader = btoa(`ui-service:ui-service`);
-      ;
+
       let grant_type = 'password';
 
       let headers = new Headers();
@@ -89,30 +89,16 @@ export class AuthServices {
         reject('Password cannot be blank');
       }
 
-      let basicAuthHeader = btoa(`ui-service:ui-service`);
       let authorization = "authorization";
 
       let headers = new Headers();
-      headers.append('Authorization', `Basic  ${basicAuthHeader}`);
       headers.append('Accept', `application/json`);
-      headers.append('Content-Type', `application/x-www-form-urlencoded`);
 
-      let payload = 'username=' + encodeURIComponent(username) +
-        '&password=' + encodeURIComponent(password) +
-        'authorization' + encodeURIComponent(authorization) +
-        '&grant_type=client_credentials';
+      let payload = new User(username, password, [], null);
 
       this.http
-        .post('/api/**', payload, {headers: headers})
+        .post('', payload, {headers: headers})
         .subscribe(
-          data => {
-            this.tokenData = data.json();
-            this.authenticated = true;
-            this.userData = this.tokenData.access_token;
-            this.tokenExpirationDate = new Date(this.userData.exp * 1000);
-            resolve('OK');
-            localStorage.setItem('tokenData', JSON.stringify(this.tokenData));
-          },
           err => {
             console.log(err);
             reject('Cannot registration');
@@ -157,8 +143,8 @@ export class AuthServices {
     this.tokenExpirationDate = null;
   }
 
-  public getUserData(): any {
-    return this.userData;
+  public getUserData(): User {
+    return User.toUser(this.userData);
   }
 
   public getTokenExpirationDate(): Date {
@@ -167,7 +153,7 @@ export class AuthServices {
 
   public hasRole(role: string): boolean {
     if (this.isAuthenticated()) {
-      return this.getUserData()['authorities'].indexOf(role) >= 0;
+      return this.getUserData().authorities.indexOf(role) >= 0;
     }
     return false;
   }

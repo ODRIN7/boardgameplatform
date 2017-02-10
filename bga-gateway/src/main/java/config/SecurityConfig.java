@@ -17,7 +17,7 @@ import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 @Configuration
 @EnableResourceServer
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true,securedEnabled = true)
+@EnableGlobalMethodSecurity(prePostEnabled = false,securedEnabled = false)
 public class SecurityConfig implements ResourceServerConfigurer {
 
     @Override
@@ -37,7 +37,28 @@ public class SecurityConfig implements ResourceServerConfigurer {
             .and()
             .authorizeRequests()
             .antMatchers("/api/**").permitAll()
-            .anyRequest().authenticated()
+            .antMatchers("/test").authenticated()
+
+            .antMatchers("/actuator").permitAll()
+            .antMatchers("/autoconfig").permitAll()
+            .antMatchers("/beans").permitAll()
+            .antMatchers("/configprops").permitAll()
+            .antMatchers("/dump").permitAll()
+            .antMatchers("/env").permitAll()
+            .antMatchers("/flyway").permitAll()
+            .antMatchers("/health").permitAll()
+            .antMatchers("/info").permitAll()
+            .antMatchers("/liquibase").permitAll()
+            .antMatchers("/metrics").permitAll()
+            .antMatchers("/mappings").permitAll()
+            .antMatchers("/shutdown").denyAll()
+            .antMatchers("/trace").permitAll()
+            .antMatchers("/docs").permitAll()
+            .antMatchers("/heapdump").permitAll()
+            .antMatchers("/jolokia").permitAll()
+            .antMatchers("/logfile").permitAll()
+
+            .anyRequest().permitAll()
             .and()
             .csrf().disable()
             .exceptionHandling()

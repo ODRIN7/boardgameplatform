@@ -5,5 +5,5 @@
   <span>{{ name }}</span>
   <span class="fill"></span>
   <span class="user-info"
-        *ngIf="authService.isAuthenticated()">Current user: {{ authService.getUserData().user_name }}</span>
+        *ngIf="authService.isAuthenticated()">Current user: {{ authService.getUserData().username }}</span>
 </div>
