@@ -11,13 +11,11 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 
-/**
- * Created by Tarun Sukhu
- */
+
 @Configuration
 @EnableResourceServer
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = false,securedEnabled = false)
+@EnableGlobalMethodSecurity(prePostEnabled = true,securedEnabled = true)
 public class SecurityConfig implements ResourceServerConfigurer {
 
     @Override

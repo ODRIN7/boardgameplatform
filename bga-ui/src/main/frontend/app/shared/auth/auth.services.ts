@@ -94,10 +94,10 @@ export class AuthServices {
       let headers = new Headers();
       headers.append('Accept', `application/json`);
 
-      let payload = new User(username, password, [], null);
+      let payload = new User(username, password);
 
       this.http
-        .post('', payload, {headers: headers})
+        .post('/api/', payload, {headers: headers})
         .subscribe(
           err => {
             console.log(err);
@@ -153,7 +153,7 @@ export class AuthServices {
 
   public hasRole(role: string): boolean {
     if (this.isAuthenticated()) {
-      return this.getUserData().authorities.indexOf(role) >= 0;
+      return this.getUserData().getauthorities().indexOf(role) >= 0;
     }
     return false;
   }
