@@ -1,7 +1,7 @@
 package hu.odrin7.bga.domain.game;
 
-/**
- * Created by ODRIN7_asus on 2017. 02. 11..
- */
-public interface GameRepository {
+import hu.odrin7.bga.domain.boardgame.BoardGame;
+import org.springframework.data.repository.CrudRepository;
+
+public interface GameRepository extends CrudRepository<Game,Long> {
 }

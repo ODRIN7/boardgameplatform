@@ -1,7 +1,9 @@
 package hu.odrin7.bga.domain.statistics;
 
-/**
- * Created by ODRIN7_asus on 2017. 02. 11..
- */
+import hu.odrin7.bga.domain.user.User;
+import org.springframework.data.annotation.Id;
+
 public class Statistics {
+    @Id
+    private String id;
 }

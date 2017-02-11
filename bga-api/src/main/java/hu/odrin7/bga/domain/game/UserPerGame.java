@@ -1,7 +1,12 @@
 package hu.odrin7.bga.domain.game;
 
-/**
- * Created by ODRIN7_asus on 2017. 02. 11..
- */
+import hu.odrin7.bga.domain.user.User;
+import org.springframework.data.annotation.Id;
+
 public class UserPerGame {
+
+    @Id
+    private String id;
+
+    private User user;
 }

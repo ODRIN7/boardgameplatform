@@ -1,7 +1,13 @@
 package hu.odrin7.bga.service;
 
-/**
- * Created by ODRIN7_asus on 2017. 02. 11..
- */
+import hu.odrin7.bga.domain.blog.BlogPost;
+
+import java.util.List;
+
 public interface StatisticsService {
+
+    void fillData();
+    List<BlogPost> getPosts();
+    BlogPost savePost(BlogPost blogPost);
+    BlogPost deletePost(Long postId);
 }

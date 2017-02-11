@@ -1,7 +1,22 @@
 package hu.odrin7.bga.domain.game;
 
-/**
- * Created by ODRIN7_asus on 2017. 02. 11..
- */
+import hu.odrin7.bga.domain.boardgame.BoardGame;
+import hu.odrin7.bga.domain.user.User;
+import org.springframework.data.annotation.Id;
+
+import java.util.List;
+
+
 public class Game {
+
+    @Id
+    private String id;
+    private BoardGame boardGame;
+    private List<UserPerGame> userPerGame;
+    private Status status;
+    public User getWinner(){
+        return null;
+    }
+
+
 }
