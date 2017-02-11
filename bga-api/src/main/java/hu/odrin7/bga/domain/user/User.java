@@ -15,8 +15,13 @@ public class User {
     @Length(min = 6, max = 40)
     private String password;
 
+    private List<Role> authority;
 
-    private List<Role> roles;
+    public User(String username, String password, List<Role> authority) {
+        this.username = username;
+        this.password = password;
+        this.authority = authority;
+    }
 
     public String getUsername() {
         return username;
@@ -34,11 +39,11 @@ public class User {
         this.password = password;
     }
 
-    public List<Role> getRoles() {
-        return roles;
+    public List<Role> getAuthority() {
+        return authority;
     }
 
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
+    public void setAuthority(List<Role> authority) {
+        this.authority = authority;
     }
 }

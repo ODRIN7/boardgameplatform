@@ -3,8 +3,6 @@ package hu.odrin7.bga.Controller;
 
 import hu.odrin7.bga.domain.blog.BlogPost;
 import hu.odrin7.bga.service.BlogPostService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,13 +12,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/posts")
-//@PreAuthorize(value = "hasRole('ROLE_USER')")
 public class BlogPostRestController {
-
-    private static final Logger log = LoggerFactory.getLogger(BlogPostRestController.class);
 
     @Autowired
     private BlogPostService blogPostService;
+
+    public BlogPostRestController() {
+    }
 
     @PostConstruct
     public void fillData() {

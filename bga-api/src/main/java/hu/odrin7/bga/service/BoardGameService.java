@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface BoardGameService {
 
+    void fillData();
     List<BoardGame> getBoardGames();
     BoardGame saveBoardGame(BoardGame boardGame);
     BoardGame deleteBoardGame(Long postId);

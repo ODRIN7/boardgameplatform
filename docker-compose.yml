@@ -106,10 +106,12 @@ services:
     depends_on:
        - discovery-service
        - auth-service
+       - api-mongodb
     links:
        - discovery-service
        - auth-service
        - config-service
+       - api-mongodb
     restart: always
     logging:
       options:

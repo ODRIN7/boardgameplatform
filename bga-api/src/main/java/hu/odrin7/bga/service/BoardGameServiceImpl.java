@@ -22,6 +22,21 @@ public class BoardGameServiceImpl implements BoardGameService {
     @Autowired
     private BoardGameRepository  boardGameRepository;
 
+    public BoardGameServiceImpl() {
+    }
+
+    @Override
+    public void fillData() {
+        List<BoardGame> boardGames = this.getBoardGames();
+        if (boardGames.isEmpty()) {
+            for (int i = 1; i <= 10; i++) {
+                BoardGame boardGame = new BoardGame("Sample blog post title #" + i, "Sample blog post content #" + i,""," ");
+                boardGameRepository.save(boardGame);
+                log.warn(boardGame.toString());
+            }
+        }
+    }
+
     @Override
     public List<BoardGame> getBoardGames() {
         return Lists.newArrayList(boardGameRepository.findAll());

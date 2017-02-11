@@ -17,6 +17,9 @@ public class BlogPostServiceImpl implements BlogPostService {
     @Autowired
     private BlogPostRepository blogPostRepository;
 
+    public BlogPostServiceImpl() {
+    }
+
     @Override
     public void fillData() {
         List<BlogPost> posts = this.getPosts();

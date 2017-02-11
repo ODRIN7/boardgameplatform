@@ -1,6 +1,5 @@
 package hu.odrin7.bga.domain.boardgame;
 
-import com.google.common.base.Objects;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -57,14 +56,12 @@ public class BoardGame {
     }
 
 
-
     @Override
     public String toString() {
-        return Objects.toStringHelper(this)
-            .add("id", id)
-            .add("name", name)
-            .add("shortDescription", shortDescription)
-            .add("rule", rule)
-            .toString();
+        return "BlogPost{" +
+            "id=" + id +
+            ", title='" + name + '\'' +
+            ", content='" + name + '\'' +
+            '}';
     }
 }
