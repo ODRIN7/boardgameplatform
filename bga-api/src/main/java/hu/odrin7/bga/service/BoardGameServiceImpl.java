@@ -1,6 +1,8 @@
 package hu.odrin7.bga.service;
 
+import com.google.common.collect.Lists;
 import hu.odrin7.bga.client.AuthServiceClient;
+import hu.odrin7.bga.domain.blog.BlogPost;
 import hu.odrin7.bga.domain.boardgame.BoardGame;
 import hu.odrin7.bga.domain.user.User;
 import hu.odrin7.bga.domain.boardgame.BoardGameRepository;
@@ -10,36 +12,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
+import java.util.List;
+
 @Service
 public class BoardGameServiceImpl implements BoardGameService {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    private AuthServiceClient authServiceClient;
-
-    @Autowired
-    private BoardGameRepository repository;
+    private BoardGameRepository  boardGameRepository;
 
     @Override
-    public void create(BoardGame boardGame) {
-
-        BoardGame existing = repository.findOne(boardGame.getId());
-        Assert.isNull(existing, "boardGame already exists: " + boardGame.getId());
-
-        repository.save(boardGame);
-
-        log.info("new boardGame has been created: {}", boardGame.getId());
+    public List<BoardGame> getBoardGames() {
+        return Lists.newArrayList(boardGameRepository.findAll());
     }
 
     @Override
-    public String getBoardGames() {
-        return "hello boardgames";
+    public BoardGame saveBoardGame(BoardGame boardGame) {
+        return boardGameRepository.save(boardGame);
     }
 
     @Override
-    public void createUser(User user) {
-        authServiceClient.createUser(user);
+    public BoardGame deleteBoardGame(Long postId) {
+        BoardGame boardGame = boardGameRepository.findOne(postId);
+        if (boardGame != null) {
+            boardGameRepository.delete(boardGame);
+        }
+        return boardGame;
     }
 
 

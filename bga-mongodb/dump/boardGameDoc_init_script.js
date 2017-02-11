@@ -1,19 +1,9 @@
 print('board game create script start');
 
-db.boardgames.insert(
-  {
-    "_id": "1001",
-    "id": 100,
-    "shortDescription": "demo boardgame1"
-  },
+db.boardGames.insert(
   { upsert: true }
 );
 db.blogPosts.insert(
-  {
-    _id: "blogPosts",
-    title: "title",
-    content: "content"
-  },
   {upsert: true}
 );
 db.sequence.insert(

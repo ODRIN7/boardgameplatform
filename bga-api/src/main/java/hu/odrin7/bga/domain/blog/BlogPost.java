@@ -12,6 +12,9 @@ public class BlogPost {
     private String title;
     private String content;
 
+    public BlogPost() {
+    }
+
     public BlogPost(String title, String content) {
         this.title = title;
         this.content = content;
