@@ -66,6 +66,7 @@ public class BGAApiApplication extends ResourceServerConfigurerAdapter {
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
             .antMatchers("/" , "/demo").permitAll()
+            .antMatchers("/boardgames/**", "/posts/**").permitAll()
             .anyRequest().authenticated();
     }
 }

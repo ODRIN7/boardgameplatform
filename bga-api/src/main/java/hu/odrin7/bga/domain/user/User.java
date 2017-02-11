@@ -17,6 +17,9 @@ public class User {
 
     private List<Role> authority;
 
+    public User() {
+    }
+
     public User(String username, String password, List<Role> authority) {
         this.username = username;
         this.password = password;

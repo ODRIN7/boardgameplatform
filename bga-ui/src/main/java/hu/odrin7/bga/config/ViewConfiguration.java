@@ -6,9 +6,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by Tomasz Kucharzyk
- */
 @Configuration
 public class ViewConfiguration extends WebMvcConfigurerAdapter{
 

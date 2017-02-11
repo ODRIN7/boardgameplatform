@@ -19,11 +19,6 @@ public class UserForeignController {
     public UserForeignController() {
     }
 
-    @PostConstruct
-    public void fillData() {
-        userService.fillData();
-    }
-
     @RequestMapping(path = "/", method = RequestMethod.POST)
     public void createUser(@Valid @RequestBody User user) {
 
