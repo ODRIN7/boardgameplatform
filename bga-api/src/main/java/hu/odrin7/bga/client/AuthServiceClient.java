@@ -1,6 +1,6 @@
 package hu.odrin7.bga.client;
 
-import hu.odrin7.bga.domain.User;
+import hu.odrin7.bga.domain.user.User;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -57,3 +57,31 @@ export const COMMON_ROOT_MODULES = [
   MdToolbarModule.forRoot(),
   MdTooltipModule.forRoot()
 ];
+
+export const COMMON_CHILD_MODULES = [
+  CommonModule,
+  FormsModule,
+  HttpModule,
+  MdButtonModule,
+  MdButtonToggleModule,
+  MdCardModule,
+  MdCheckboxModule,
+  MdCoreModule,
+  MdDialogModule,
+  MdGridListModule,
+  MdIconModule,
+  MdInputModule,
+  MdListModule,
+  MdMenuModule,
+  MdProgressBarModule,
+  MdProgressCircleModule,
+  MdRadioModule,
+  MdSelectModule,
+  MdSidenavModule,
+  MdSlideToggleModule,
+  MdSliderModule,
+  MdSnackBarModule,
+  MdTabsModule,
+  MdToolbarModule,
+  MdTooltipModule
+];

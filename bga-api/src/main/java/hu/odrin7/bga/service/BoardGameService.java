@@ -1,7 +1,7 @@
 package hu.odrin7.bga.service;
 
-import hu.odrin7.bga.domain.BoardGame;
-import hu.odrin7.bga.domain.User;
+import hu.odrin7.bga.domain.boardgame.BoardGame;
+import hu.odrin7.bga.domain.user.User;
 
 public interface BoardGameService {
 

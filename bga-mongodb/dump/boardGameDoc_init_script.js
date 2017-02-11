@@ -8,5 +8,19 @@ db.boardgames.insert(
   },
   { upsert: true }
 );
-
+db.blogPosts.insert(
+  {
+    _id: "blogPosts",
+    title: "title",
+    content: "content"
+  },
+  {upsert: true}
+);
+db.sequence.insert(
+  {
+    _id: "blogPost",
+    seq: 1
+  },
+  {upsert: true}
+);
 print('board game create script end');

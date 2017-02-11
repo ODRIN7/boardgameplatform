@@ -1,3 +1,4 @@
+import {Role} from "./shared/domain/roles";
 export const APP_MENU: AppMenuItem[] = [
 
   {
@@ -7,28 +8,30 @@ export const APP_MENU: AppMenuItem[] = [
     link: ['']
   },
   {
-    name: 'SignIn',
-    description: 'Login page',
-    icon: 'public',
-    link: ['singIn']
-  },
-  {
-    name: 'SignUP',
-    description: 'Registration page',
-    icon: 'public',
-    link: ['singUp']
+    name: 'Playground',
+    description: 'Playground page',
+    icon: 'casino',
+    link: ['playground']
   },
   {
     name: 'Recipes',
     description: 'Recipes page',
     icon: 'public',
-    link: ['recipes']
+    link: ['recipes'],
+    roles: [Role.ADMIN_ROLE]
   },
   {
     name: 'Shopping List',
     description: 'Shopping List',
     icon: 'public',
     link: ['shopping-list'],
+    roles: [Role.ADMIN_ROLE]
+  },
+  {
+    name: 'Users',
+    description: 'user table',
+    icon: 'public',
+    link: ['users']
   }
 ];
 
@@ -37,5 +40,5 @@ export interface AppMenuItem {
   description: string;
   icon: string;
   link: string[];
-  roles?: string[];
+  roles?: Role[];
 }

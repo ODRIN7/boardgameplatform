@@ -1,9 +1,9 @@
 package hu.odrin7.bga.service;
 
 import hu.odrin7.bga.client.AuthServiceClient;
-import hu.odrin7.bga.domain.BoardGame;
-import hu.odrin7.bga.domain.User;
-import hu.odrin7.bga.repository.BoardGameRepository;
+import hu.odrin7.bga.domain.boardgame.BoardGame;
+import hu.odrin7.bga.domain.user.User;
+import hu.odrin7.bga.domain.boardgame.BoardGameRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

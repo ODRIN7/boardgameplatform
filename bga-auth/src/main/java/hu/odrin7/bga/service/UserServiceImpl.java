@@ -26,7 +26,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void create(User user) {
-        log.info("create user ----------------------------------------------- CREATE USER -------");
+        log.info("create user ----------------------------------------------- CREATE USER ------------");
 		User existing = repository.findOne(user.getUsername());
 		Assert.isNull(existing, "user already exists: " + user.getUsername());
 

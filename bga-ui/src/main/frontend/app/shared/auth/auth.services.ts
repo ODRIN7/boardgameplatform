@@ -1,7 +1,8 @@
 import {Injectable} from "@angular/core";
 import {Http, Headers} from "@angular/http";
-import {User} from "../common/user";
+import {User} from "../domain/user";
 import {AppMenuItem} from "../../app.menu";
+import {Role} from "../domain/roles";
 
 
 @Injectable()
@@ -152,14 +153,14 @@ export class AuthService {
     return this.tokenExpirationDate;
   }
 
-  public hasRole(role: string): boolean {
+  public hasRole(role: Role): boolean {
     if (this.isAuthenticated()) {
       return this.getUserData().getauthorities().indexOf(role) >= 0;
     }
     return false;
   }
 
-  public hasAnyRole(roles: string[]): boolean {
+  public hasAnyRole(roles: Role[]): boolean {
     let ok = false;
     roles.forEach(role => {
       if (this.hasRole(role)) {

@@ -39,7 +39,7 @@ services:
   api-mongodb:
     build: bga-mongodb
     ports:
-      - 26000:27017
+      - 26000:27016
 
 
 

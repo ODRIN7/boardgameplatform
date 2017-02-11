@@ -27,12 +27,17 @@ const APP_ROUTES: Routes = [
     component: ShoppingListComponent
   },
   {
-    path: 'singIn',
+    path: 'signIn',
     component: LoginComponent
   },
   {
     path: 'signUp',
     component: SignupComponent
+  },
+  {
+    path: 'users',
+    pathMatch: 'prefix',
+    loadChildren: 'app/user/user.module#UserModule'
   }
 
 ];
