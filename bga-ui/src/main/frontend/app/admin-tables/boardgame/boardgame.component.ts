@@ -1,14 +1,13 @@
-/* tslint:disable:no-unused-variable */
 import {Component, OnInit} from '@angular/core';
 import {Http} from '@angular/http';
-import {AuthService} from "../shared/auth/auth.services";
+import {AuthService} from "../../shared/auth/auth.services";
 
 @Component({
-  selector: 'bga-users',
-  templateUrl: './user.component.html',
-  styleUrls: ['./user.component.scss']
+  selector: 'bga-boardgame',
+  templateUrl: './boardgame.component.html',
+  styleUrls: ['./boardgame.component.scss']
 })
-export class UserComponent implements OnInit {
+export class BoardGameComponent implements OnInit {
 
   posts: BlogPost[] = [];
 
@@ -61,7 +60,7 @@ export class UserComponent implements OnInit {
   }
 
   private fetchPosts() {
-    this.http.get('/api/posts/', {headers: this.authService.getAuthorizationHeaders()})
+    this.http.get('/api/boardgames/', {headers: this.authService.getAuthorizationHeaders()})
       .subscribe(
         data => {
           this.posts = data.json();
@@ -71,7 +70,7 @@ export class UserComponent implements OnInit {
   }
 
   private savePost(post: BlogPost) {
-    this.http.post(`/api/posts/`, post, {headers: this.authService.getAuthorizationHeaders()})
+    this.http.post(`/api/boardgames/`, post, {headers: this.authService.getAuthorizationHeaders()})
       .subscribe(
         data => {
           console.log('Saved', data.json());
@@ -82,7 +81,7 @@ export class UserComponent implements OnInit {
   }
 
   private deletePost(post: BlogPost) {
-    this.http.delete(`/api/posts/${post.id}`, {headers: this.authService.getAuthorizationHeaders()})
+    this.http.delete(`/api/boardgames/${post.id}`, {headers: this.authService.getAuthorizationHeaders()})
       .subscribe(
         data => {
           console.log('Removed', data.json());

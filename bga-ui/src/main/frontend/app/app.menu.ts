@@ -29,9 +29,39 @@ export const APP_MENU: AppMenuItem[] = [
   },
   {
     name: 'Users',
-    description: 'user table',
+    description: 'CRUD table',
     icon: 'public',
-    link: ['users']
+    link: ['admin/users']
+  },
+  {
+    name: 'Posts',
+    description: 'CRUD table',
+    icon: 'public',
+    link: ['admin/posts']
+  },
+  {
+    name: 'BoardGames',
+    description: 'CRUD table',
+    icon: 'public',
+    link: ['admin/boardgames']
+  },
+  {
+    name: 'Games',
+    description: 'CRUD table',
+    icon: 'public',
+    link: ['admin/games']
+  },
+  {
+    name: 'Statistics',
+    description: 'CRUD table',
+    icon: 'public',
+    link: ['admin/statistics']
+  },
+  {
+    name: 'Notification',
+    description: 'CRUD table',
+    icon: 'public',
+    link: ['admin/notifications']
   }
 ];
 

@@ -70,7 +70,7 @@ services:
 
   auth-mongodb:
     environment:
-      INIT_DUMP: userDoc_init_script.js
+      INIT_DUMP: nothing.js
       MONGODB_NAME: boardGameArena
       MONGODB_ROLE: readWrite
       MONGODB_PASSWORD: odrin7
@@ -121,7 +121,7 @@ services:
 
   api-mongodb:
     environment:
-      INIT_DUMP: boardGameDoc_init_script.js
+      INIT_DUMP: nothing.js
       MONGODB_NAME: boardGameArena
       MONGODB_ROLE: readWrite
       MONGODB_PASSWORD: odrin7

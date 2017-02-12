@@ -64,4 +64,12 @@ public class User implements UserDetails {
         return true;
     }
 
+    public User() {
+    }
+
+    public User(String username, String password, List<Authority> authority) {
+        this.username = username;
+        this.password = password;
+        this.authority = authority;
+    }
 }

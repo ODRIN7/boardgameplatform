@@ -18,15 +18,6 @@ const APP_ROUTES: Routes = [
     component: HomeComponent
   },
   {
-    path: 'recipes',
-    component: RecipesComponent,
-    children: RECIPE_ROUTES
-  },
-  {
-    path: 'shopping-list',
-    component: ShoppingListComponent
-  },
-  {
     path: 'signIn',
     component: LoginComponent
   },
@@ -35,11 +26,19 @@ const APP_ROUTES: Routes = [
     component: SignupComponent
   },
   {
-    path: 'users',
+    path: 'admin',
     pathMatch: 'prefix',
-    loadChildren: 'app/user/user.module#UserModule'
-  }
-
+    loadChildren: 'app/admin-tables/admin-routing.module#ADMIN_ROUTING_MODULE'
+  },
+  {
+    path: 'recipes',
+    component: RecipesComponent,
+    children: RECIPE_ROUTES
+  },
+  {
+    path: 'shopping-list',
+    component: ShoppingListComponent
+  },
 ];
 
 export const AppRoutingModule = RouterModule.forRoot(APP_ROUTES);
