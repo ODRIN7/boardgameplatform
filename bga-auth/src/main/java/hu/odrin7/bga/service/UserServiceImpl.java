@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
                     "username" + i,
                     "password" + i,
                     Collections.singletonList(new Authority(Role.ADMIN_ROLE)));
-                repository.save(user);
+                create(user);
                 log.warn(user.toString());
             }
         }

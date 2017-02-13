@@ -17,51 +17,55 @@ export const APP_MENU: AppMenuItem[] = [
     name: 'Recipes',
     description: 'Recipes page',
     icon: 'public',
-    link: ['recipes'],
-    roles: [Role.ADMIN_ROLE]
+    link: ['recipes']
   },
   {
     name: 'Shopping List',
     description: 'Shopping List',
     icon: 'public',
-    link: ['shopping-list'],
-    roles: [Role.ADMIN_ROLE]
+    link: ['shopping-list']
   },
   {
     name: 'Users',
     description: 'CRUD table',
     icon: 'public',
-    link: ['admin/users']
+    link: ['admin/users'],
+    roles: [Role.ADMIN_ROLE]
   },
   {
     name: 'Posts',
     description: 'CRUD table',
     icon: 'public',
-    link: ['admin/posts']
+    link: ['admin/posts'],
+    roles: [Role.ADMIN_ROLE]
   },
   {
     name: 'BoardGames',
     description: 'CRUD table',
     icon: 'public',
-    link: ['admin/boardgames']
+    link: ['admin/boardgames'],
+    roles: [Role.ADMIN_ROLE]
   },
   {
     name: 'Games',
     description: 'CRUD table',
     icon: 'public',
-    link: ['admin/games']
+    link: ['admin/games'],
+    roles: [Role.ADMIN_ROLE]
   },
   {
     name: 'Statistics',
     description: 'CRUD table',
     icon: 'public',
-    link: ['admin/statistics']
+    link: ['admin/statistics'],
+    roles: [Role.ADMIN_ROLE]
   },
   {
     name: 'Notification',
     description: 'CRUD table',
     icon: 'public',
-    link: ['admin/notifications']
+    link: ['admin/notifications'],
+    roles: [Role.ADMIN_ROLE]
   }
 ];
 
