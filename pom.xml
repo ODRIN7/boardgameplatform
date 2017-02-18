@@ -26,8 +26,8 @@
         <java.version>1.8</java.version>
         <maven-compiler-plugin-version>3.5.1</maven-compiler-plugin-version>
         <frontend-maven-plugin.version>1.0</frontend-maven-plugin.version>
-        <frontend-maven-plugin.node.version>v6.7.0</frontend-maven-plugin.node.version>
-        <frontend-maven-plugin.npm.version>3.10.3</frontend-maven-plugin.npm.version>
+        <frontend-maven-plugin.node.version>v7.0.0</frontend-maven-plugin.node.version>
+        <frontend-maven-plugin.npm.version>3.10.10</frontend-maven-plugin.npm.version>
         <maven.version>3.3.3</maven.version>
         <maven-enforcer-plugin.version>1.4.1</maven-enforcer-plugin.version>
         <spring-cloud-starter-parent.version>Camden.RELEASE</spring-cloud-starter-parent.version>

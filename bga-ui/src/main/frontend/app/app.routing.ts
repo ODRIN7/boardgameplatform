@@ -1,44 +1,43 @@
 import {Routes, RouterModule} from "@angular/router";
-import {RecipesComponent} from "./recipes/recipes.component";
-import {ShoppingListComponent} from "./shopping-list/shopping-list.component";
-import {RECIPE_ROUTES} from "./recipes/recipes.routes";
-import {HomeComponent} from "./home/home.component";
-import {LoginComponent} from "./login/login.component";
-import {SignupComponent} from "./signup/sign.up.component";
+import {LoginComponent} from "./signIn/login.component";
+import {SignUpComponent} from "./signUp/signUp.component";
+import {MainComponent} from "./main/main.component";
 
-const APP_ROUTES: Routes = [
+const routes: Routes = [
   {
-    path: '',
-    pathMatch: 'prefix',
-    redirectTo: 'home'
-  },
-  {
-    path: 'home',
-    pathMatch: 'prefix',
-    component: HomeComponent
-  },
-  {
-    path: 'signIn',
+    path: 'signin',
     component: LoginComponent
   },
   {
-    path: 'signUp',
-    component: SignupComponent
+    path: 'signup',
+    component: SignUpComponent
   },
   {
-    path: 'admin',
-    pathMatch: 'prefix',
-    loadChildren: 'app/admin-tables/admin-routing.module#ADMIN_ROUTING_MODULE'
-  },
-  {
-    path: 'recipes',
-    component: RecipesComponent,
-    children: RECIPE_ROUTES
-  },
-  {
-    path: 'shopping-list',
-    component: ShoppingListComponent
-  },
-];
+    path: '',
+    component: LoginComponent,
+    children: [
+      {
+        component: LoginComponent,
+        path: '',
+      },
+      {
+        path: 'store',
+        component: LoginComponent,
+      },
+      {
+        path: 'arena',
+        component: MainComponent,
+      },
+      {path: 'users', children: [
+        {path: '', component: LoginComponent},
+        {path: 'add', component: LoginComponent},
+        {path: ':id/delete', component: LoginComponent},
+        {path: ':id/edit', component: LoginComponent},
+      ]},
+    ]
+  }
 
-export const AppRoutingModule = RouterModule.forRoot(APP_ROUTES);
+];
+export const appRoutingProviders: any[] = [];
+
+export const appRoutes: any = RouterModule.forRoot(routes, {useHash: true});

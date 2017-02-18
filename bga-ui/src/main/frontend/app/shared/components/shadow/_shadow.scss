@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-@import "../variables";
-@import "../mixins";
+@import "../_variables";
+@import "../_mixins";
 
 .mdl-shadow--2dp {
   @include shadow-2dp();

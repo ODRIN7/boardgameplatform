@@ -1,8 +1,8 @@
 import {Injectable} from "@angular/core";
 import {Http, Headers} from "@angular/http";
 import {User} from "../domain/user";
-import {AppMenuItem} from "../../app.menu";
 import {Role} from "../domain/roles";
+import {AppMenuItem} from "../../main/app.menu";
 
 
 @Injectable()

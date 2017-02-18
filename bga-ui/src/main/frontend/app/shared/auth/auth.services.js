@@ -8,7 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 var user_1 = require("../domain/user");
-var AuthService = (function () {
+var AuthService = AuthService_1 = (function () {
     function AuthService(http) {
         this.http = http;
         this.authenticated = false;
@@ -55,7 +55,7 @@ var AuthService = (function () {
                 .subscribe(function (data) {
                 _this.tokenData = data.json();
                 _this.authenticated = true;
-                _this.userData = AuthService.decodeAccessToken(_this.tokenData.access_token);
+                _this.userData = AuthService_1.decodeAccessToken(_this.tokenData.access_token);
                 _this.tokenExpirationDate = new Date(_this.userData.exp * 1000);
                 resolve('OK');
                 localStorage.setItem('tokenData', JSON.stringify(_this.tokenData));
@@ -158,11 +158,11 @@ var AuthService = (function () {
         }
         return ok;
     };
-    AuthService = __decorate([
-        core_1.Injectable()
-    ], AuthService);
     return AuthService;
 }());
+AuthService = AuthService_1 = __decorate([
+    core_1.Injectable()
+], AuthService);
 exports.AuthService = AuthService;
 var Oauth2TokenData = (function () {
     function Oauth2TokenData() {
@@ -175,3 +175,4 @@ var Oauth2TokenData = (function () {
     }
     return Oauth2TokenData;
 }());
+var AuthService_1;

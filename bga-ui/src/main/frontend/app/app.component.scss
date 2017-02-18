@@ -1,28 +1,30 @@
-[hidden] {
-  display: none;
-}
+/* :host /deep/ lets shadowdom style child elements */
+:host /deep/ {
+  /**
+  * CSS Overrides for bug fixes
+  */
 
-.fill {
-  flex: 1 1 auto;
-}
+  /**
+  * END CSS Overrides for bug fixes
+  */
 
-.user-info {
-  margin-right: 10px;
-  font-size: 0.75em;
-}
-
-.footer {
-  align-items: center;
-  font-size: 1em;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  margin: 25px auto;
-
-  a, a:hover, a:visited {
-    text-decoration: none;
-    color: black;
+  /* Manage list custom styles */
+  .md-sort-item {
+    /deep/ {
+      .md-list-item {
+        padding: 0;
+      }
+    }
   }
-
+  .md-sort-icon {
+    font-size: 15px;
+    margin-right: 10px;
+  }
+  .md-sort-header {
+    padding: 10px;
+    &:hover {
+      background-color: #EEEEEE;
+      cursor: pointer;
+    }
+  }
 }
-

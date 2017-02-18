@@ -2,6 +2,10 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {HttpModule} from "@angular/http";
 import {BrowserModule} from "@angular/platform-browser";
 import {CommonModule} from "@angular/common";
+import { CovalentCoreModule } from '@covalent/core';
+import { CovalentHighlightModule } from '@covalent/highlight';
+import { CovalentMarkdownModule } from '@covalent/markdown';
+import { CovalentChartsModule } from '@covalent/charts';
 import {
   MdInputModule,
   MdIconModule,
@@ -55,7 +59,11 @@ export const COMMON_ROOT_MODULES = [
   MdSnackBarModule.forRoot(),
   MdTabsModule.forRoot(),
   MdToolbarModule.forRoot(),
-  MdTooltipModule.forRoot()
+  MdTooltipModule.forRoot(),
+  CovalentCoreModule.forRoot(),
+  CovalentChartsModule.forRoot(),
+  CovalentHighlightModule.forRoot(),
+  CovalentMarkdownModule.forRoot(),
 ];
 
 export const COMMON_CHILD_MODULES = [
