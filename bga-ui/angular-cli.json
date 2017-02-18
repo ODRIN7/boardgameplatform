@@ -1,7 +1,7 @@
 {
   "project": {
     "version": "1.0.0-beta.17",
-    "name": "shardis-ui"
+    "name": "bga-ui"
   },
   "apps": [
     {
@@ -12,10 +12,11 @@
       "main": "main.ts",
       "test": "test.ts",
       "tsconfig": "tsconfig.json",
-      "prefix": "shardis",
+      "prefix": "app",
       "mobile": false,
       "styles": [
-        "styles.scss"
+        "styles.scss",
+        "theme.scss"
       ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",
@@ -39,6 +40,7 @@
   },
   "defaults": {
     "styleExt": "scss",
-    "prefixInterfaces": false
+    "prefixInterfaces": false,
+    "lazyRoutePrefix": "+"
   }
 }
