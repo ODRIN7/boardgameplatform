@@ -1,0 +1,23 @@
+<md-card>
+  <md-card-title>Recent Games</md-card-title>
+  <md-card-subtitle>Pls try join and try them</md-card-subtitle>
+  <md-divider></md-divider>
+  <md-list class="will-load alert-list">
+    <template tdLoading="alerts.load">
+      <template let-item let-last="last" ngFor [ngForOf]="openGames">
+        <md-list-item layout-align="row">
+          <md-icon md-list-avatar class="bgc-amber-800">{{item.icon}}</md-icon>
+          <h3 md-line> {{item.description}} </h3>
+          <p md-line> {{item.name}} </p>
+        </md-list-item>
+        <md-divider *ngIf="!last" md-inset></md-divider>
+      </template>
+    </template>
+  </md-list>
+  <md-divider></md-divider>
+  <md-card-actions>
+    <a md-button color="accent" class="text-upper" [routerLink]="['/logs']">
+      <span>View More</span>
+    </a>
+  </md-card-actions>
+</md-card>

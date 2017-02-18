@@ -2,6 +2,11 @@ import {Routes, RouterModule} from "@angular/router";
 import {LoginComponent} from "./signIn/login.component";
 import {SignUpComponent} from "./signUp/signUp.component";
 import {MainComponent} from "./main/main.component";
+import {UsersFormComponent} from "./users/+form/form.component";
+import {UsersComponent} from "./users/users.component";
+import {ArenaComponent} from "./arena/arena.component";
+import {StoreComponent} from "./store/store.component";
+import {DashboardComponent} from "./dashboard/dashboard.component";
 
 const routes: Routes = [
   {
@@ -14,25 +19,25 @@ const routes: Routes = [
   },
   {
     path: '',
-    component: LoginComponent,
+    component: MainComponent,
     children: [
       {
-        component: LoginComponent,
+        component: DashboardComponent,
         path: '',
       },
       {
         path: 'store',
-        component: LoginComponent,
+        component: StoreComponent,
       },
       {
         path: 'arena',
-        component: MainComponent,
+        component: ArenaComponent,
       },
       {path: 'users', children: [
-        {path: '', component: LoginComponent},
-        {path: 'add', component: LoginComponent},
-        {path: ':id/delete', component: LoginComponent},
-        {path: ':id/edit', component: LoginComponent},
+        {path: '', component: UsersComponent},
+        {path: 'add', component: UsersFormComponent},
+        {path: ':id/delete', component: UsersFormComponent},
+        {path: ':id/edit', component: UsersFormComponent},
       ]},
     ]
   }

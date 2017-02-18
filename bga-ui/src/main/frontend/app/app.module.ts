@@ -13,6 +13,17 @@ import {AuthService} from "./shared/auth/auth.services";
 import {RequestInterceptor} from "./config/interceptors/request.interceptor";
 import {BGAMyAppComponent} from "./app.component";
 import {MainComponent} from "./main/main.component";
+import {ArenaComponent} from "./arena/arena.component";
+import {FavouriteComponent} from "./dashboard/favourite/favourite.component";
+import {GameBoardComponent} from "./dashboard/gameboard/gameboard.component";
+import {RecentGamesComponent} from "./dashboard/recentgames/recentGames.component";
+import {PageInformationComponent} from "./dashboard/pageinformation/pageinformation.component";
+import {NewsComponent} from "./dashboard/news/news.component";
+import {SignUpComponent} from "./signUp/signUp.component";
+import {UsersFormComponent} from "./users/+form/form.component";
+import {UsersComponent} from "./users/users.component";
+import {DashboardComponent} from "./dashboard/dashboard.component";
+import {StoreComponent} from "./store/store.component";
 
 const httpInterceptorProviders: Type<any>[] = [
   RequestInterceptor,
@@ -20,6 +31,20 @@ const httpInterceptorProviders: Type<any>[] = [
 
 @NgModule({
   declarations: [
+    BGAMyAppComponent,
+    DashboardComponent,
+    UsersComponent,
+    UsersFormComponent,
+    LoginComponent,
+    MainComponent,
+    SignUpComponent,
+    NewsComponent,
+    PageInformationComponent,
+    RecentGamesComponent,
+    GameBoardComponent,
+    FavouriteComponent,
+    StoreComponent,
+    ArenaComponent,
     LoginComponent,
     MainComponent
   ],
