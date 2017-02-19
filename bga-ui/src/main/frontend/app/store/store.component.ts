@@ -1,21 +1,35 @@
-import { Component, AfterViewInit } from '@angular/core';
+import {Component, AfterViewInit, OnInit} from '@angular/core';
 
 import { TdMediaService } from '@covalent/core';
+import {StoreService} from "../shared/services/storeservice";
+import {Boardgame} from "../shared/domain/boardgame";
 
 @Component({
   selector: 'bga-store',
   templateUrl: './store.component.html',
   styleUrls: ['./store.component.scss'],
 })
-export class StoreComponent implements AfterViewInit {
+export class StoreComponent implements AfterViewInit, OnInit {
 
-  constructor(public media: TdMediaService) {
 
+  public boardGames: Boardgame[];
+
+  constructor(public media: TdMediaService,
+  public storeService:StoreService) {
+
+  }
+
+  ngOnInit(): void {
+    this.boardGames = this.storeService.boardGames;
+    this.storeService.boardGamesChanged.subscribe(
+      (boardGames: Boardgame[]) => this.boardGames = boardGames
+    );
   }
 
   ngAfterViewInit(): void {
     // broadcast to all listener observables when loading the page
     this.media.broadcast();
+    this.storeService.fetchData();
   }
 
 }

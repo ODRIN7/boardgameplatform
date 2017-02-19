@@ -1,35 +1,19 @@
-import {Component, HostBinding, Input} from '@angular/core';
-import {slideInDownAnimation} from "../app.animations";
+import {Component, Input, HostBinding} from '@angular/core';
 import {Boardgame} from "../shared/domain/boardgame";
-import {StoreService} from "../shared/services/storeservice";
+import {slideInDownAnimation} from "../app.animations";
 
 
 @Component({
-  selector: 'bga-arena',
-  templateUrl: './arena.component.html',
-  styleUrls: ['./arena.component.scss'],
+  selector: 'bga-arena-item',
+  templateUrl: 'arena-item.component.html',
   animations: [slideInDownAnimation],
 })
-export class ArenaComponent {
-
+export class ArenaItemComponent {
+  @Input() boardGame: Boardgame;
+  @Input() boardGameId: number;
   @HostBinding('@routeAnimation') routeAnimation: boolean = true;
   @HostBinding('class.td-route-animation') classAnimation: boolean = true;
-  public boardGames: Boardgame[];
 
-  constructor(public storeService: StoreService) {
-
-  }
-
-  ngOnInit(): void {
-    this.boardGames = this.storeService.boardGames;
-    this.storeService.boardGamesChanged.subscribe(
-      (boardGames: Boardgame[]) => this.boardGames = boardGames
-    );
-  }
-
-  ngAfterViewInit(): void {
-    this.storeService.fetchData();
-  }
 
 
   expandCollapseExpansion1Msg: string = 'No expanded/collapsed detected yet';
@@ -53,4 +37,5 @@ export class ArenaComponent {
   collapseExpansion1Event(): void {
     this.expandCollapseExpansion1Msg = 'Collapse event emitted.';
   }
+
 }

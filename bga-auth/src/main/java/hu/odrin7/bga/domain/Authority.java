@@ -1,7 +1,9 @@
 package hu.odrin7.bga.domain;
 
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 
+@Document(collection = "authorities")
 public class Authority implements GrantedAuthority {
 
     private Role role;

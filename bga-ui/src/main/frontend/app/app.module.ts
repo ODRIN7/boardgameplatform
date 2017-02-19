@@ -13,7 +13,6 @@ import {AuthService} from "./shared/auth/auth.services";
 import {RequestInterceptor} from "./config/interceptors/request.interceptor";
 import {BGAMyAppComponent} from "./app.component";
 import {MainComponent} from "./main/main.component";
-import {ArenaComponent} from "./arena/arena.component";
 import {FavouriteComponent} from "./dashboard/favourite/favourite.component";
 import {GameBoardComponent} from "./dashboard/gameboard/gameboard.component";
 import {RecentGamesComponent} from "./dashboard/recentgames/recentGames.component";
@@ -23,7 +22,7 @@ import {SignUpComponent} from "./signUp/signUp.component";
 import {UsersFormComponent} from "./users/+form/form.component";
 import {UsersComponent} from "./users/users.component";
 import {DashboardComponent} from "./dashboard/dashboard.component";
-import {StoreComponent} from "./store/store.component";
+import {StoreService} from "./shared/services/storeservice";
 
 const httpInterceptorProviders: Type<any>[] = [
   RequestInterceptor,
@@ -43,8 +42,6 @@ const httpInterceptorProviders: Type<any>[] = [
     RecentGamesComponent,
     GameBoardComponent,
     FavouriteComponent,
-    StoreComponent,
-    ArenaComponent,
     LoginComponent,
     MainComponent
   ],
@@ -66,6 +63,7 @@ const httpInterceptorProviders: Type<any>[] = [
   ],
   providers: [
     AuthService,
+    StoreService,
     appRoutingProviders,
     httpInterceptorProviders,
     Title,

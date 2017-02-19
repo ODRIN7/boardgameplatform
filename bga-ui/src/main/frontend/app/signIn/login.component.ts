@@ -1,6 +1,7 @@
 import {Component} from "@angular/core";
 import {Router} from "@angular/router";
 import {TdLoadingService} from "@covalent/core";
+import {AuthService} from "../shared/auth/auth.services";
 
 @Component({
   selector: 'qs-login',
@@ -11,27 +12,27 @@ export class LoginComponent {
 
   username: string;
   password: string;
+  message: string;
 
   constructor(public router: Router,
-              public loadingService: TdLoadingService) {
+              public authService:AuthService) {
   }
 
-  login(): void {
-    this.loadingService.register();
-    alert('Mock log in as ' + this.username);
-    setTimeout(() => {
-      this.router.navigate(['/']);
-      this.loadingService.resolve();
-    }, 2000);
+  login() {
+    console.log('LogMeIn');
+    this.authService
+      .authenticate(this.username, this.password)
+      .catch(errorMessage => this.message = errorMessage)
+      .then(() => {
+        if (this.authService.isAuthenticated()) {
+          this.router.navigate(['']);
+        }
+      });
+
   }
 
-  loginWithFacebook(): void {
-    this.loadingService.register();
-    alert('Mock log in as ' + this.username);
-    setTimeout(() => {
-      this.router.navigate(['/']);
-      this.loadingService.resolve();
-    }, 2000);
+  ngOnInit(): any {
+    console.log('hello `Login` component');
   }
 
   signUp(): void {

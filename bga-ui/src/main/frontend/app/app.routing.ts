@@ -27,11 +27,11 @@ const routes: Routes = [
       },
       {
         path: 'store',
-        component: StoreComponent,
+        loadChildren: './store/store.module#StoreModule'
       },
       {
         path: 'arena',
-        component: ArenaComponent,
+        loadChildren: './arena/arena.module#ArenaModule'
       },
       {path: 'users', children: [
         {path: '', component: UsersComponent},

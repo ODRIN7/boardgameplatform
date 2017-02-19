@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {Component, OnInit} from "@angular/core";
+import {Router} from "@angular/router";
 import {AuthService} from "./shared/auth/auth.services";
 import {DomSanitizer} from "@angular/platform-browser";
 import {MdIconRegistry} from "@angular/material";
+import {StoreService} from "./shared/services/storeservice";
 
 @Component({
   selector: 'bga-app',
@@ -13,7 +14,9 @@ export class BGAMyAppComponent implements OnInit {
 
   constructor(private _iconRegistry: MdIconRegistry,
               private _domSanitizer: DomSanitizer,
-              public authService: AuthService, public router: Router) {
+              public authService: AuthService,
+              public router: Router,
+              public  storeService: StoreService) {
     this._iconRegistry.addSvgIconInNamespace('assets', 'teradata',
       this._domSanitizer.bypassSecurityTrustResourceUrl('../assets/icons/teradata.svg'));
     this._iconRegistry.addSvgIconInNamespace('assets', 'github',
@@ -34,6 +37,7 @@ export class BGAMyAppComponent implements OnInit {
 
   ngOnInit(): any {
     console.log('app on init');
+    this.storeService.fetchData();
   }
 
 }

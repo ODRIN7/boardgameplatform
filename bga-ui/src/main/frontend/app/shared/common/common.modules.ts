@@ -91,5 +91,9 @@ export const COMMON_CHILD_MODULES = [
   MdSnackBarModule,
   MdTabsModule,
   MdToolbarModule,
-  MdTooltipModule
+  MdTooltipModule,
+  CovalentCoreModule,
+  CovalentChartsModule,
+  CovalentHighlightModule,
+  CovalentMarkdownModule,
 ];
