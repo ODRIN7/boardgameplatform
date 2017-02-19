@@ -35,7 +35,7 @@
       </a>
     </md-nav-list>
     <div td-toolbar-content layout="row" layout-align="start center" flex>
-      <span class="text-capital">{{action}} user</span>
+      <span class="text-capital"></span>
     </div>
     <md-card tdMediaToggle="gt-xs" [mediaClasses]="['push']">
       <md-card-title>User Form</md-card-title>
@@ -43,32 +43,32 @@
       <md-card-content class="push-bottom-none">
         <form #userForm="ngForm">
           <div layout="row">
-            <md-input-container flex> 
+            <md-input-container flex>
               <input md-input
                       #displayNameElement
                       #displayNameControl="ngModel"
-                      type="text" 
-                      placeholder="Display Name" 
-                      [(ngModel)]="displayName" 
-                      name="displayName" 
-                      maxlength="20" 
+                      type="text"
+                      placeholder="Display Name"
+                      [(ngModel)]="displayName"
+                      name="displayName"
+                      maxlength="20"
                       required>
               <md-hint align="start">
                 <span [hidden]="displayNameControl.pristine" class="tc-red-600">
                   <span [hidden]="!displayNameControl.errors?.required">Required</span>
                 </span>
               </md-hint>
-              <md-hint align="end">{{displayNameElement.value.length}} / 20</md-hint>
+              <md-hint align="end"></md-hint>
             </md-input-container>
           </div>
           <div layout="row" class="push-top">
-            <md-input-container flex> 
+            <md-input-container flex>
               <input md-input
                       #emailElement
                       #emailControl="ngModel"
-                      type="text" 
-                      placeholder="Email" 
-                      [(ngModel)]="email" 
+                      type="text"
+                      placeholder="Email"
+                      [(ngModel)]="email"
                       name="email"
                       maxlength="30"
                       pattern="^[a-zA-Z0-9]+(\.[_a-zA-Z0-9]+)*@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*(\.[a-zA-Z]{2,15})$"
@@ -79,7 +79,7 @@
                   <span [hidden]="!emailControl.errors?.pattern">incorrect pattern</span>
                 </span>
               </md-hint>
-              <md-hint align="end">{{emailElement.value.length}} / 30</md-hint>
+              <md-hint align="end"></md-hint>
             </md-input-container>
           </div>
           <div layout="row">

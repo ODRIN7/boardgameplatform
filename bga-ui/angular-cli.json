@@ -1,13 +1,17 @@
 {
   "project": {
-    "version": "1.0.0-beta.17",
+    "version": "1.0.0-beta.32.3",
     "name": "bga-ui"
   },
   "apps": [
     {
       "root": "src/main/frontend",
       "outDir": "src/main/resources/static",
-      "assets": "assets",
+      "assets": [
+        "assets",
+        "data",
+        "favicon.ico"
+      ],
       "index": "index.html",
       "main": "main.ts",
       "test": "test.ts",
@@ -16,9 +20,14 @@
       "mobile": false,
       "styles": [
         "styles.scss",
-        "theme.scss"
+        "theme.scss",
+        "../../../node_modules/@covalent/core/common/platform.css",
+        "../../../node_modules/@swimlane/ngx-charts/release/ngx-charts.css"
       ],
-      "scripts": [],
+      "scripts": [
+        "../../../node_modules/hammerjs/hammer.min.js",
+        "../../../node_modules/showdown/dist/showdown.js"
+      ],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",
