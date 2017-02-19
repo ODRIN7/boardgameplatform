@@ -17,7 +17,9 @@ bga-gateway/target/
 bga-config/target/
 target/image_info.json
 configs
-
+bga-store/target/bga-api-1.0.0.jar
+bga-store/target/bga-api-1.0.0.jar.original
+bga-store/target/image_info.json
 ### node
 npm-debug.log
 npm-debug.log*

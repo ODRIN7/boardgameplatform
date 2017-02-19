@@ -25,15 +25,3 @@ spring:
         config:
             uri: http://192.168.99.100:8888
 
-#SECURITY
-security:
-  basic:
-    enabled: false
-  oauth2:
-    client:
-        clientId: api-service
-        clientSecret: api-service
-        accessTokenUri: http://auth-service:8083/oauth/token
-        grant-type: client_credentials
-        scope: server
-
