@@ -36,12 +36,12 @@ public class UserController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public List<User> getPosts() {
+    public List<User> getUsers() {
         return userService.getUsers();
     }
 
     @RequestMapping(value = "/{username}", method = RequestMethod.DELETE)
-    public User deletePost(@PathVariable("username") String username) {
+    public User deleteUser(@PathVariable("username") String username) {
         return userService.deleteUser(username);
     }
 

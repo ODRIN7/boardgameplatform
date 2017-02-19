@@ -18,6 +18,7 @@
         <module>bga-gateway</module>
         <module>bga-auth</module>
         <module>bga-api</module>
+        <module>bga-store</module>
         <module>bga-ui</module>
     </modules>
 

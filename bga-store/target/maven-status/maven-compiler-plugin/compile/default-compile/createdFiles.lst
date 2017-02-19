@@ -1,0 +1,15 @@
+hu\odrin7\bga\BGAStoreApplication.class
+hu\odrin7\bga\service\security\CustomUserInfoTokenServices.class
+hu\odrin7\bga\domain\user\User.class
+hu\odrin7\bga\Controller\BoardGameStoreController.class
+hu\odrin7\bga\service\BoardGameStoreService.class
+hu\odrin7\bga\client\AuthServiceClient.class
+hu\odrin7\bga\domain\store\Status.class
+hu\odrin7\bga\domain\store\ShoppingRepository.class
+hu\odrin7\bga\service\StoreServiceImpl.class
+hu\odrin7\bga\domain\boardgame\BoardGame.class
+hu\odrin7\bga\service\StoreService.class
+hu\odrin7\bga\domain\user\Role.class
+hu\odrin7\bga\service\BoardGameStoreServiceImpl.class
+hu\odrin7\bga\domain\boardgame\BoardGameRepository.class
+hu\odrin7\bga\domain\store\Shopping.class

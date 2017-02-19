@@ -41,6 +41,18 @@ services:
     ports:
       - 26000:27017
 
+  store-service:
+    build: bga-api
+    ports:
+      - 8086:8086
+
+  store-mongodb:
+    build: bga-mongodb
+    ports:
+      - 24000:27017
+
+
+
 
 
 
