@@ -1,8 +1,8 @@
 import {Routes, RouterModule} from "@angular/router";
 import {StoreComponent} from "./store.component";
-import {StoreDetailComponent} from "./store-detail.component";
+import {StoreDetailComponent} from "./detail/store-detail.component";
 import {NgModule} from "@angular/core";
-import {StoreStartComponent} from "./StoreStartComponent";
+import {StoreStartComponent} from "./starter/StoreStartComponent";
 
 
 export const routes: Routes = [

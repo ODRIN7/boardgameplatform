@@ -1,0 +1,33 @@
+<td-expansion-panel label="{{boardGame.id}}"
+                    sublabel="1600 Amphitheatre Pkwy, Mountain View, CA 94043, USA"
+                    [expand]="expansion1"
+                    [disabled]="disabled"
+                    (expanded)="expandExpansion1Event()"
+                    (collapsed)="collapseExpansion1Event()">
+  <td-expansion-summary>
+    <md-list>
+      <md-list-item>
+        <md-icon md-list-avatar>pin_drop</md-icon>
+        <h3 md-line>Google</h3>
+        <h4 md-line>Headquarters</h4>
+        <p md-line>
+          1600 Amphitheatre Pkwy<br/>Mountain View, CA 94043, USA
+        </p>
+      </md-list-item>
+    </md-list>
+  </td-expansion-summary>
+  <form class="md-padding" layout="column">
+    <md-input-container flex>
+      <input md-input placeholder="Company (disabled)" disabled value="Google"/>
+    </md-input-container>
+    <md-input-container flex>
+      <textarea md-input placeholder="Description" rows="4"></textarea>
+    </md-input-container>
+  </form>
+  <md-divider></md-divider>
+  <div layout="row" layout-margin layout-align="end center">
+      <button flex md-raised-button color="accent" (click)="onPlay()">
+        Play!
+      </button>
+  </div>
+</td-expansion-panel>

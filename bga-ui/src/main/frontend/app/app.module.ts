@@ -15,7 +15,7 @@ import {BGAMyAppComponent} from "./app.component";
 import {MainComponent} from "./main/main.component";
 import {FavouriteComponent} from "./dashboard/favourite/favourite.component";
 import {GameBoardComponent} from "./dashboard/gameboard/gameboard.component";
-import {RecentGamesComponent} from "./dashboard/recentgames/recentGames.component";
+import {RecentGamesComponent} from "./shared/components/recentgames/recentGames.component";
 import {PageInformationComponent} from "./dashboard/pageinformation/pageinformation.component";
 import {NewsComponent} from "./dashboard/news/news.component";
 import {SignUpComponent} from "./signUp/signUp.component";

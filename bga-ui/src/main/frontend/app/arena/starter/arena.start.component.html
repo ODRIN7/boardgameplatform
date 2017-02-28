@@ -1,0 +1,21 @@
+<div class="md-content" flex md-scroll-y>
+  <div layout="column" layout-gt-sm="row" class="inset">
+    <div flex-gt-sm="60">
+      <div layout="column" class="cardStyle">
+        <md-card>
+          <md-card-title>Expansion Panels</md-card-title>
+          <md-card-subtitle>Expand & collapse containers</md-card-subtitle>
+          <md-divider></md-divider>
+          <md-card-content>
+            <p>YourGames: {{expandCollapseExpansion1Msg}}</p>
+            <div layout-gt-xs="row" layout-align-gt-xs="center start">
+              <div flex-gt-xs="90">
+                <bga-arena-item *ngFor="let boardGame of boardGames; let i = index" [boardGame]="boardGame" [boardGameId]="i"></bga-arena-item>
+              </div>
+            </div>
+          </md-card-content>
+        </md-card>
+      </div>
+    </div>
+  </div>
+</div>

@@ -43,10 +43,6 @@ export class SignUpComponent implements OnInit {
     window.history.back();
   }
 
-  signUp(): void {
-
-  }
-
   ngOnInit(): any {
     console.log('hello `Login` component');
   }

@@ -1,16 +1,12 @@
 package hu.odrin7.bga.service;
 
 import com.google.common.collect.Lists;
-import hu.odrin7.bga.client.AuthServiceClient;
-import hu.odrin7.bga.domain.blog.BlogPost;
 import hu.odrin7.bga.domain.boardgame.BoardGame;
-import hu.odrin7.bga.domain.user.User;
 import hu.odrin7.bga.domain.boardgame.BoardGameRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
 import java.util.List;
 
@@ -20,7 +16,7 @@ public class BoardGameServiceImpl implements BoardGameService {
     private final Logger log = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    private BoardGameRepository  boardGameRepository;
+    private  BoardGameRepository boardGameRepository;
 
     public BoardGameServiceImpl() {
     }
@@ -30,7 +26,7 @@ public class BoardGameServiceImpl implements BoardGameService {
         List<BoardGame> boardGames = this.getBoardGames();
         if (boardGames.isEmpty()) {
             for (int i = 1; i <= 10; i++) {
-                BoardGame boardGame = new BoardGame("Sample blog post title #" + i, "Sample blog post content #" + i,""," ");
+                BoardGame boardGame = new BoardGame("Sample blog post title #" + i, "Sample blog post content #" + i, "", " ");
                 boardGameRepository.save(boardGame);
                 log.warn(boardGame.toString());
             }
