@@ -6,22 +6,16 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 var core_1 = require('@angular/core');
-var roles_1 = require("../domain/roles");
-var AdminGuards = (function () {
-    function AdminGuards(authService, router) {
-        this.authService = authService;
-        this.router = router;
+var RecentGamesComponent = (function () {
+    function RecentGamesComponent() {
     }
-    AdminGuards.prototype.canActivate = function (next, state) {
-        if (this.authService.hasRole(roles_1.Role.ADMIN_ROLE)) {
-            return true;
-        }
-        this.router.navigate(['accessDenied']);
-        return false;
-    };
-    AdminGuards = __decorate([
-        core_1.Injectable()
-    ], AdminGuards);
-    return AdminGuards;
+    RecentGamesComponent = __decorate([
+        core_1.Component({
+            selector: 'bga-recentGames',
+            templateUrl: './recentGames.component.html',
+            styleUrls: ['./recentGames.component.scss'],
+        })
+    ], RecentGamesComponent);
+    return RecentGamesComponent;
 }());
-exports.AdminGuards = AdminGuards;
+exports.RecentGamesComponent = RecentGamesComponent;

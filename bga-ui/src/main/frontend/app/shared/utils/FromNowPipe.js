@@ -6,22 +6,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 var core_1 = require('@angular/core');
-var roles_1 = require("../domain/roles");
-var AdminGuards = (function () {
-    function AdminGuards(authService, router) {
-        this.authService = authService;
-        this.router = router;
+var moment = require('moment');
+var FromNowPipe = (function () {
+    function FromNowPipe() {
     }
-    AdminGuards.prototype.canActivate = function (next, state) {
-        if (this.authService.hasRole(roles_1.Role.ADMIN_ROLE)) {
-            return true;
-        }
-        this.router.navigate(['accessDenied']);
-        return false;
+    FromNowPipe.prototype.transform = function (value, args) {
+        return moment(value).fromNow();
     };
-    AdminGuards = __decorate([
-        core_1.Injectable()
-    ], AdminGuards);
-    return AdminGuards;
+    FromNowPipe = __decorate([
+        core_1.Pipe({
+            name: 'fromNow'
+        })
+    ], FromNowPipe);
+    return FromNowPipe;
 }());
-exports.AdminGuards = AdminGuards;
+exports.FromNowPipe = FromNowPipe;
+exports.fromNowPipeInjectables = [
+    FromNowPipe
+];

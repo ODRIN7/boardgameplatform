@@ -1,6 +1,6 @@
 import {Component, OnInit} from "@angular/core";
 import {Router} from "@angular/router";
-import {AuthService} from "../shared/auth/auth.services";
+import {AuthService} from "../shared/services/auth/auth.services";
 
 @Component({
   selector: 'bga-signUp',

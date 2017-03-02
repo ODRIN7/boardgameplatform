@@ -1,7 +1,7 @@
 import {Routes, RouterModule} from "@angular/router";
 import {NgModule} from "@angular/core";
 import {ArenaComponent} from "./arena.component";
-import {ArenaStartComponent} from "./starter/arena.start.component";
+import {ArenaStartComponent} from "./menu/starter/arena.start.component";
 import {ArenaElementComponent} from "./element/arena-element.component";
 
 

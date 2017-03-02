@@ -1,5 +1,4 @@
-export * from './auth/auth.services'
+export * from './services/auth/auth.services'
 export * from './common/common.modules'
-export * from './guards/index'
 export * from './domain/roles';
 export * from './components/recentgames/recentGames.component';

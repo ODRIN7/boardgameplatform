@@ -3,10 +3,10 @@ var forms_1 = require("@angular/forms");
 var http_1 = require("@angular/http");
 var platform_browser_1 = require("@angular/platform-browser");
 var common_1 = require("@angular/common");
-var core_1 = require("@covalent/core");
-var highlight_1 = require("@covalent/highlight");
-var markdown_1 = require("@covalent/markdown");
-var charts_1 = require("@covalent/charts");
+var core_1 = require('@covalent/core');
+var highlight_1 = require('@covalent/highlight');
+var markdown_1 = require('@covalent/markdown');
+var charts_1 = require('@covalent/charts');
 var material_1 = require("@angular/material");
 exports.COMMON_ROOT_MODULES = [
     platform_browser_1.BrowserModule,
@@ -66,5 +66,9 @@ exports.COMMON_CHILD_MODULES = [
     material_1.MdSnackBarModule,
     material_1.MdTabsModule,
     material_1.MdToolbarModule,
-    material_1.MdTooltipModule
+    material_1.MdTooltipModule,
+    core_1.CovalentCoreModule,
+    charts_1.CovalentChartsModule,
+    highlight_1.CovalentHighlightModule,
+    markdown_1.CovalentMarkdownModule,
 ];

@@ -9,7 +9,7 @@ import {CovalentHighlightModule} from "@covalent/highlight";
 import {CovalentHttpModule} from "@covalent/http";
 import {CovalentChartsModule} from "@covalent/charts";
 import {BrowserModule, Title} from "@angular/platform-browser";
-import {AuthService} from "./shared/auth/auth.services";
+import {AuthService} from "./shared/services/auth/auth.services";
 import {RequestInterceptor} from "./config/interceptors/request.interceptor";
 import {BGAMyAppComponent} from "./app.component";
 import {MainComponent} from "./main/main.component";
@@ -23,6 +23,7 @@ import {UsersFormComponent} from "./users/+form/form.component";
 import {UsersComponent} from "./users/users.component";
 import {DashboardComponent} from "./dashboard/dashboard.component";
 import {StoreService} from "./shared/services/storeservice";
+import {MessagesService} from "./shared/services/MessagesService";
 
 const httpInterceptorProviders: Type<any>[] = [
   RequestInterceptor,
@@ -66,6 +67,7 @@ const httpInterceptorProviders: Type<any>[] = [
     StoreService,
     appRoutingProviders,
     httpInterceptorProviders,
+    MessagesService,
     Title,
   ], // additional providers needed for this module
   entryComponents: [ ],

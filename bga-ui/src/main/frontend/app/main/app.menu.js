@@ -4,34 +4,34 @@ exports.MAIN_MENU = [
     {
         title: 'Feeds',
         icon: 'dashboard',
-        link: ['']
+        link: '',
     },
     {
         title: 'Store',
         icon: 'receipt',
-        link: ['/store']
+        link: '/store',
     },
     {
         title: 'Arena',
         icon: 'view_quilt',
-        link: ['/store']
+        link: '/arena',
     },
     {
         title: 'Manage Users',
         icon: 'people',
-        link: ['/store'],
-        roles: [roles_1.Role.ADMIN_ROLE]
+        link: '/users',
+        roles: [roles_1.Role.ADMIN_ROLE],
     },
     {
         title: 'Manage BoardGames',
         icon: 'people',
-        link: ['/store'],
-        roles: [roles_1.Role.ADMIN_ROLE]
+        link: '/boardgames',
+        roles: [roles_1.Role.ADMIN_ROLE],
     },
     {
         title: 'Statistics',
         icon: 'people',
-        link: ['/store'],
-        roles: [roles_1.Role.ADMIN_ROLE]
+        link: '/statistics',
+        roles: [roles_1.Role.ADMIN_ROLE],
     }
 ];

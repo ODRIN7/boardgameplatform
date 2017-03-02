@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import {AppMenuItem, MAIN_MENU} from "./app.menu";
-import {AuthService} from "../shared/auth/auth.services";
+import {AuthService} from "../shared/services/auth/auth.services";
 
 @Component({
   selector: 'qs-main',
