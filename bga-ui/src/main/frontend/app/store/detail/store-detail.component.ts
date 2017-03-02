@@ -3,7 +3,7 @@ import {Boardgame} from "../../shared/domain/boardgame";
 import {TdMediaService} from "@covalent/core";
 import {Subscription} from "rxjs/Rx";
 import {ActivatedRoute} from "@angular/router";
-import {StoreService} from "../../shared/services/storeservice";
+import {StoreService} from "../../shared/services/store.service";
 
 @Component({
   selector: 'bga-store-detail',

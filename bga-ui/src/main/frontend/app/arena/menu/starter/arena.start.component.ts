@@ -1,7 +1,7 @@
 import {Component, HostBinding, AfterViewInit, OnInit} from '@angular/core';
-import {Boardgame} from "../../shared/domain/boardgame";
-import {StoreService} from "../../shared/services/storeservice";
-import {slideInDownAnimation} from "../../app.animations";
+import {Boardgame} from "../../../shared/domain/boardgame";
+import {slideInDownAnimation} from "../../../app.animations";
+import {StoreService} from "../../../shared/services/store.service";
 
 @Component({
   selector: 'bga-arena-starter',

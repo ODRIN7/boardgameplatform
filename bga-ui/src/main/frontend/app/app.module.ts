@@ -22,8 +22,8 @@ import {SignUpComponent} from "./signUp/signUp.component";
 import {UsersFormComponent} from "./users/+form/form.component";
 import {UsersComponent} from "./users/users.component";
 import {DashboardComponent} from "./dashboard/dashboard.component";
-import {StoreService} from "./shared/services/storeservice";
-import {MessagesService} from "./shared/services/MessagesService";
+import {StoreService} from "./shared/services/store.service";
+import {MessagesService} from "./shared/services/messages.service";
 
 const httpInterceptorProviders: Type<any>[] = [
   RequestInterceptor,

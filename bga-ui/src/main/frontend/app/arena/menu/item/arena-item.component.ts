@@ -1,7 +1,7 @@
 import {Component, Input, HostBinding} from "@angular/core";
 import {Router} from "@angular/router";
-import {slideInDownAnimation} from "../../app.animations";
-import {Boardgame} from "../../shared/domain/boardgame";
+import {slideInDownAnimation} from "../../../app.animations";
+import {Boardgame} from "../../../shared/domain/boardgame";
 
 
 @Component({

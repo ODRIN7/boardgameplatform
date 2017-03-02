@@ -1,8 +1,8 @@
 import {Component, AfterViewInit, OnInit} from '@angular/core';
 
 import { TdMediaService } from '@covalent/core';
-import {StoreService} from "../shared/services/storeservice";
 import {Boardgame} from "../shared/domain/boardgame";
+import {StoreService} from "../shared/services/store.service";
 
 @Component({
   selector: 'bga-store',

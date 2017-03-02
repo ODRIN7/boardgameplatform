@@ -1,8 +1,5 @@
-import {Component} from '@angular/core';
-import {MessagesService} from "../../../shared/services/MessagesService";
-import {ThreadsService} from "../../../shared/services/ThreadsService";
-import {UserService} from "../../../shared/services/UserService";
-import {ChatExampleData} from "../../../shared/domain/ChatExampleData";
+import {Component} from "@angular/core";
+import {MessagesService} from "../../../shared/services/messages.service";
 
 @Component({
   selector: 'bga-chat',
@@ -10,10 +7,7 @@ import {ChatExampleData} from "../../../shared/domain/ChatExampleData";
   styleUrls: ['./chat.component.scss'],
 })
 export class ChatComponent {
-  constructor(public messagesService: MessagesService,
-              public threadsService: ThreadsService,
-              public userService: UserService) {
-    ChatExampleData.init(messagesService, threadsService, userService);
+  constructor(public messagesService: MessagesService) {
   }
 }
 

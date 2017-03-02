@@ -3,13 +3,13 @@ import {Component, OnInit} from "@angular/core";
 import {Observable} from "rxjs";
 import {Message} from "../../../../shared/domain/message";
 import {User} from "../../../../shared/domain/user";
-import {MessagesService} from "../../../../shared/services/MessagesService";
+import {MessagesService} from "../../../../shared/services/messages.service";
 
 
 @Component({
   selector: 'chat-window',
-  templateUrl: './chat.message.html',
-  styleUrls: ['./chat.message.scss'],
+  templateUrl: './chat.window.html',
+  styleUrls: ['./chat.window.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 
 })
@@ -43,7 +43,6 @@ export class ChatWindow implements OnInit {
 
   sendMessage(): void {
     let m: Message = this.draftMessage;
-    m.author = this.currentUser;
     m.isRead = true;
     this.messagesService.addMessage(m);
     this.draftMessage = new Message();

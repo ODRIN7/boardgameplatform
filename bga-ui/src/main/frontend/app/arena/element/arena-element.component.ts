@@ -1,9 +1,9 @@
 import {Component, HostBinding, Input, AfterViewInit, OnInit} from '@angular/core';
 import {slideInDownAnimation} from "../../app.animations";
-import {StoreService} from "../../shared/services/storeservice";
 import {Subscription} from "rxjs";
 import {ActivatedRoute} from "@angular/router";
 import {Boardgame} from "../../shared/domain/boardgame";
+import {StoreService} from "../../shared/services/store.service";
 
 
 @Component({

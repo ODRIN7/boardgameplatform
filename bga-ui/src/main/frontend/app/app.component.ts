@@ -3,7 +3,7 @@ import {Router} from "@angular/router";
 import {AuthService} from "./shared/services/auth/auth.services";
 import {DomSanitizer} from "@angular/platform-browser";
 import {MdIconRegistry} from "@angular/material";
-import {StoreService} from "./shared/services/storeservice";
+import {StoreService} from "./shared/services/store.service";
 
 @Component({
   selector: 'bga-app',
