@@ -27,13 +27,7 @@ export class ChatWindow implements OnInit {
 
     //current user
 
-    this.messages
-      .subscribe(
-        (messages: Array<Message>) => {
-          setTimeout(() => {
-            this.scrollToBottom();
-          });
-        });
+
   }
 
   onEnter(event: any): void {
