@@ -16,7 +16,7 @@ export class ArenaItemComponent {
   @HostBinding('class.td-route-animation') classAnimation: boolean = true;
 
 
-  constructor(private router: Router) {
+  constructor(public router: Router) {
 
   }
 
@@ -45,7 +45,7 @@ export class ArenaItemComponent {
   }
 
   onPlay(): void {
-    this.router.navigate(["arena/"+ this.boardGameId]);
+    this.router.navigate(["/" + this.boardGameId]);
   }
 
 }

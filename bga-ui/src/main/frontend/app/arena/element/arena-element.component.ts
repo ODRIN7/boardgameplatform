@@ -41,4 +41,8 @@ export class ArenaElementComponent implements AfterViewInit, OnInit{
   ngAfterViewInit(): void {
 
   }
+
+  goBack(): void {
+    window.history.back();
+  }
 }

@@ -42,7 +42,7 @@ var DashboardComponent = (function () {
     }
     DashboardComponent.prototype.ngAfterViewInit = function () {
         var _this = this;
-        this._titleService.setTitle('Covalent Quickstart');
+        this._titleService.setTitle('BoardGameArena');
         this._loadingService.register('items.load');
         this._itemsService.query().subscribe(function (items) {
             _this.items = items;

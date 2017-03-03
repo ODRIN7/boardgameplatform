@@ -1,8 +1,8 @@
 {
-  "name": "covalent-quickstart",
+  "name": "boardGameArena",
   "version": "1.0.0-beta.1",
   "private": true,
-  "description": "Quickstart App with @covalent packages",
+  "description": "BoardGameArena",
   "keywords": [
     "angular",
     "components",

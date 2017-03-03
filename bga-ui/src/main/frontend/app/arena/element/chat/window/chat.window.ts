@@ -23,7 +23,6 @@ export class ChatWindow implements OnInit {
   }
 
   ngOnInit(): void {
-    this.draftMessage = new Message();
 
     //current user
 
@@ -39,7 +38,6 @@ export class ChatWindow implements OnInit {
     let m: Message = this.draftMessage;
     m.isRead = true;
     this.messagesService.addMessage(m);
-    this.draftMessage = new Message();
   }
 
   scrollToBottom(): void {
