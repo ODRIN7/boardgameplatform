@@ -15,6 +15,10 @@ export const MAIN_MENU: AppMenuItem[] = [
     title: 'Arena',
     icon: 'view_quilt',
     link: '/arena',
+  },  {
+    title: 'Shoppinglist',
+    icon: 'view_quilt',
+    link: '/shopping',
   },
   {
     title: 'Manage Users',
@@ -29,9 +33,9 @@ export const MAIN_MENU: AppMenuItem[] = [
     roles: [Role.ADMIN_ROLE],
   },
   {
-    title: 'Statistics',
+    title: 'Notifications',
     icon: 'people',
-    link: '/statistics',
+    link: '/notifications',
     roles: [Role.ADMIN_ROLE],
   }
 ];

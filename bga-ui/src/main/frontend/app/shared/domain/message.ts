@@ -1,5 +1,5 @@
 
-export class Message {
+export class  Message {
   id: string;
   sentAt: Date;
   isRead: boolean;

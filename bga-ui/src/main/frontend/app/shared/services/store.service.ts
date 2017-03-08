@@ -18,13 +18,25 @@ export class StoreService {
 
   fetchData() {
 
-    return this.http.get('/api/boardgames/')
-      .map((response: Response) => response.json())
-      .subscribe(
-        (data: Boardgame[]) => {
-          this.boardGames = data;
-          this.boardGamesChanged.emit(this.boardGames);
-        }
-      );
+    this.boardGames = [];
+
+    this.boardGames.push(new Boardgame("id1", "text1"));
+    this.boardGames.push(new Boardgame("id2", "text2"));
+    this.boardGames.push(new Boardgame("id3", "text3"));
+    this.boardGames.push(new Boardgame("id4", "text4"));
+    this.boardGames.push(new Boardgame("id5", "text5"));
+    this.boardGames.push(new Boardgame("id6", "text6"));
+    this.boardGames.push(new Boardgame("id7", "text6"));
+    this.boardGames.push(new Boardgame("id8", "text6"));
+    this.boardGames.push(new Boardgame("id9", "text6"));
+    this.boardGames.push(new Boardgame("id6", "text6"));
+    /* return this.http.get('/api/boardgames/')
+       .map((response: Response) => response.json())
+       .subscribe(
+         (data: Boardgame[]) => {
+           this.boardGames = data;
+           this.boardGamesChanged.emit(this.boardGames);
+         }
+       );*/
   }
 }

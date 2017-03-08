@@ -21,8 +21,8 @@
         <bga-recentGames></bga-recentGames>
       </div>
       <div flex-gt-sm="40">
-<bga-gameboard></bga-gameboard>
-<bga-favourite></bga-favourite>
+        <bga-gameboard [routing]="'arena'"></bga-gameboard>
+        <bga-favourite></bga-favourite>
       </div>
     </div>
   </div>
@@ -33,4 +33,5 @@
       <md-icon class="md-icon-ux" svgIcon="assets:teradata-ux"></md-icon>
     </div>
   </td-layout-footer>
+  <router-outlet></router-outlet>
 </td-layout-nav>

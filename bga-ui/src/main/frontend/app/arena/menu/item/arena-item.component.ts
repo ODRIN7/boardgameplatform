@@ -45,7 +45,10 @@ export class ArenaItemComponent {
   }
 
   onPlay(): void {
-    this.router.navigate(["/" + this.boardGameId]);
+    this.router.navigate(["arena/" + this.boardGameId]);
+  }
+  createNewGame(): void {
+    this.router.navigate(["arena/" + this.boardGameId]);
   }
 
 }

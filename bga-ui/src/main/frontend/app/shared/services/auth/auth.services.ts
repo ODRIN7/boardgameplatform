@@ -3,6 +3,8 @@ import {Http, Headers} from "@angular/http";
 import {User} from "../../domain/user";
 import {Role} from "../../domain/roles";
 import {AppMenuItem} from "../../../main/app.menu";
+import {Observable} from "rxjs";
+import {Boardgame} from "../../domain/boardgame";
 
 
 @Injectable()
@@ -11,10 +13,7 @@ export class AuthService {
   private authenticated: boolean = false;
   private tokenExpirationDate: Date = null;
   private userData: any = null;
-
-  public static decodeAccessToken(access_token: string) {
-    return JSON.parse(window.atob(access_token.split('.')[1]));
-  }
+  private users: Observable<User[]>;
 
   private tokenData: Oauth2TokenData;
 
@@ -34,6 +33,36 @@ export class AuthService {
   public isAuthenticated(): boolean {
     this.checkTokenExpirationDate();
     return this.authenticated;
+  }
+
+  public getUsers(): User[] {
+
+    var userss = [];
+    userss.push(new User("user1", "pwd1"));
+    userss.push(new User("user2", "pwd1"));
+    userss.push(new User("user3", "pwd1"));
+    userss.push(new User("user4", "pwd1"));
+    userss.push(new User("user5", "pwd1"));
+    userss.push(new User("user6", "pwd1"));
+    userss.push(new User("user7", "pwd1"));
+    return userss;
+  }
+
+  public getUser(username: string): Observable<User> {
+    return this.users[0];
+  }
+
+  public getUserWithoutObs(username: string): User {
+    return this.users[0];
+  }
+
+  public getShoppingCards(username: string): Boardgame[] {
+    var boardgames = new Array<Boardgame>();
+    boardgames.push(Boardgame.create("boardgame", "assadasdasd"));
+    boardgames.push(Boardgame.create("boardgame1", "assadasdasd"));
+    boardgames.push(Boardgame.create("boardgame4", "assadasdasd"));
+    return boardgames;
+    //return this.getUserWithoutObs(username).getboardgames();
   }
 
   public authenticate(username: string, password: string) {
@@ -188,11 +217,15 @@ export class AuthService {
   public canView(view: AppMenuItem): boolean {
     let ok = false;
     if (!view.roles) {
-     ok = true;
-   } else {
-     ok = this.hasAnyRole(view.roles);
-   }
-   return ok;
+      ok = true;
+    } else {
+      ok = this.hasAnyRole(view.roles);
+    }
+    return ok;
+  }
+
+  public static decodeAccessToken(access_token: string) {
+    return JSON.parse(window.atob(access_token.split('.')[1]));
   }
 
 }

@@ -35,4 +35,9 @@ export class StoreDetailComponent implements OnInit {
       }
     );
   }
+
+  addToShoppingCard() : void{
+
+  }
+
 }

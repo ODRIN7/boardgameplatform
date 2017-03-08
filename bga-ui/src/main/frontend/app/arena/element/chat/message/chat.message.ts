@@ -17,5 +17,12 @@ export class ChatMessage implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.getRandomInt(1, 100) < 50) {
+      this.incoming = true;
+    }
+  }
+
+  getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
   }
 }

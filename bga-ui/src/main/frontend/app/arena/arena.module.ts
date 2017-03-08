@@ -4,17 +4,20 @@ import {ARENA_MODULE} from "./arena.routing";
 import {ArenaItemComponent} from "./menu/item/arena-item.component";
 import {ArenaComponent} from "./arena.component";
 import {ArenaStartComponent} from "./menu/starter/arena.start.component";
-import {ArenaElementComponent} from "./element/arena-element.component";
-import {GameComponent} from "./element/game/bga-game-element.component";
-import {ChatComponent} from "./element/chat/chat.component";
 import {utilInjectables} from "../shared/utils/util";
+import {DashboardModule} from "../dashboard/dashboard.module";
+import {ArenaElementComponent} from "./element/arena-element.component";
+import {GameComponent} from "./element/game/gameBoard/bga-game-element.component";
+import {ChatComponent} from "./element/chat/chat.component";
 import {ChatWindow} from "./element/chat/window/chat.window";
 import {ChatMessage} from "./element/chat/message/chat.message";
+import {ArenaGameDetailComponent} from "./element/game/detail/arena-game-detail.component";
 
 @NgModule({
   imports: [
     ...COMMON_CHILD_MODULES,
-    ARENA_MODULE
+    ARENA_MODULE,
+    DashboardModule
   ],
   declarations: [
     ArenaComponent,
@@ -25,7 +28,8 @@ import {ChatMessage} from "./element/chat/message/chat.message";
     ChatComponent,
     ChatWindow,
     ChatMessage,
-    utilInjectables
+    utilInjectables,
+    ArenaGameDetailComponent
   ]
 })
 export class ArenaModule {

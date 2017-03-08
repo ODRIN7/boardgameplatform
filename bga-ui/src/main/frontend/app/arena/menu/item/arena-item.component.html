@@ -26,8 +26,11 @@
   </form>
   <md-divider></md-divider>
   <div layout="row" layout-margin layout-align="end center">
-      <button flex md-raised-button color="accent" [routerLink]="[{{boardGameId}}]" >
-        Play!
-      </button>
+    <button flex md-raised-button color="accent" (click)="onPlay()" >
+      Create new game!
+    </button>
+    <button flex md-raised-button color="primary" (click)="createNewGame()" >
+      Play!
+    </button>
   </div>
 </td-expansion-panel>

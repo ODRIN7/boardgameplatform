@@ -2,11 +2,8 @@ import {Routes, RouterModule} from "@angular/router";
 import {LoginComponent} from "./signIn/login.component";
 import {SignUpComponent} from "./signUp/signUp.component";
 import {MainComponent} from "./main/main.component";
-import {UsersFormComponent} from "./users/+form/form.component";
-import {UsersComponent} from "./users/users.component";
-import {ArenaComponent} from "./arena/arena.component";
-import {StoreComponent} from "./store/store.component";
-import {DashboardComponent} from "./dashboard/dashboard.component";
+import {NotificationComponent} from "./notifications/notifications.component";
+import {ShoppingComponent} from "./store/card/shopping/shopping.component";
 
 const routes: Routes = [
   {
@@ -22,8 +19,8 @@ const routes: Routes = [
     component: MainComponent,
     children: [
       {
-        component: DashboardComponent,
         path: '',
+        loadChildren: './dashboard/dashboard.module#DashboardModule'
       },
       {
         path: 'store',
@@ -33,12 +30,21 @@ const routes: Routes = [
         path: 'arena',
         loadChildren: './arena/arena.module#ArenaModule'
       },
-      {path: 'users', children: [
-        {path: '', component: UsersComponent},
-        {path: 'add', component: UsersFormComponent},
-        {path: ':id/delete', component: UsersFormComponent},
-        {path: ':id/edit', component: UsersFormComponent},
-      ]},
+      {
+        path: 'users',
+        loadChildren: './users/users.module#UserModule'
+      },
+      {
+        path: 'notifications',
+        component: NotificationComponent,
+      },
+      {
+        path: 'boardgames',
+        loadChildren: './boardgames/boardgames.module#BoardGameModule'
+      }, {
+        path: 'shopping',
+        component: ShoppingComponent
+      },
     ]
   }
 

@@ -1,6 +1,4 @@
-import {ChangeDetectionStrategy, ElementRef} from "@angular/core";
-import {Component, OnInit} from "@angular/core";
-import {Observable} from "rxjs";
+import {ChangeDetectionStrategy, ElementRef, Component, OnInit} from "@angular/core";
 import {Message} from "../../../../shared/domain/message";
 import {User} from "../../../../shared/domain/user";
 import {MessagesService} from "../../../../shared/services/messages.service";
@@ -14,7 +12,7 @@ import {MessagesService} from "../../../../shared/services/messages.service";
 
 })
 export class ChatWindow implements OnInit {
-  messages: Observable<any>;
+  messages: Message[];
   draftMessage: Message;
   currentUser: User;
 
@@ -23,10 +21,10 @@ export class ChatWindow implements OnInit {
   }
 
   ngOnInit(): void {
+    this.draftMessage = new Message(new Date(), "");
 
-    //current user
-
-
+    this.messagesService.fetchData();
+    this.messages = this.messagesService.messages ;
   }
 
   onEnter(event: any): void {
@@ -35,9 +33,7 @@ export class ChatWindow implements OnInit {
   }
 
   sendMessage(): void {
-    let m: Message = this.draftMessage;
-    m.isRead = true;
-    this.messagesService.addMessage(m);
+       this.messagesService.sendMessage(this.draftMessage);
   }
 
   scrollToBottom(): void {

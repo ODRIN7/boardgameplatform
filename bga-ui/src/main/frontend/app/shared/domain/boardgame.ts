@@ -20,4 +20,7 @@ export class Boardgame {
   set shortDescription(value: string) {
     this._shortDescription = value;
   }
+  public static create(id: string, shortDescription: string):Boardgame{
+    return new Boardgame(id,shortDescription);
+  }
 }
