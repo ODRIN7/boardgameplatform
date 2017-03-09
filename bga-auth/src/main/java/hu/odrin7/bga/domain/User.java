@@ -4,11 +4,11 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Document(collection = "users")
 public class User implements UserDetails {
-
 
     @Id
     private String username;
@@ -16,6 +16,11 @@ public class User implements UserDetails {
     private String password;
 
     private List<Authority> authority;
+
+    private List<BoardGame> boardGames;
+    private List<Shopping> shoppings;
+
+    private long money;
 
     @Override
     public String getPassword() {
@@ -71,5 +76,39 @@ public class User implements UserDetails {
         this.username = username;
         this.password = password;
         this.authority = authority;
+        init();
     }
+
+    public boolean addtoCard(BoardGame boardGame) {
+        if (this.money <= boardGame.getPrice()) {
+            boardGames.add(boardGame);
+            this.money -= boardGame.getPrice();
+            return true;
+        }
+        return false;
+    }
+
+    public boolean buyBoardGame(BoardGame boardGame) {
+        if (this.money <= boardGame.getPrice()) {
+            boardGames.add(boardGame);
+            this.money -= boardGame.getPrice();
+            return true;
+        }
+        return false;
+    }
+
+    public void addMoney(long money) {
+        this.money = money;
+    }
+
+    public void addToCard(Shopping shopping) {
+        this.shoppings.add(shopping);
+    }
+
+    private void init() {
+        this.money = 0L;
+        this.boardGames = new ArrayList<>();
+        shoppings = new ArrayList<>();
+    }
+
 }

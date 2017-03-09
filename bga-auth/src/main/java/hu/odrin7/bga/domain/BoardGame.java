@@ -1,11 +1,9 @@
-package hu.odrin7.bga.domain.boardgame;
+package hu.odrin7.bga.domain;
 
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
-@Document(collection = "boardgames")
 public class BoardGame {
 
     private static long seq = 1000L;

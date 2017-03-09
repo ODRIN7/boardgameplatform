@@ -11,12 +11,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/shoppings")
-public class BoardGameStoreController {
+public class StoreController {
+
+    private final StoreService storeService;
 
     @Autowired
-    private StoreService storeService;
-
-    public BoardGameStoreController() {
+    public StoreController(StoreService storeService) {
+        this.storeService = storeService;
     }
 
     @PostConstruct
@@ -41,7 +42,7 @@ public class BoardGameStoreController {
 
     @RequestMapping(value = "/buy/{shoppingId}", method = RequestMethod.POST)
     public Shopping buy(@PathVariable("shoppingId") Long shoppingId) {
-        return storeService.buy(shoppingId);
+        return storeService.buy(shoppingId, shoppingId);
     }
 
     @RequestMapping(value = "/{shoppingId}", method = RequestMethod.DELETE)

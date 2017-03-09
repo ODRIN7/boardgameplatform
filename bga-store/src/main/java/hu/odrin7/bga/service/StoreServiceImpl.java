@@ -2,9 +2,11 @@ package hu.odrin7.bga.service;
 
 import com.google.common.collect.Lists;
 import hu.odrin7.bga.client.AuthServiceClient;
+import hu.odrin7.bga.client.BoardGameServiceClient;
 import hu.odrin7.bga.domain.store.Shopping;
 import hu.odrin7.bga.domain.store.ShoppingRepository;
 import hu.odrin7.bga.domain.store.Status;
+import hu.odrin7.bga.domain.user.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,30 +22,20 @@ public class StoreServiceImpl implements StoreService {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    @Autowired
-    private BoardGameStoreService boardGameStoreService;
-    @Autowired
-    private ShoppingRepository shoppingRepository;
-    @Autowired
-    private AuthServiceClient authServiceClient;
+    private final BoardGameServiceClient boardGameServiceClient;
+    private final ShoppingRepository shoppingRepository;
+    private final AuthServiceClient authServiceClient;
 
-    public StoreServiceImpl() {
+    @Autowired
+    public StoreServiceImpl(BoardGameServiceClient boardGameServiceClient, ShoppingRepository shoppingRepository, AuthServiceClient authServiceClient) {
+        this.boardGameServiceClient = boardGameServiceClient;
+        this.shoppingRepository = shoppingRepository;
+        this.authServiceClient = authServiceClient;
     }
 
     @Override
     public void fillData() {
-        List<Shopping> shoppings = this.getAllShoppingList();
-        if (shoppings.isEmpty()) {
-            for (long i = 1; i <= 10; i++) {
 
-                Shopping shopping = new Shopping(i,
-                    boardGameStoreService.getShoppingBoardGames().get(0).getId(),
-                    10L, LocalDate.now(), Status.NOT_PAYED);
-
-                shoppingRepository.save(shopping);
-                log.warn(shopping.toString());
-            }
-        }
     }
 
     @Override
@@ -71,12 +63,17 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
-    public Shopping buy(Long shoppingId) {
+    public Shopping buy(long userId, Long shoppingId) {
+        //buy
         Shopping shopping = shoppingRepository.findOne(shoppingId);
         shopping.setStatus(ALREADY_PAYED);
         shoppingRepository.save(shopping);
         return shopping;
     }
 
+    @Override
+    public Shopping addToCard(long userId, Long shoppingId) {
+        return  null;
+    }
 
 }

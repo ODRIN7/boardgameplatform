@@ -6,20 +6,23 @@ import hu.odrin7.bga.domain.user.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
 
+@Service
 public class GameServiceImpl implements GameService {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    @Autowired
-    private GameRepository gameRepository;
+    private final GameRepository gameRepository;
 
-    public GameServiceImpl() {
+    @Autowired
+    public GameServiceImpl(GameRepository gameRepository) {
+        this.gameRepository = gameRepository;
     }
 
     @Override

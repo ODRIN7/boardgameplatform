@@ -14,8 +14,11 @@ public interface StoreService {
 
     Shopping addToCard(Shopping shopping);
 
-    Shopping buy(Long shoppingId);
+    Shopping buy(long userId, Long shoppingId);
+
+    Shopping addToCard(long userId, Long shoppingId);
 
     Shopping deleteShopping(Long shoppingId);
+
 
 }

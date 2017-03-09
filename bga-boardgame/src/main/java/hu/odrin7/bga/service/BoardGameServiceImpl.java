@@ -16,10 +16,11 @@ public class BoardGameServiceImpl implements BoardGameService {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
 
-    @Autowired
-    private BoardGameRepository boardGameRepository;
+    private final BoardGameRepository boardGameRepository;
 
-    public BoardGameServiceImpl() {
+    @Autowired
+    public BoardGameServiceImpl(BoardGameRepository boardGameRepository) {
+        this.boardGameRepository = boardGameRepository;
     }
 
     @Override
@@ -28,7 +29,7 @@ public class BoardGameServiceImpl implements BoardGameService {
         if (boardGames.isEmpty()) {
             for (int i = 1; i <= 10; i++) {
                 BoardGame boardGame = BoardGame.create("Name" + i, "icon" + i, "description",
-                    new ArrayList<>(), "", new ArrayList<>());
+                    new ArrayList<>(), "", new ArrayList<>(), 0L);
                 boardGameRepository.save(boardGame);
                 log.warn(boardGame.toString());
             }
@@ -60,6 +61,7 @@ public class BoardGameServiceImpl implements BoardGameService {
         BoardGame boardGame = boardGameRepository.findOne(boardGameId);
         if (boardGame != null) {
             boardGame = newBoardGame;
+            boardGameRepository.save(boardGame);
             return true;
         }
         return false;
