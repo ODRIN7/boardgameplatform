@@ -6,10 +6,10 @@ C:\Dani\07\szakdoga\boardgameplatform\bga-store\src\main\java\hu\odrin7\bga\doma
 C:\Dani\07\szakdoga\boardgameplatform\bga-store\src\main\java\hu\odrin7\bga\domain\user\Role.java
 C:\Dani\07\szakdoga\boardgameplatform\bga-store\src\main\java\hu\odrin7\bga\service\StoreService.java
 C:\Dani\07\szakdoga\boardgameplatform\bga-store\src\main\java\hu\odrin7\bga\domain\store\Shopping.java
-C:\Dani\07\szakdoga\boardgameplatform\bga-store\src\main\java\hu\odrin7\bga\service\BoardGameStoreService.java
-C:\Dani\07\szakdoga\boardgameplatform\bga-store\src\main\java\hu\odrin7\bga\domain\boardgame\BoardGameRepository.java
+C:\Dani\07\szakdoga\boardgameplatform\bga-store\src\main\java\hu\odrin7\bga\domain\user\Authority.java
 C:\Dani\07\szakdoga\boardgameplatform\bga-store\src\main\java\hu\odrin7\bga\client\AuthServiceClient.java
+C:\Dani\07\szakdoga\boardgameplatform\bga-store\src\main\java\hu\odrin7\bga\domain\boardgame\TypeOfBoardGame.java
 C:\Dani\07\szakdoga\boardgameplatform\bga-store\src\main\java\hu\odrin7\bga\domain\store\ShoppingRepository.java
 C:\Dani\07\szakdoga\boardgameplatform\bga-store\src\main\java\hu\odrin7\bga\domain\store\Status.java
-C:\Dani\07\szakdoga\boardgameplatform\bga-store\src\main\java\hu\odrin7\bga\Controller\BoardGameStoreController.java
-C:\Dani\07\szakdoga\boardgameplatform\bga-store\src\main\java\hu\odrin7\bga\service\BoardGameStoreServiceImpl.java
+C:\Dani\07\szakdoga\boardgameplatform\bga-store\src\main\java\hu\odrin7\bga\client\BoardGameServiceClient.java
+C:\Dani\07\szakdoga\boardgameplatform\bga-store\src\main\java\hu\odrin7\bga\Controller\StoreController.java

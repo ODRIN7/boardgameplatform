@@ -14,10 +14,11 @@ import java.util.List;
 @RequestMapping("/statistics")
 public class StatisticsRestController {
 
-    @Autowired
-    private StatisticsService statisticsService;
+    private final StatisticsService statisticsService;
 
-    public StatisticsRestController() {
+    @Autowired
+    public StatisticsRestController(StatisticsService statisticsService) {
+        this.statisticsService = statisticsService;
     }
 
     @PostConstruct

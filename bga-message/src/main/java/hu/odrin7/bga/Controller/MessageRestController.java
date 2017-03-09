@@ -14,10 +14,11 @@ import java.util.List;
 @RequestMapping("/messages")
 public class MessageRestController {
 
-    @Autowired
-    private MessageService messageService;
+    private final MessageService messageService;
 
-    public MessageRestController() {
+    @Autowired
+    public MessageRestController(MessageService messageService) {
+        this.messageService = messageService;
     }
 
     @PostConstruct
@@ -25,19 +26,39 @@ public class MessageRestController {
         messageService.fillData();
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/s", method = RequestMethod.GET)
     public List<Message> getMessages() {
-       return messageService.getMessagess();
+        return messageService.getMessages(1);
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
-    public Message saveMessage(@RequestBody Message message) {
-       return messageService.saveMessage(message);
+    @RequestMapping(value = "/aaa", method = RequestMethod.GET)
+    public List<Message> getMessagesByUser() {
+        return messageService.getMessages(1);
+    }
+
+    @RequestMapping(value = "/aa", method = RequestMethod.POST)
+    public Message writeMessageByUser(@RequestBody Message message) {
+        return messageService.writeMessage(message);
+    }
+
+    @RequestMapping(value = "/aaa", method = RequestMethod.POST)
+    public Message createChat(@RequestBody Message message) {
+        return messageService.writeMessage(message);
+    }
+
+    @RequestMapping(value = "/aaaa", method = RequestMethod.POST)
+    public Message connectToChat(@RequestBody Message message) {
+        return messageService.writeMessage(message);
+    }
+
+    @RequestMapping(value = "/aaaaa", method = RequestMethod.POST)
+    public Message discconectFromChat(@RequestBody Message message) {
+        return messageService.writeMessage(message);
     }
 
     @RequestMapping(value = "/{messageId}", method = RequestMethod.DELETE)
     public Message deleteMessage(@PathVariable("messageId") Long messageId) {
-      return messageService.deleteMessage(messageId);
+        return messageService.deleteMessage(messageId);
     }
 
 }

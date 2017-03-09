@@ -6,16 +6,18 @@ import hu.odrin7.bga.domain.statistics.StatisticsRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class StatisticsServiceImpl implements  StatisticsService{
 
     private final Logger log = LoggerFactory.getLogger(getClass());
-    @Autowired
-    private StatisticsRepository statisticsRepository;
+    private final StatisticsRepository statisticsRepository;
 
-    public StatisticsServiceImpl() {
+    @Autowired
+    public StatisticsServiceImpl(StatisticsRepository statisticsRepository) {
+        this.statisticsRepository = statisticsRepository;
     }
 
     @Override

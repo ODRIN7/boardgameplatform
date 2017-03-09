@@ -3,13 +3,16 @@
 1.
 	docker-machine rm default
 2.
-	docker-machine create  --virtualbox-cpu-count "3" --virtualbox-disk-size "10800" --virtualbox-memory "5000"   -d virtualbox default
+	docker-machine create  --virtualbox-cpu-count "3" --virtualbox-disk-size "5000" --virtualbox-memory "6000"   -d virtualbox default
 3.
 	cd C:/Dani/07/szakdoga/boardgameplatform/
 4.
 	mvn install -P dev -DskipTests
 5.
+	docker-compose -f docker-compose.origin.yml -f docker-compose.dev.origin.yml up -d
 	docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+
+
 
 Simple Run:
 mvn clean package -P prod-standalone -DskipTests

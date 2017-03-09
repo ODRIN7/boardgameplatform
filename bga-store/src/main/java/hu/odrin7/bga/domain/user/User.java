@@ -3,15 +3,12 @@ package hu.odrin7.bga.domain.user;
 import hu.odrin7.bga.domain.boardgame.BoardGame;
 import hu.odrin7.bga.domain.store.Shopping;
 import org.springframework.data.annotation.Id;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class User implements UserDetails {
+public class User {
 
-
-    @Id
     private String username;
 
     private String password;
@@ -23,17 +20,17 @@ public class User implements UserDetails {
 
     private long money;
 
-    @Override
+
     public String getPassword() {
         return password;
     }
 
-    @Override
+
     public String getUsername() {
         return username;
     }
 
-    @Override
+
     public List<Authority> getAuthorities() {
         return authority;
     }
@@ -48,26 +45,6 @@ public class User implements UserDetails {
 
     public void setAuthority(List<Authority> authority) {
         this.authority = authority;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
     }
 
     public User() {

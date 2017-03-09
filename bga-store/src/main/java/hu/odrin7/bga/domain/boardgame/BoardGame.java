@@ -8,7 +8,6 @@ public class BoardGame {
 
     private static long seq = 1000L;
 
-    @Id
     private long id;
     private String icon;
     private String name;
@@ -45,7 +44,7 @@ public class BoardGame {
                                    String pdfDescription,
                                    List<TypeOfBoardGame> typeOfBoardGames,
                                    long price) {
-        return new BoardGame(seq, icon, name, typeOfBoardGames, shortDescription, rules, pdfDescription, price);
+        return new BoardGame(seq++, icon, name, typeOfBoardGames, shortDescription, rules, pdfDescription, price);
     }
 
     public void decorateTypeOfBoardGame(TypeOfBoardGame typeOfBoardGame) {

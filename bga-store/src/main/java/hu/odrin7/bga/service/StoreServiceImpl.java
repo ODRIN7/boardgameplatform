@@ -5,14 +5,11 @@ import hu.odrin7.bga.client.AuthServiceClient;
 import hu.odrin7.bga.client.BoardGameServiceClient;
 import hu.odrin7.bga.domain.store.Shopping;
 import hu.odrin7.bga.domain.store.ShoppingRepository;
-import hu.odrin7.bga.domain.store.Status;
-import hu.odrin7.bga.domain.user.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import static hu.odrin7.bga.domain.store.Status.ALREADY_PAYED;
@@ -73,7 +70,7 @@ public class StoreServiceImpl implements StoreService {
 
     @Override
     public Shopping addToCard(long userId, Long shoppingId) {
-        return  null;
+        return null;
     }
 
 }
