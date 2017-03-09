@@ -24,36 +24,64 @@ services:
   auth-mongodb:
     build: bga-mongodb
     ports:
-      - 25000:27017
+      - 24000:27017
 
   ui-service:
     build: bga-ui
     ports:
        - 8080:8080
 
-  api-service:
-    build: bga-api
+  boardgame-service:
+    build: bga-boardgame
     ports:
       - 8085:8085
 
-  api-mongodb:
+  boardgame-mongodb:
     build: bga-mongodb
     ports:
-      - 26000:27017
-
-  store-service:
-    build: bga-api
-    ports:
-      - 8086:8086
-
-  store-mongodb:
-    build: bga-mongodb
-    ports:
-      - 24000:27017
-
-
-
-
-
-
+      - 25000:27017
+#
+#  message-service:
+#    build: bga-message
+#    ports:
+#      - 8086:8086
+#
+#  message-mongodb:
+#    build: bga-mongodb
+#    ports:
+#      - 26000:27017
+#
+#  store-service:
+#    build: bga-store
+#    ports:
+#      - 8087:8087
+#
+#  store-mongodb:
+#    build: bga-mongodb
+#    ports:
+#      - 27000:27017
+#
+#  notification-service:
+#    build: bga-notification
+#    ports:
+#      - 8088:8088
+#
+#  notification-mongodb:
+#    build: bga-mongodb
+#    ports:
+#      - 28000:27017
+#
+#  statistics-service:
+#    build: bga-statistics
+#    ports:
+#      - 8089:8089
+#
+#  statistics-mongodb:
+#    build: bga-mongodb
+#    ports:
+#      - 29000:27017
+#
+#
+#
+#
 

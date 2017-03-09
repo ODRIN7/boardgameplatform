@@ -17,9 +17,12 @@
         <module>bga-discovery</module>
         <module>bga-gateway</module>
         <module>bga-auth</module>
-        <module>bga-api</module>
-        <module>bga-store</module>
         <module>bga-ui</module>
+        <module>bga-boardgame</module>
+        <module>bga-store</module>
+        <module>bga-message</module>
+        <module>bga-notification</module>
+        <module>bga-statistics</module>
     </modules>
 
     <properties>
