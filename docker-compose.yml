@@ -55,33 +55,6 @@ services:
         max-size: "10m"
         max-file: "10"
 
-  notification-service:
-    environment:
-      MONGODB_PASSWORD: odrin7
-    image: bga/bga-notification
-    ports:
-      - 8088:8088
-    restart: always
-    logging:
-      options:
-        max-size: "10m"
-        max-file: "10"
-    entrypoint: ./wait-for-service.sh http://discovery-service:8081/health
-
-  notification-mongodb:
-    environment:
-      INIT_DUMP: nothing.js
-      MONGODB_NAME: boardGameArena
-      MONGODB_ROLE: readWrite
-      MONGODB_PASSWORD: odrin7
-      MONGODB_USER: odrin7
-    image: bga/bga-notification-mongodb
-    restart: always
-    logging:
-      options:
-        max-size: "10m"
-        max-file: "10"
-
   statistics-service:
     environment:
       MONGODB_PASSWORD: odrin7
