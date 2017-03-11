@@ -3,7 +3,7 @@
 1.
 	docker-machine rm default
 2.
-	docker-machine create  --virtualbox-cpu-count "3" --virtualbox-disk-size "5000" --virtualbox-memory "6000"   -d virtualbox default
+	docker-machine create  --virtualbox-cpu-count "2" --virtualbox-disk-size "5000" --virtualbox-memory "3000"   -d virtualbox default
 3.
 	cd C:/Dani/07/szakdoga/boardgameplatform/
 4.

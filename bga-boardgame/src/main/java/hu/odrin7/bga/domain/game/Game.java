@@ -11,7 +11,6 @@ import java.util.List;
 @Document(collection = "games")
 public class Game {
     //todo id generator must have
-    private static long seq = 100L;
 
     @Id
     private long id;
@@ -21,12 +20,12 @@ public class Game {
     private Status status;
     private User winner;
 
-    public static Game create(Long boardGameId, User host, String title) {
-        return new Game(boardGameId, host, title);
+    public static Game create(long id, Long boardGameId, User host, String title) {
+        return new Game(id, boardGameId, host, title);
     }
 
-    private Game(Long boardGameId, User host, String title) {
-        this.id = seq;
+    private Game(long id, Long boardGameId, User host, String title) {
+        this.id = id;
         this.title = title;
         this.boardGameId = boardGameId;
         init(host);
@@ -54,10 +53,6 @@ public class Game {
 
     public void newPlayerConnect(User player) {
         userPerGame.add(new UserPerGame(player, 0));
-    }
-
-    public static long getSeq() {
-        return seq;
     }
 
     public long getId() {
