@@ -81,18 +81,3 @@ services:
       options:
         max-size: "10m"
         max-file: "10"
-        
-  ui-service:
-    image: bga/bga-ui
-    ports:
-     - 8080:8080
-    depends_on:
-     - discovery-service
-     - auth-service
-     - gateway-service
-    links:
-     - discovery-service
-     - gateway-service
-     - auth-service
-     - config-service
-    entrypoint: ./wait-for-service.sh http://discovery-service:8081/health

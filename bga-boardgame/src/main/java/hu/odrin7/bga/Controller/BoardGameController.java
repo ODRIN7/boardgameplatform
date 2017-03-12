@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.PostConstruct;
 import java.util.List;
 
+import static org.springframework.web.bind.annotation.RequestMethod.*;
+
 @RestController
 @RequestMapping("/boardgames")
 public class BoardGameController {
@@ -24,12 +26,13 @@ public class BoardGameController {
         boardGameService.fillData();
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/", method = GET)
     public List<BoardGame> getBoardGames() {
         return boardGameService.getBoardGames();
     }
 
-    @RequestMapping(value = "/{boardGameId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{boardGameId}", method = GET)
     public BoardGame getBoardGame(@PathVariable("boardGameId") Long boardGameId) {
         return boardGameService.getBoardGameById(boardGameId);
     }
