@@ -1,6 +1,6 @@
 package service.security;
 
-import hu.odrin7.bga.domain.User;
+import hu.odrin7.bga.domain.user.User;
 import hu.odrin7.bga.repository.UserRepository;
 import hu.odrin7.bga.service.security.MongoUserDetailsService;
 import org.junit.Before;

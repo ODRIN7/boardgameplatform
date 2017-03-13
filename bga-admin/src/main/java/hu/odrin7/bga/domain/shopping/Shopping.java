@@ -1,8 +1,7 @@
-package hu.odrin7.bga.domain;
+package hu.odrin7.bga.domain.shopping;
 
 import com.google.common.base.Objects;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 

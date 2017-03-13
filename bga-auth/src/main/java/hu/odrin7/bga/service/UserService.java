@@ -1,6 +1,6 @@
 package hu.odrin7.bga.service;
 
-import hu.odrin7.bga.domain.User;
+import hu.odrin7.bga.domain.user.User;
 
 import java.util.List;
 

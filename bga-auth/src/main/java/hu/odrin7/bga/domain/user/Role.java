@@ -1,4 +1,4 @@
-package hu.odrin7.bga.domain;
+package hu.odrin7.bga.domain.user;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 

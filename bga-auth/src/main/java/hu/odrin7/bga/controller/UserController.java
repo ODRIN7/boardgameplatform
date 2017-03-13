@@ -1,7 +1,7 @@
 package hu.odrin7.bga.controller;
 
 
-import hu.odrin7.bga.domain.User;
+import hu.odrin7.bga.domain.user.User;
 import hu.odrin7.bga.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

@@ -1,7 +1,7 @@
 package repository;
 
 import hu.odrin7.bga.BGAAuthApplication;
-import hu.odrin7.bga.domain.User;
+import hu.odrin7.bga.domain.user.User;
 import hu.odrin7.bga.repository.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;

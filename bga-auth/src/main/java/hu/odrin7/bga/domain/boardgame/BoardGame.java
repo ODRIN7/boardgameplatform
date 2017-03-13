@@ -1,12 +1,10 @@
-package hu.odrin7.bga.domain;
+package hu.odrin7.bga.domain.boardgame;
 
 import org.springframework.data.annotation.Id;
 
 import java.util.List;
 
 public class BoardGame {
-
-    private static long seq = 1000L;
 
     @Id
     private long id;
@@ -19,7 +17,7 @@ public class BoardGame {
     private long price;
 
 
-    private BoardGame() {
+    public BoardGame() {
     }
 
     private BoardGame(long id,
@@ -38,22 +36,19 @@ public class BoardGame {
         this.price = price;
     }
 
-    public static BoardGame create(String name,
+    public static BoardGame create(long id,
+                                   String name,
                                    String icon,
                                    String shortDescription,
                                    List<String> rules,
                                    String pdfDescription,
                                    List<TypeOfBoardGame> typeOfBoardGames,
                                    long price) {
-        return new BoardGame(seq, icon, name, typeOfBoardGames, shortDescription, rules, pdfDescription, price);
+        return new BoardGame(id, icon, name, typeOfBoardGames, shortDescription, rules, pdfDescription, price);
     }
 
     public void decorateTypeOfBoardGame(TypeOfBoardGame typeOfBoardGame) {
         this.typeOfBoardGames.add(typeOfBoardGame);
-    }
-
-    public static long getSeq() {
-        return seq;
     }
 
     public String getIcon() {

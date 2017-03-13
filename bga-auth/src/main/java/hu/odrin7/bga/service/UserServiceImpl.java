@@ -2,9 +2,9 @@ package hu.odrin7.bga.service;
 
 
 import com.google.common.collect.Lists;
-import hu.odrin7.bga.domain.Authority;
-import hu.odrin7.bga.domain.Role;
-import hu.odrin7.bga.domain.User;
+import hu.odrin7.bga.domain.user.Authority;
+import hu.odrin7.bga.domain.user.Role;
+import hu.odrin7.bga.domain.user.User;
 import hu.odrin7.bga.repository.UserRepository;
 import hu.odrin7.bga.seq.dao.SequenceDao;
 import org.slf4j.Logger;

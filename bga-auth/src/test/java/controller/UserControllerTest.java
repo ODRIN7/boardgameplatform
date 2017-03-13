@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.security.auth.UserPrincipal;
 import hu.odrin7.bga.BGAAuthApplication;
 import hu.odrin7.bga.controller.UserController;
-import hu.odrin7.bga.domain.User;
+import hu.odrin7.bga.domain.user.User;
 import hu.odrin7.bga.service.UserService;
 import org.junit.Before;
 import org.junit.Test;

@@ -1,6 +1,6 @@
 package hu.odrin7.bga.service.security;
 
-import hu.odrin7.bga.domain.User;
+import hu.odrin7.bga.domain.user.User;
 import hu.odrin7.bga.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

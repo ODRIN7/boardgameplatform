@@ -1,5 +1,7 @@
-package hu.odrin7.bga.domain;
+package hu.odrin7.bga.domain.user;
 
+import hu.odrin7.bga.domain.boardgame.BoardGame;
+import hu.odrin7.bga.domain.shopping.Shopping;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.userdetails.UserDetails;

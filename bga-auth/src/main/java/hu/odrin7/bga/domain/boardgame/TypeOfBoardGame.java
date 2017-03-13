@@ -1,4 +1,4 @@
-package hu.odrin7.bga.domain;
+package hu.odrin7.bga.domain.boardgame;
 
 public enum TypeOfBoardGame {
 

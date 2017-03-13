@@ -16,9 +16,9 @@ public interface AuthServiceClient {
         consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     void createUser(User user);
 
-    @RequestMapping(value = "/current", method = RequestMethod.GET)
+    @RequestMapping(value = "/users/current", method = RequestMethod.GET)
     Principal getUser();
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/users/", method = RequestMethod.GET)
     List<User> getUsers();
 }

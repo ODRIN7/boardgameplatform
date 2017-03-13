@@ -36,3 +36,6 @@ Api
   http://192.168.99.100:8085/demo
   http://192.168.99.100:8085/boardGame/all
   http://192.168.99.100:8085/uaa/oauth/token
+admin
+http://192.168.99.102:8095/hystrix
+http://192.168.99.102:8096/
