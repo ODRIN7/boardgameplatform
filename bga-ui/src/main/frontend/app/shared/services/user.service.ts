@@ -1,10 +1,14 @@
 import {Injectable, EventEmitter} from "@angular/core";
-import {Http} from "@angular/http";
+import {Http, Response} from "@angular/http";
 import {User} from "../domain/user";
+import {Observable} from "rxjs";
+import {BoardGame} from "../domain/boardgamee";
 
 
 @Injectable()
 export class UserService {
+  private usersUrl = '/oauth/users/';
+  private boardGameURL = 'http://192.168.99.101:8090/api/boardgames/';
   public userChanged = new EventEmitter<User[]>();
   public users: User[];
 
@@ -12,9 +16,19 @@ export class UserService {
 
   }
 
-  getBoardGame(id: number) {
-    return this.users[id];
+  public getUsers() {// Observable<User[]> {
+    return null;
+    // return this.http.get(this.usersUrl)
+    //   .map((response: Response) => response.json())
+    //   .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
   }
+
+  public getBoardGames(): Observable<BoardGame[]> {
+    return this.http.get(this.boardGameURL)
+      .map((response: Response) => response.json())
+      .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
 
   fetchData() {
 

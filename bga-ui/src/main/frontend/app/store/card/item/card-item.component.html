@@ -1,6 +1,5 @@
 <a md-list-item [routerLink]="['/shopping']">
-  <img md-list-avatar src="http://lorempixel.com/40/40/people/{{boardGameId}}"/>
-  <h4 md-line><span class="text-wrap">{{boardGame.id}}</span></h4>
-  <p md-line>{{boardGame.id}}</p>
+  <img md-list-avatar src="{{boardGame.icon}}"/>
+  <h4 md-line><span class="text-wrap">{{boardGame.name}}</span></h4>
 </a>
 <md-divider></md-divider>

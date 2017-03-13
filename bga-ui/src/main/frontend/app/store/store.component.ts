@@ -2,11 +2,13 @@ import {Component, AfterViewInit, OnInit} from "@angular/core";
 import {TdMediaService, TdDialogService, TdLoadingService} from "@covalent/core";
 import {Boardgame} from "../shared/domain/boardgame";
 import {StoreService} from "../shared/services/store.service";
-import {AuthService} from "../shared/services/auth/auth.services";
 import {MdSnackBar} from "@angular/material";
 import {Router} from "@angular/router";
 import {Title} from "@angular/platform-browser";
-import {User} from "../shared/domain/user";
+import {BoardGame} from "../shared/domain/boardgamee";
+import {EmitterService} from "../shared/services/emitter.service";
+import {BoardGameService} from "../shared/services/boardGame.service";
+import {BoardGameType} from "../shared/domain/boardGame.type";
 
 @Component({
   selector: 'bga-store',
@@ -14,26 +16,28 @@ import {User} from "../shared/domain/user";
   styleUrls: ['./store.component.scss'],
 })
 export class StoreComponent implements AfterViewInit, OnInit {
-  ngOnInit(): void {
-    this.boardGames = this.storeService.boardGames;
-    this.shoppingCard = this.storeService.boardGames;
+
+  shoppingCard: Boardgame[];
+  boardGames: BoardGame[] = [];
+  filteredBoardGames: BoardGame[] = [];
+  public allBoardGameTypes: Array<string> ;
+  private boardGameListId = 'BOARDGAME_COMPONENT'
+
+  constructor(private _titleService: Title,
+              private _router: Router,
+              private _loadingService: TdLoadingService,
+              private _dialogService: TdDialogService,
+              private _snackBarService: MdSnackBar,
+              private boardGameService: BoardGameService,
+              private eventEmitter: EmitterService,
+              private storeService: StoreService,
+              public media: TdMediaService) {
   }
 
 
-  public boardGames: Boardgame[];
-  public shoppingCard: Boardgame[];
-  users: User[];
-  filteredUsers: User[];
-
-  constructor(public storeService: StoreService,
-              public authService: AuthService,
-              public _titleService: Title,
-              public _router: Router,
-              public _loadingService: TdLoadingService,
-              public _dialogService: TdDialogService,
-              public _snackBarService: MdSnackBar,
-              public _usersService: AuthService,
-              public media: TdMediaService) {
+  ngOnInit(): void {
+    this.shoppingCard = this.storeService.boardGames;
+    this.shoppingCard.length = this.storeService.boardGames.length;
   }
 
   goBack(route: string): void {
@@ -41,68 +45,68 @@ export class StoreComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit(): void {
-    // broadcast to all listener observables when loading the page
     this.media.broadcast();
-
+    this.initBoardGameTypes();
     this._titleService.setTitle('Covalent Users');
-    this.loadUsers();
-    this.boardGames = this.storeService.boardGames;
-    this.storeService.boardGamesChanged.subscribe(
-      (boardGames: Boardgame[]) => this.boardGames = boardGames
-    );
+    this.loadBoardGames();
     this.shoppingCard = this.storeService.boardGames;
-    this.storeService.boardGamesChanged.subscribe(
-      (boardGames: Boardgame[]) => this.boardGames = boardGames
-    );
   }
 
-  public filterAllUsers(displayName: string = ''): void {
-    /* this.filteredUsers = this.users.filter((user: User) => {
-     return user.getusername().toLowerCase().indexOf(displayName.toLowerCase()) > -1;
-     });*/
+  private initBoardGameTypes(): void {
+    this.allBoardGameTypes = Object.keys(BoardGameType);
+    this.allBoardGameTypes = this.allBoardGameTypes.slice(this.allBoardGameTypes.length / 2);
+  }
+
+  public filterBoardGames(displayName: string = ''): void {
+    this.filteredBoardGames = this.boardGames.filter((boardGame: BoardGame) => {
+      return boardGame.name.toLowerCase().indexOf(displayName.toLowerCase()) > -1;
+    });
+  }
+
+  public filterBoardGamesByType(boardGameType: string = ''): void {
+    if (boardGameType != '') {
+      this.filteredBoardGames = this.boardGames.filter((boardGame: BoardGame) => {
+        return boardGame.typeOfBoardGames.indexOf(boardGameType) > -1;
+      });
+    }
   }
 
   public filterUsers(): void {
   }
 
-  loadUsers(): void {
+  loadBoardGames(): void {
 
-    this.filteredUsers = [];
-    this.filteredUsers = this._usersService.getUsers();
-    /*  this._loadingService.register('users.list');
-     this._usersService.getUsers().subscribe((users: User[]) => {
-     this.users = users;
-     this.filteredUsers = users;
-     this._loadingService.resolve('users.list');
-     }, (error: Error) => {
-     this._usersService.getUsers().subscribe((users: User[]) => {
-     this.users = users;
-     this.filteredUsers = users;
-     this._loadingService.resolve('users.list');
-     });
-     });*/
+    this.filteredBoardGames = [];
+    this._loadingService.register('boardGames.list');
+    this.boardGameService.getBoardGames().subscribe((boardGames: BoardGame[]) => {
+      this.boardGames = boardGames;
+      this.filteredBoardGames = boardGames;
+      this._loadingService.resolve('boardGames.list');
+    }, (error: Error) => {
+      this.boardGameService.getBoardGames().subscribe((users: BoardGame[]) => {
+        this.boardGames = users;
+        this.filteredBoardGames = users;
+        this._loadingService.resolve('boardGames.list');
+      });
+    });
   }
 
-  deleteUser(id: string): void {
+  ngOnChanges(changes: any) {
+    // Listen to the 'list'emitted event so as populate the model
+    // with the event payload
+    EmitterService.get(this.boardGameListId).subscribe((boardGames: BoardGame[]) => {
+      this.loadBoardGames()
+    });
+  }
+
+  deleteBoardGame(id: number): void {
     this._dialogService
       .openConfirm({message: 'Are you sure you want to delete this user?'})
-    /* .afterClosed().subscribe((confirm: boolean) => {
-     if (confirm) {
-     this._loadingService.register('users.list');
-     this._usersService.delete(id).subscribe(() => {
-     this.users = this.users.filter((user: User) => {
-     return user.getusername() !== id;
-     });
-     this.filteredUsers = this.filteredUsers.filter((user: User) => {
-     return user.getusername() !== id;
-     });
-     this._loadingService.resolve('users.list');
-     this._snackBarService.open('User deleted', 'Ok');
-     }, (error: Error) => {
-     this._dialogService.openAlert({message: 'There was an error'});
-     this._loadingService.resolve('users.list');
-     });
-     }
-     });*/
+      .afterClosed().subscribe((confirm: boolean) => {
+      if (confirm) {
+        this.boardGameService.deleteById(id);
+      }
+    });
+    EmitterService.get(this.boardGameListId).emit(this.boardGames);
   }
 }

@@ -18,6 +18,9 @@ import {StoreService} from "./shared/services/store.service";
 import {MessagesService} from "./shared/services/messages.service";
 import {NotificationComponent} from "./notifications/notifications.component";
 import {ShoppingComponent} from "./store/card/shopping/shopping.component";
+import {UserService} from "./shared/services/user.service";
+import {BoardGameService} from "./shared/services/boardGame.service";
+import {EmitterService} from "./shared/services/emitter.service";
 
 const httpInterceptorProviders: Type<any>[] = [
   RequestInterceptor,
@@ -55,6 +58,9 @@ const httpInterceptorProviders: Type<any>[] = [
     httpInterceptorProviders,
     MessagesService,
     Title,
+    UserService,
+    BoardGameService,
+    EmitterService
   ], // additional providers needed for this module
   entryComponents: [],
   bootstrap: [BGAMyAppComponent]

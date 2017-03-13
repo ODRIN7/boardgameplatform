@@ -12,13 +12,16 @@ import java.util.List;
 import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @RestController
+
+//@CrossOrigin(origins = "*" ,allowCredentials="true")
 @RequestMapping("/boardgames")
 public class BoardGameController {
 
-    @Autowired
-    private BoardGameService boardGameService;
+    private final BoardGameService boardGameService;
 
-    public BoardGameController() {
+    @Autowired
+    public BoardGameController(BoardGameService boardGameService) {
+        this.boardGameService = boardGameService;
     }
 
     @PostConstruct

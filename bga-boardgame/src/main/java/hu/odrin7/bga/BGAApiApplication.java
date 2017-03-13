@@ -22,6 +22,12 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.E
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.provider.token.ResourceServerTokenServices;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @SpringBootApplication
 @EnableResourceServer
@@ -47,7 +53,7 @@ public class BGAApiApplication extends ResourceServerConfigurerAdapter {
     }
 
     @Bean
-    public RequestInterceptor oauth2FeignRequestInterceptor(){
+    public RequestInterceptor oauth2FeignRequestInterceptor() {
         return new OAuth2FeignRequestInterceptor(new DefaultOAuth2ClientContext(),
             clientCredentialsResourceDetails());
     }
@@ -65,7 +71,7 @@ public class BGAApiApplication extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-            .antMatchers("/" , "/demo").permitAll()
+            .antMatchers("/", "/demo").permitAll()
             .antMatchers("/boardgames/**", "/posts/**").permitAll()
             .anyRequest().authenticated();
     }

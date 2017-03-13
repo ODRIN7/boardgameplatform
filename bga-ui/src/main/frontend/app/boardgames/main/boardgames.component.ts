@@ -1,10 +1,12 @@
-import {Component} from "@angular/core";
+import {Component, AfterViewInit, EventEmitter, OnChanges} from "@angular/core";
 import {Router} from "@angular/router";
 import {Title} from "@angular/platform-browser";
 import {MdSnackBar} from "@angular/material";
 import {TdLoadingService, TdDialogService, TdMediaService} from "@covalent/core";
-import {AuthService} from "../../shared/services/auth/auth.services";
-import {User} from "../../shared/domain/user";
+import {BoardGame} from "../../shared/domain/boardgamee";
+import {BoardGameService} from "../../shared/services/boardGame.service";
+import {BoardGameType} from "../../shared/domain/boardGame.type";
+import {EmitterService} from "../../shared/services/emitter.service";
 
 
 @Component({
@@ -12,17 +14,21 @@ import {User} from "../../shared/domain/user";
   templateUrl: './boardgames.component.html',
   styleUrls: ['./boardgames.component.scss'],
 })
-export class BoardGameManagerComponent {
+export class BoardGameManagerComponent implements AfterViewInit, OnChanges {
 
-  users: User[];
-  filteredUsers: User[];
+  boardGames: BoardGame[] = [];
+  filteredBoardGames: BoardGame[] = [];
+  public allBoardGameTypes: Array<string>;
+  private boardGameListId = 'BOARDGAME_COMPONENT'
+
 
   constructor(private _titleService: Title,
               private _router: Router,
               private _loadingService: TdLoadingService,
               private _dialogService: TdDialogService,
               private _snackBarService: MdSnackBar,
-              private _usersService: AuthService,
+              private boardGameService: BoardGameService,
+              private eventEmitter: EmitterService,
               public media: TdMediaService) {
   }
 
@@ -31,58 +37,67 @@ export class BoardGameManagerComponent {
   }
 
   ngAfterViewInit(): void {
-    // broadcast to all listener observables when loading the page
     this.media.broadcast();
-
-    this._titleService.setTitle( 'Covalent Users' );
-    this.loadUsers();
+    this.initBoardGameTypes();
+    this._titleService.setTitle('Covalent Users');
+    this.loadBoardGames();
   }
 
-  public filterAllUsers(displayName: string = ''): void {
-   /* this.filteredUsers = this.users.filter((user: User) => {
-      return user.getusername().toLowerCase().indexOf(displayName.toLowerCase()) > -1;
-    });*/
+  private initBoardGameTypes(): void {
+    this.allBoardGameTypes = Object.keys(BoardGameType);
+    this.allBoardGameTypes = this.allBoardGameTypes.slice(this.allBoardGameTypes.length / 2);
   }
+
+  public filterBoardGames(displayName: string = ''): void {
+    this.filteredBoardGames = this.boardGames.filter((boardGame: BoardGame) => {
+      return boardGame.name.toLowerCase().indexOf(displayName.toLowerCase()) > -1;
+    });
+  }
+
+  public filterBoardGamesByType(boardGameType: string = ''): void {
+    if (boardGameType != '') {
+      this.filteredBoardGames = this.boardGames.filter((boardGame: BoardGame) => {
+        return boardGame.typeOfBoardGames.indexOf(boardGameType) > -1;
+      });
+    }
+  }
+
   public filterUsers(): void {
   }
-  loadUsers(): void {
 
-    this.filteredUsers = [];
-    this.filteredUsers = this._usersService.getUsers();
-    /*  this._loadingService.register('users.list');
-    this._usersService.getUsers().subscribe((users: User[]) => {
-      this.users = users;
-      this.filteredUsers = users;
-      this._loadingService.resolve('users.list');
+  loadBoardGames(): void {
+
+    this.filteredBoardGames = [];
+    this._loadingService.register('boardGames.list');
+    this.boardGameService.getBoardGames().subscribe((boardGames: BoardGame[]) => {
+      this.boardGames = boardGames;
+      this.filteredBoardGames = boardGames;
+      this._loadingService.resolve('boardGames.list');
     }, (error: Error) => {
-      this._usersService.getUsers().subscribe((users: User[]) => {
-        this.users = users;
-        this.filteredUsers = users;
-        this._loadingService.resolve('users.list');
+      this.boardGameService.getBoardGames().subscribe((users: BoardGame[]) => {
+        this.boardGames = users;
+        this.filteredBoardGames = users;
+        this._loadingService.resolve('boardGames.list');
       });
-    });*/
+    });
   }
 
-  deleteUser(id: string): void {
+  ngOnChanges(changes: any) {
+    // Listen to the 'list'emitted event so as populate the model
+    // with the event payload
+    EmitterService.get(this.boardGameListId).subscribe((boardGames: BoardGame[]) => {
+      this.loadBoardGames()
+    });
+  }
+
+  deleteBoardGame(id: number): void {
     this._dialogService
       .openConfirm({message: 'Are you sure you want to delete this user?'})
-     /* .afterClosed().subscribe((confirm: boolean) => {
+      .afterClosed().subscribe((confirm: boolean) => {
       if (confirm) {
-        this._loadingService.register('users.list');
-        this._usersService.delete(id).subscribe(() => {
-          this.users = this.users.filter((user: User) => {
-            return user.getusername() !== id;
-          });
-          this.filteredUsers = this.filteredUsers.filter((user: User) => {
-            return user.getusername() !== id;
-          });
-          this._loadingService.resolve('users.list');
-          this._snackBarService.open('User deleted', 'Ok');
-        }, (error: Error) => {
-          this._dialogService.openAlert({message: 'There was an error'});
-          this._loadingService.resolve('users.list');
-        });
+        this.boardGameService.deleteById(id);
       }
-    });*/
+    });
+    EmitterService.get(this.boardGameListId).emit(this.boardGames);
   }
 }
