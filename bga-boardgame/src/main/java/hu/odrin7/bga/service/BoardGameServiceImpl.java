@@ -5,7 +5,6 @@ import hu.odrin7.bga.domain.boardgame.BoardGame;
 import hu.odrin7.bga.domain.boardgame.BoardGameRepository;
 import hu.odrin7.bga.domain.boardgame.TypeOfBoardGame;
 import hu.odrin7.bga.seq.dao.SequenceDao;
-import hu.odrin7.bga.seq.domain.SequenceId;
 import hu.odrin7.bga.seq.domain.SequenceIdRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +14,9 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import static com.google.common.collect.Lists.newArrayList;
 import static hu.odrin7.bga.domain.boardgame.TypeOfBoardGame.*;
 
 @Service
@@ -49,7 +50,14 @@ public class BoardGameServiceImpl implements BoardGameService {
 
     @Override
     public List<BoardGame> getBoardGames() {
-        return Lists.newArrayList(boardGameRepository.findAll());
+        return newArrayList(boardGameRepository.findAll());
+    }
+
+    @Override
+    public List<BoardGame> getBoardGamesByType(TypeOfBoardGame typeOfBoardGame) {
+        return newArrayList(boardGameRepository.findAll()).stream()
+            .filter(boardGame -> boardGame.getTypeOfBoardGames()
+                .contains(typeOfBoardGame)).collect(Collectors.toList());
     }
 
     @Override
