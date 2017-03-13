@@ -1,7 +1,6 @@
 package hu.odrin7.bga.service;
 
 
-import com.google.common.collect.Lists;
 import hu.odrin7.bga.domain.user.Authority;
 import hu.odrin7.bga.domain.user.Role;
 import hu.odrin7.bga.domain.user.User;
@@ -16,7 +15,6 @@ import org.springframework.util.Assert;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static java.util.stream.Collectors.toList;
@@ -43,7 +41,8 @@ public class UserServiceImpl implements UserService {
                     "username" + i,
                     "password" + i,
                     Collections.singletonList(new Authority(Role.ADMIN_ROLE)),
-                    "email" + i + "@email.com");
+                    "email" + i + "@email.com",
+                    "http://lorempixel.com/40/40/people/" + i);
                 create(user);
                 log.warn(user.toString());
             }

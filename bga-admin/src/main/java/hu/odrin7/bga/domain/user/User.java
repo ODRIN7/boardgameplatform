@@ -13,39 +13,29 @@ public class User {
     @NotNull
     @Length(min = 3, max = 20)
     private String username;
-
-    @NotNull
-    @Length(min = 6, max = 40)
     private String password;
     private String email;
-    private List<Authority> authority;
-    private List<BoardGame> boardGames;
+    private String icon;
+    private List<Authority> authorities;
+    private List<Long> boardGamesId;
     private List<Shopping> shoppings;
     private long money;
 
     public User() {
     }
 
-    public User(String username, String password, List<Authority> authority, String email) {
+    public User(String username, String password, List<Authority> authorities, String email, String icon) {
         this.username = username;
         this.password = password;
-        this.authority = authority;
+        this.authorities = authorities;
         this.email = email;
+        this.icon = icon;
         init();
-    }
-
-    public boolean addtoCard(BoardGame boardGame) {
-        if (this.money <= boardGame.getPrice()) {
-            boardGames.add(boardGame);
-            this.money -= boardGame.getPrice();
-            return true;
-        }
-        return false;
     }
 
     public boolean buyBoardGame(BoardGame boardGame) {
         if (this.money <= boardGame.getPrice()) {
-            boardGames.add(boardGame);
+            boardGamesId.add(boardGame.getId());
             this.money -= boardGame.getPrice();
             return true;
         }
@@ -56,14 +46,10 @@ public class User {
         this.money = money;
     }
 
-    public void addToCard(Shopping shopping) {
-        this.shoppings.add(shopping);
-    }
-
     private void init() {
         this.money = 0L;
-        this.boardGames = new ArrayList<>();
-        shoppings = new ArrayList<>();
+        this.boardGamesId = new ArrayList<>();
+        this.shoppings = new ArrayList<>();
     }
 
     public String getUsername() {
@@ -82,20 +68,36 @@ public class User {
         this.password = password;
     }
 
-    public List<Authority> getAuthority() {
-        return authority;
+    public String getEmail() {
+        return email;
     }
 
-    public void setAuthority(List<Authority> authority) {
-        this.authority = authority;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
-    public List<BoardGame> getBoardGames() {
-        return boardGames;
+    public String getIcon() {
+        return icon;
     }
 
-    public void setBoardGames(List<BoardGame> boardGames) {
-        this.boardGames = boardGames;
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public List<Authority> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(List<Authority> authorities) {
+        this.authorities = authorities;
+    }
+
+    public List<Long> getBoardGamesId() {
+        return boardGamesId;
+    }
+
+    public void setBoardGamesId(List<Long> boardGamesId) {
+        this.boardGamesId = boardGamesId;
     }
 
     public List<Shopping> getShoppings() {
@@ -114,11 +116,14 @@ public class User {
         this.money = money;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
+    public User(String username, String password, String email, String icon, List<Authority> authorities, List<Long> boardGamesId, List<Shopping> shoppings, long money) {
+        this.username = username;
+        this.password = password;
         this.email = email;
+        this.icon = icon;
+        this.authorities = authorities;
+        this.boardGamesId = boardGamesId;
+        this.shoppings = shoppings;
+        this.money = money;
     }
 }

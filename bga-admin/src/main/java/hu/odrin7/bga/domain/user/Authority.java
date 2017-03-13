@@ -22,4 +22,7 @@ public class Authority implements GrantedAuthority {
     public String getAuthority() {
         return role.name();
     }
+
+    public Authority() {
+    }
 }

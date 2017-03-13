@@ -14,7 +14,4 @@ public interface AuthServiceClient {
 
     @RequestMapping(value = "/current", method = RequestMethod.GET)
     Principal getUser();
-
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    List<User> getUsers();
 }
