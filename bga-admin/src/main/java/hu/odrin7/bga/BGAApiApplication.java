@@ -10,6 +10,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
+import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
+import org.springframework.cloud.netflix.turbine.stream.EnableTurbineStream;
 import org.springframework.cloud.security.oauth2.client.feign.OAuth2FeignRequestInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,6 +33,8 @@ import org.springframework.security.oauth2.provider.token.ResourceServerTokenSer
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableConfigurationProperties
 @Configuration
+@EnableTurbineStream
+@EnableHystrixDashboard
 public class BGAApiApplication extends ResourceServerConfigurerAdapter {
 
     @Autowired
@@ -65,8 +69,8 @@ public class BGAApiApplication extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-            .antMatchers("/" , "/demo").permitAll()
-            .antMatchers("/boardgames/**", "/posts/**").permitAll()
+            .antMatchers("/", "/demo", "/hystrix").permitAll()
+            .antMatchers("/notifications/**", "/statistics/**","/users/**").permitAll()
             .anyRequest().authenticated();
     }
 }

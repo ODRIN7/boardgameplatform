@@ -5,6 +5,8 @@ import hu.odrin7.bga.domain.user.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -18,6 +20,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void createUser(User user) {
         authServiceClient.createUser(user);
+    }
+
+    @Override
+    public List<User> getUsers() {
+        return authServiceClient.getUsers();
     }
 
 }

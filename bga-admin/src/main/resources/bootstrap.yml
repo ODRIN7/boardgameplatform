@@ -4,7 +4,7 @@ info:
 
 # PROFILES
 spring:
-    application.name: statistics-service
+    application.name: admin-service
     profiles.active: @default.spring.profiles@
     cloud:
         config:
@@ -23,7 +23,6 @@ spring:
     cloud:
         config:
             uri: http://localhost:8888
-
 
 
 

@@ -35,7 +35,16 @@ services:
     build: bga-mongodb
     ports:
       - 25000:27017
-  ui-service:
-    build: bga-ui
+
+  admin-service:
+    build: bga-admin
     ports:
-       - 8080:8080
+      - 8095:8095
+      - 8096:8096
+      - 9000:9000
+      - 8089:8089
+
+  admin-mongodb:
+    build: bga-mongodb
+    ports:
+      - 29000:27017

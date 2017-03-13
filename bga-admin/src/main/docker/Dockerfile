@@ -1,7 +1,7 @@
 FROM anapsix/alpine-java:8
 MAINTAINER ODRIN7 <sz.danix6@gmail.com>
 VOLUME /tmp
-ADD bga-statistics-1.0.0.jar app.jar
+ADD bga-admin-1.0.0.jar app.jar
 ADD wait-for-service.sh wait-for-service.sh
 RUN bash -c 'touch /app.jar'
 RUN bash -c 'touch /wait-for-service.sh'

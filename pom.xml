@@ -21,7 +21,7 @@
         <module>bga-boardgame</module>
         <module>bga-store</module>
         <module>bga-message</module>
-        <module>bga-statistics</module>
+        <module>bga-admin</module>
     </modules>
 
     <properties>
