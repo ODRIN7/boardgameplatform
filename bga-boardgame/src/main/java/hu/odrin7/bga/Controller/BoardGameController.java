@@ -4,6 +4,7 @@ package hu.odrin7.bga.Controller;
 import hu.odrin7.bga.domain.boardgame.BoardGame;
 import hu.odrin7.bga.service.BoardGameService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
@@ -13,10 +14,9 @@ import static org.springframework.web.bind.annotation.RequestMethod.*;
 
 @RestController
 
-//@CrossOrigin(origins = "*" ,allowCredentials="true")
 @RequestMapping("/boardgames")
 public class BoardGameController {
-
+//@CrossOrigin(origins = "*" ,allowCredentials="true")
     private final BoardGameService boardGameService;
 
     @Autowired
