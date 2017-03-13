@@ -16,6 +16,10 @@ import org.springframework.util.Assert;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static com.google.common.collect.Lists.newArrayList;
+import static java.util.stream.Collectors.toList;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -38,7 +42,8 @@ public class UserServiceImpl implements UserService {
                 User user = new User(
                     "username" + i,
                     "password" + i,
-                    Collections.singletonList(new Authority(Role.ADMIN_ROLE)));
+                    Collections.singletonList(new Authority(Role.ADMIN_ROLE)),
+                    "email" + i + "@email.com");
                 create(user);
                 log.warn(user.toString());
             }
@@ -61,7 +66,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getUsers() {
-        return Lists.newArrayList(repository.findAll());
+        return newArrayList(repository.findAll());
+    }
+
+    @Override
+    public List<User> getUsersByAuthority(Authority authority) {
+        return newArrayList(repository.findAll()).stream().filter(user -> user.getAuthorities().contains(authority)).collect(toList());
     }
 
     @Override
@@ -71,5 +81,25 @@ public class UserServiceImpl implements UserService {
             repository.delete(user);
         }
         return user;
+    }
+
+    @Override
+    public boolean modifyByUsername(String username, User newUser) {
+        User boardGame = repository.findOne(username);
+        if (boardGame != null) {
+            boardGame = newUser;
+            repository.save(boardGame);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public User getUserByUsername(String username) {
+        User user = repository.findOne(username);
+        if (user != null) {
+            return user;
+        }
+        return null;
     }
 }

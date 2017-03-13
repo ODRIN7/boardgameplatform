@@ -14,11 +14,9 @@ public class User implements UserDetails {
 
     @Id
     private String username;
-
     private String password;
-
+    private String email;
     private List<Authority> authority;
-
     private List<BoardGame> boardGames;
     private List<Shopping> shoppings;
 
@@ -71,13 +69,15 @@ public class User implements UserDetails {
         return true;
     }
 
+
     public User() {
     }
 
-    public User(String username, String password, List<Authority> authority) {
+    public User(String username, String password, List<Authority> authority, String email) {
         this.username = username;
         this.password = password;
         this.authority = authority;
+        this.email = email;
         init();
     }
 
@@ -111,6 +111,14 @@ public class User implements UserDetails {
         this.money = 0L;
         this.boardGames = new ArrayList<>();
         shoppings = new ArrayList<>();
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
 }

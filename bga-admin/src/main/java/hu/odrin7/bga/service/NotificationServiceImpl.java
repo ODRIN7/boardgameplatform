@@ -15,7 +15,7 @@ public class NotificationServiceImpl implements NotificationService{
 
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final NotificationRepository notificationRepository;
-
+    private static final String BOARDGAME_SEQ_KEY = "notification";
     @Autowired
     public NotificationServiceImpl(NotificationRepository notificationRepository) {
         this.notificationRepository = notificationRepository;
@@ -25,6 +25,7 @@ public class NotificationServiceImpl implements NotificationService{
     public void fillData() {
         List<Notification> notifications = this.getNotifications();
         if (notifications.isEmpty()) {
+       //     sequenceDao.saveNewKey(BOARDGAME_SEQ_KEY, 200);
             for (int i = 1; i <= 10; i++) {
                 Notification post = new Notification("Sample message post title #" + i, "Sample message post content #" + i);
                 notificationRepository.save(post);

@@ -17,6 +17,7 @@ public class User {
     @NotNull
     @Length(min = 6, max = 40)
     private String password;
+    private String email;
     private List<Authority> authority;
     private List<BoardGame> boardGames;
     private List<Shopping> shoppings;
@@ -25,10 +26,11 @@ public class User {
     public User() {
     }
 
-    public User(String username, String password, List<Authority> authority) {
+    public User(String username, String password, List<Authority> authority, String email) {
         this.username = username;
         this.password = password;
         this.authority = authority;
+        this.email = email;
         init();
     }
 
@@ -110,5 +112,13 @@ public class User {
 
     public void setMoney(long money) {
         this.money = money;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
