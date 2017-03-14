@@ -30,6 +30,11 @@ public class StoreController {
         return storeService.getAllShoppingList();
     }
 
+    @RequestMapping(value = "/current/", method = RequestMethod.GET)
+    public List<Shopping> getShoppingListByCurrentUser() {
+        return storeService.getShoppingListByCurrentUser();
+    }
+
     @RequestMapping(value = "/byUser/{userId}", method = RequestMethod.GET)
     public List<Shopping> getShoppingList(@PathVariable("userId") Long userId) {
         return storeService.getShoppingListByUser(userId);

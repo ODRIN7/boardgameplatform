@@ -10,15 +10,14 @@ public interface StoreService {
 
     List<Shopping> getAllShoppingList();
 
+    List<Shopping> getShoppingListByCurrentUser();
+
     List<Shopping> getShoppingListByUser(Long userId);
 
     Shopping addToCard(Shopping shopping);
 
     Shopping buy(long userId, Long shoppingId);
 
-    Shopping addToCard(long userId, Long shoppingId);
-
     Shopping deleteShopping(Long shoppingId);
-
 
 }

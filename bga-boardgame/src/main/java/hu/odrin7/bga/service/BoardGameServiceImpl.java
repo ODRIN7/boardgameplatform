@@ -1,6 +1,5 @@
 package hu.odrin7.bga.service;
 
-import com.google.common.collect.Lists;
 import hu.odrin7.bga.domain.boardgame.BoardGame;
 import hu.odrin7.bga.domain.boardgame.BoardGameRepository;
 import hu.odrin7.bga.domain.boardgame.TypeOfBoardGame;
@@ -55,9 +54,16 @@ public class BoardGameServiceImpl implements BoardGameService {
 
     @Override
     public List<BoardGame> getBoardGamesByType(TypeOfBoardGame typeOfBoardGame) {
-        return newArrayList(boardGameRepository.findAll()).stream()
+        return getBoardGames().stream()
             .filter(boardGame -> boardGame.getTypeOfBoardGames()
                 .contains(typeOfBoardGame)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<BoardGame> getBoardGamesByIds(List<Long> boardGameIds) {
+        return getBoardGames().stream()
+            .filter(boardGame -> boardGameIds.contains(boardGame.getId()))
+            .collect(Collectors.toList());
     }
 
     @Override

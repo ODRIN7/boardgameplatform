@@ -16,7 +16,7 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @RequestMapping("/boardgames")
 public class BoardGameController {
-    //@CrossOrigin(origins = "*" ,allowCredentials="true")
+
     private final BoardGameService boardGameService;
 
     @Autowired
@@ -43,6 +43,11 @@ public class BoardGameController {
     @RequestMapping(value = "/{boardGameId}", method = GET)
     public BoardGame getBoardGame(@PathVariable("boardGameId") Long boardGameId) {
         return boardGameService.getBoardGameById(boardGameId);
+    }
+
+    @RequestMapping(value = "/boardGames", method = RequestMethod.POST)
+    public List<BoardGame> getBoardGame(@RequestBody List<Long> boardGameIds) {
+        return boardGameService.getBoardGamesByIds(boardGameIds);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)

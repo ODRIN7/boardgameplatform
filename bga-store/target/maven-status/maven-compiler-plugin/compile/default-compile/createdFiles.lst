@@ -3,11 +3,16 @@ hu\odrin7\bga\BGAStoreApplication.class
 hu\odrin7\bga\service\security\CustomUserInfoTokenServices.class
 hu\odrin7\bga\client\BoardGameServiceClient.class
 hu\odrin7\bga\domain\user\User.class
+hu\odrin7\bga\seq\dao\SequenceDao.class
 hu\odrin7\bga\domain\boardgame\TypeOfBoardGame.class
 hu\odrin7\bga\client\AuthServiceClient.class
 hu\odrin7\bga\domain\user\Authority.class
+hu\odrin7\bga\seq\domain\SequenceIdRepository.class
 hu\odrin7\bga\domain\store\Status.class
 hu\odrin7\bga\domain\store\ShoppingRepository.class
+hu\odrin7\bga\seq\dao\SequenceDaoImpl.class
+hu\odrin7\bga\seq\domain\SequenceId.class
+hu\odrin7\bga\seq\exception\SequenceException.class
 hu\odrin7\bga\service\StoreServiceImpl.class
 hu\odrin7\bga\domain\boardgame\BoardGame.class
 hu\odrin7\bga\service\StoreService.class

@@ -36,15 +36,13 @@ services:
     ports:
       - 25000:27017
 
-  admin-service:
-    build: bga-admin
+  store-service:
+    build: bga-store
     ports:
-      - 8095:8095
-      - 8096:8096
-      - 9000:9000
-      - 8089:8089
-
-  admin-mongodb:
+      - 8087:8087
+  store-mongodb:
     build: bga-mongodb
     ports:
-      - 29000:27017
+      - 27000:27017
+
+

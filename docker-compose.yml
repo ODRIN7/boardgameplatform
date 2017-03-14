@@ -27,34 +27,6 @@ services:
         max-size: "10m"
         max-file: "10"
 
-
-  store-service:
-    environment:
-      MONGODB_PASSWORD: odrin7
-    image: bga/bga-store
-    ports:
-      - 8087:8087
-    restart: always
-    logging:
-      options:
-        max-size: "10m"
-        max-file: "10"
-    entrypoint: ./wait-for-service.sh http://discovery-service:8081/health
-
-  store-mongodb:
-    environment:
-      INIT_DUMP: nothing.js
-      MONGODB_NAME: boardGameArena
-      MONGODB_ROLE: readWrite
-      MONGODB_PASSWORD: odrin7
-      MONGODB_USER: odrin7
-    image: bga/bga-store-mongodb
-    restart: always
-    logging:
-      options:
-        max-size: "10m"
-        max-file: "10"
-
   ui-service:
     image: bga/bga-ui
     ports:
@@ -69,3 +41,30 @@ services:
      - auth-service
      - config-service
     entrypoint: ./wait-for-service.sh http://discovery-service:8081/health
+
+  admin-service:
+    environment:
+      MONGODB_PASSWORD: odrin7
+    image: bga/bga-admin
+    ports:
+      - 8095:8095
+    restart: always
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"
+    entrypoint: ./wait-for-service.sh http://discovery-service:8081/health
+
+  admin-mongodb:
+    environment:
+      INIT_DUMP: nothing.js
+      MONGODB_NAME: boardGameArena
+      MONGODB_ROLE: readWrite
+      MONGODB_PASSWORD: odrin7
+      MONGODB_USER: odrin7
+    image: bga/admin-mongodb
+    restart: always
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "10"

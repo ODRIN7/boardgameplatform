@@ -3,6 +3,7 @@ package hu.odrin7.bga.client;
 import hu.odrin7.bga.domain.boardgame.BoardGame;
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -16,4 +17,7 @@ public interface BoardGameServiceClient {
 
     @RequestMapping(value = "/{boardGameId}", method = RequestMethod.GET)
     BoardGame getBoardGame(@PathVariable("boardGameId") Long boardGameId);
+
+    @RequestMapping(value = "/boardGames", method = RequestMethod.POST)
+    List<BoardGame> getBoardGame(@RequestBody List<Long> boardGameIds);
 }

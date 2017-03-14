@@ -13,6 +13,8 @@ public interface BoardGameService {
 
     List<BoardGame> getBoardGamesByType(TypeOfBoardGame typeOfBoardGame);
 
+    List<BoardGame> getBoardGamesByIds(List<Long> boardGameIds);
+
     BoardGame getBoardGameById(long boardGameId);
 
     List<BoardGame> filterBoardGame();
