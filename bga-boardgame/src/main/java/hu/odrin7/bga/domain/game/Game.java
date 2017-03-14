@@ -14,20 +14,22 @@ public class Game {
 
     @Id
     private long id;
+    private long chatId;
     private String title;
     private Long boardGameId;
     private List<UserPerGame> userPerGame;
     private Status status;
     private User winner;
 
-    public static Game create(long id, Long boardGameId, User host, String title) {
-        return new Game(id, boardGameId, host, title);
+    public static Game create(long id, long chatId, Long boardGameId, User host, String title) {
+        return new Game(id, chatId, boardGameId, host, title);
     }
 
-    private Game(long id, Long boardGameId, User host, String title) {
+    private Game(long id, long chatId, Long boardGameId, User host, String title) {
         this.id = id;
         this.title = title;
         this.boardGameId = boardGameId;
+        this.chatId = chatId;
         init(host);
     }
 
@@ -75,10 +77,43 @@ public class Game {
         return status;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public long getChatId() {
+        return chatId;
+    }
+
+    public void setChatId(long chatId) {
+        this.chatId = chatId;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setBoardGameId(Long boardGameId) {
+        this.boardGameId = boardGameId;
+    }
+
+    public void setUserPerGame(List<UserPerGame> userPerGame) {
+        this.userPerGame = userPerGame;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public void setWinner(User winner) {
+        this.winner = winner;
+    }
+
     @Override
     public String toString() {
         return Objects.toStringHelper(this)
             .add("id", id)
+            .add("chatId", chatId)
             .add("title", title)
             .add("boardGameId", boardGameId)
             .add("userPerGame", userPerGame)

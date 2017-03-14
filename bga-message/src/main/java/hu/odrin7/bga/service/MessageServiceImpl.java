@@ -5,6 +5,7 @@ import hu.odrin7.bga.client.BoardGameServiceClient;
 import hu.odrin7.bga.domain.message.Chat;
 import hu.odrin7.bga.domain.message.ChatRepository;
 import hu.odrin7.bga.domain.message.Message;
+import hu.odrin7.bga.seq.dao.SequenceDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,19 +22,25 @@ public class MessageServiceImpl implements MessageService {
     private final BoardGameServiceClient boardGameServiceClient;
     private final ChatRepository chatRepository;
     private final AuthServiceClient authServiceClient;
+    private final SequenceDao sequenceDao;
+    private static final String MESSAGE_SEQ_KEY = "message";
+    private static final String CHAT_SEQ_KEY = "chat";
 
     @Autowired
     public MessageServiceImpl(BoardGameServiceClient boardGameServiceClient,
                               ChatRepository chatRepository,
-                              AuthServiceClient authServiceClient) {
+                              AuthServiceClient authServiceClient, SequenceDao sequenceDao) {
         this.boardGameServiceClient = boardGameServiceClient;
         this.chatRepository = chatRepository;
         this.authServiceClient = authServiceClient;
+        this.sequenceDao = sequenceDao;
     }
 
 
     @Override
     public void fillData() {
+        sequenceDao.saveNewKey(MESSAGE_SEQ_KEY, 700);
+        sequenceDao.saveNewKey(CHAT_SEQ_KEY, 800);
 
     }
 

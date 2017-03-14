@@ -33,7 +33,7 @@ public class GameServiceImpl implements GameService {
         if (games.isEmpty()) {
             sequenceDao.saveNewKey(GAME_SEQ_KEY, 100);
             for (long i = 1; i <= 10; i++) {
-                Game game = Game.create(sequenceDao.getNextSequenceId(GAME_SEQ_KEY), i,
+                Game game = Game.create(sequenceDao.getNextSequenceId(GAME_SEQ_KEY), 300L, i,
                     new User("username1", "password1", new ArrayList<>()), "title" + i);
                 gameRepository.save(game);
                 log.warn(game.toString());

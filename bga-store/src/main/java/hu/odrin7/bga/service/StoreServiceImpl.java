@@ -43,9 +43,9 @@ public class StoreServiceImpl implements StoreService {
     public void fillData() {
         List<Shopping> shoppings = this.getAllShoppingList();
         if (shoppings.isEmpty()) {
-            sequenceDao.saveNewKey(SHOPPING_SEQ_KEY, 300);
+            sequenceDao.saveNewKey(SHOPPING_SEQ_KEY, 400);
             for (long i = 1; i <= 10; i++) {
-                Shopping shopping = new Shopping(i, 200L+i, i, LocalDate.now(), Status.ALREADY_PAYED);
+                Shopping shopping = new Shopping(sequenceDao.getNextSequenceId(SHOPPING_SEQ_KEY), 200L+i, i, LocalDate.now(), Status.ALREADY_PAYED);
                 addToCard(shopping);
                 log.warn(shopping.toString());
             }

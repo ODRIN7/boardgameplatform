@@ -3,6 +3,7 @@ package hu.odrin7.bga.service;
 import com.google.common.collect.Lists;
 import hu.odrin7.bga.domain.notification.Notification;
 import hu.odrin7.bga.domain.notification.NotificationRepository;
+import hu.odrin7.bga.seq.dao.SequenceDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,17 +16,20 @@ public class NotificationServiceImpl implements NotificationService{
 
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final NotificationRepository notificationRepository;
-    private static final String BOARDGAME_SEQ_KEY = "notification";
+    private final SequenceDao sequenceDao;
+    private static final String NOTIFICATION_SEQ_KEY = "notification";
     @Autowired
-    public NotificationServiceImpl(NotificationRepository notificationRepository) {
+    public NotificationServiceImpl(NotificationRepository notificationRepository,
+                                   SequenceDao sequenceDao) {
         this.notificationRepository = notificationRepository;
+        this.sequenceDao = sequenceDao;
     }
 
     @Override
     public void fillData() {
         List<Notification> notifications = this.getNotifications();
         if (notifications.isEmpty()) {
-       //     sequenceDao.saveNewKey(BOARDGAME_SEQ_KEY, 200);
+            sequenceDao.saveNewKey(NOTIFICATION_SEQ_KEY, 500);
             for (int i = 1; i <= 10; i++) {
                 Notification post = new Notification("Sample message post title #" + i, "Sample message post content #" + i);
                 notificationRepository.save(post);
