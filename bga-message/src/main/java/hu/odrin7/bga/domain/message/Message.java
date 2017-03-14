@@ -1,5 +1,6 @@
 package hu.odrin7.bga.domain.message;
 
+import com.google.common.base.Objects;
 import hu.odrin7.bga.domain.user.User;
 
 import java.time.LocalDateTime;
@@ -8,8 +9,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Message {
-
-    public static long seq = 1123L;
 
     private long messageId;
     private String title;
@@ -37,12 +36,10 @@ public class Message {
         read(authorId);
     }
 
-    public static Message create(String title,
+    public static Message create(long id,String title,
                                  String content,
                                  String authorId,
-                                 List<User> users) {
-
-        List<String> usernames = users.stream().map(User::getUsername).collect(Collectors.toList());
+                                 List<String> usernames) {
         List<ReadParam> readParams = new ArrayList<>();
         for (String username : usernames) {
             readParams.add(new ReadParam(username, false));
@@ -50,7 +47,7 @@ public class Message {
 
 
 
-        return new Message(seq++, title, content, authorId, LocalDateTime.now(), readParams);
+        return new Message(id, title, content, authorId, LocalDateTime.now(), readParams);
     }
 
     public void read(String username) {
@@ -58,10 +55,6 @@ public class Message {
             .stream()
             .filter(readParam -> readParam.getUsername() == username)
             .forEach(readParam -> readParam.read());
-    }
-
-    public static long getSeq() {
-        return seq;
     }
 
     public long getMessageId() {
@@ -86,5 +79,41 @@ public class Message {
 
     public List<ReadParam> getReadParams() {
         return readParams;
+    }
+
+    public void setMessageId(long messageId) {
+        this.messageId = messageId;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setAuthorId(String authorId) {
+        this.authorId = authorId;
+    }
+
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public void setReadParams(List<ReadParam> readParams) {
+        this.readParams = readParams;
+    }
+
+    @Override
+    public String toString() {
+        return Objects.toStringHelper(this)
+            .add("messageId", messageId)
+            .add("title", title)
+            .add("content", content)
+            .add("authorId", authorId)
+            .add("timestamp", timestamp)
+            .add("readParams", readParams)
+            .toString();
     }
 }

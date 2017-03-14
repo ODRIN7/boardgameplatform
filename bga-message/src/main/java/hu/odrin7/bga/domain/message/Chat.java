@@ -1,5 +1,6 @@
 package hu.odrin7.bga.domain.message;
 
+import com.google.common.base.Objects;
 import hu.odrin7.bga.domain.game.Game;
 import hu.odrin7.bga.domain.user.User;
 import org.springframework.data.annotation.Id;
@@ -12,45 +13,45 @@ import java.util.List;
 @Document(collection = "chats")
 public class Chat {
 
-    public static long seq = 10000L;
     @Id
     private long id;
     private String title;
-    private Game gameId;
-    private List<User> connectedUser;
+    private long gameId;
+    private List<String> connectedUser;
     private List<Message> messages;
 
     private Chat() {
     }
 
-    private Chat(String title, Game gameId, User createdUser) {
+    private Chat(Long id,String title, long gameId, String createdUser) {
         this.title = title;
         this.gameId = gameId;
         this.connectedUser = connectedUser;
         this.messages = messages;
-        init();
+        this.id = id;
+        init(createdUser);
     }
 
-    private void init() {
-        this.id = seq;
+    private void init(String createdUser) {
         this.connectedUser = new ArrayList<>();
         this.messages = new ArrayList<>();
+        connect(createdUser);
     }
 
-    public static Chat create(String title, Game gameId, User createdUser) {
-        return new Chat(title, gameId, createdUser);
+    public static Chat create(Long id, String title, long gameId, String createdUser) {
+        return new Chat(id,title, gameId, createdUser);
     }
 
-    public boolean connect(User user) {
+    public boolean connect(String user) {
         return connectedUser.add(user);
     }
 
-    public boolean disconnect(User user) {
+    public boolean disconnect(String user) {
         return connectedUser.remove(user);
     }
 
-    public void write(String title, String content, User user) {
-        Message.create(title, content, user.getUsername(), connectedUser);
+    public void write(Message message) {
+        messages.add(message);
     }
 
     public long getId() {
@@ -61,15 +62,46 @@ public class Chat {
         return title;
     }
 
-    public Game getGameId() {
+    public long getGameId() {
         return gameId;
     }
 
-    public List<User> getConnectedUser() {
+    public List<String> getConnectedUser() {
         return connectedUser;
     }
 
     public List<Message> getMessages() {
         return messages;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setGameId(long gameId) {
+        this.gameId = gameId;
+    }
+
+    public void setConnectedUser(List<String> connectedUser) {
+        this.connectedUser = connectedUser;
+    }
+
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
+    }
+
+    @Override
+    public String toString() {
+        return Objects.toStringHelper(this)
+            .add("id", id)
+            .add("title", title)
+            .add("gameId", gameId)
+            .add("connectedUser", connectedUser)
+            .add("messages", messages)
+            .toString();
     }
 }

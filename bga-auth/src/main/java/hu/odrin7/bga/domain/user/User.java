@@ -1,5 +1,6 @@
 package hu.odrin7.bga.domain.user;
 
+import com.google.common.base.Objects;
 import hu.odrin7.bga.domain.boardgame.BoardGame;
 import hu.odrin7.bga.domain.shopping.Shopping;
 import org.springframework.data.annotation.Id;
@@ -154,5 +155,19 @@ public class User implements UserDetails {
         this.boardGamesId = boardGamesId;
         this.shoppings = shoppings;
         this.money = money;
+    }
+
+    @Override
+    public String toString() {
+        return Objects.toStringHelper(this)
+            .add("username", username)
+            .add("password", password)
+            .add("email", email)
+            .add("icon", icon)
+            .add("authorities", authorities)
+            .add("boardGamesId", boardGamesId)
+            .add("shoppings", shoppings)
+            .add("money", money)
+            .toString();
     }
 }

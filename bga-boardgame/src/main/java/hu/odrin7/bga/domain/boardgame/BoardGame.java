@@ -1,5 +1,6 @@
 package hu.odrin7.bga.domain.boardgame;
 
+import com.google.common.base.Objects;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -103,5 +104,19 @@ public class BoardGame {
 
     public void setPrice(long price) {
         this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return Objects.toStringHelper(this)
+            .add("id", id)
+            .add("icon", icon)
+            .add("name", name)
+            .add("typeOfBoardGames", typeOfBoardGames)
+            .add("shortDescription", shortDescription)
+            .add("rules", rules)
+            .add("pdfDescription", pdfDescription)
+            .add("price", price)
+            .toString();
     }
 }

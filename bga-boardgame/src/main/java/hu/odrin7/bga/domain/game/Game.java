@@ -16,45 +16,54 @@ public class Game {
     private long id;
     private long chatId;
     private String title;
-    private Long boardGameId;
+    private long boardGameId;
     private List<UserPerGame> userPerGame;
     private Status status;
-    private User winner;
+    private String winnerId;
 
-    public static Game create(long id, long chatId, Long boardGameId, User host, String title) {
-        return new Game(id, chatId, boardGameId, host, title);
+    public static Game create(long id, long chatId, long boardGameId, User host, String title, long userPerGameId) {
+        return new Game(id, chatId, boardGameId, host, title, userPerGameId);
     }
 
-    private Game(long id, long chatId, Long boardGameId, User host, String title) {
+    public Game(long id, long chatId, long boardGameId, User host, String title, long userPerGameId) {
         this.id = id;
         this.title = title;
         this.boardGameId = boardGameId;
         this.chatId = chatId;
-        init(host);
+        init(userPerGameId, host);
     }
 
-    private Game() {
+    public Game() {
     }
 
-    private void init(User host) {
-        winner = null;
+    private void init(long userPerGameId, User host) {
+        winnerId = null;
         status = Status.CREATED;
         userPerGame = new ArrayList<>();
-        userPerGame.add(new UserPerGame(host, 0));
+        userPerGame.add(new UserPerGame(userPerGameId, true, host.getUsername(), 0));
     }
 
+    public Game(long id, long chatId, String title, long boardGameId, List<UserPerGame> userPerGame, Status status, String winnerId) {
+        this.id = id;
+        this.chatId = chatId;
+        this.title = title;
+        this.boardGameId = boardGameId;
+        this.userPerGame = userPerGame;
+        this.status = status;
+        this.winnerId = winnerId;
+    }
 
-    public User getWinner() {
-        return winner;
+    public String getWinnerId() {
+        return winnerId;
     }
 
     public void end(User winner) {
-        this.winner = winner;
+        this.winnerId = winner.getUsername();
         status = Status.END;
     }
 
-    public void newPlayerConnect(User player) {
-        userPerGame.add(new UserPerGame(player, 0));
+    public void newPlayerConnect(long userPerGameId, User player) {
+        userPerGame.add(new UserPerGame(userPerGameId, false, player.getUsername(), 0));
     }
 
     public long getId() {
@@ -65,7 +74,7 @@ public class Game {
         return title;
     }
 
-    public Long getBoardGameId() {
+    public long getBoardGameId() {
         return boardGameId;
     }
 
@@ -93,7 +102,7 @@ public class Game {
         this.title = title;
     }
 
-    public void setBoardGameId(Long boardGameId) {
+    public void setBoardGameId(long boardGameId) {
         this.boardGameId = boardGameId;
     }
 
@@ -105,8 +114,8 @@ public class Game {
         this.status = status;
     }
 
-    public void setWinner(User winner) {
-        this.winner = winner;
+    public void setWinnerId(String winnerId) {
+        this.winnerId = winnerId;
     }
 
     @Override
@@ -118,7 +127,7 @@ public class Game {
             .add("boardGameId", boardGameId)
             .add("userPerGame", userPerGame)
             .add("status", status)
-            .add("winner", winner)
+            .add("winnerId", winnerId)
             .toString();
     }
 }

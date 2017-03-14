@@ -4,22 +4,25 @@ import hu.odrin7.bga.domain.user.User;
 import org.springframework.data.annotation.Id;
 
 public class UserPerGame {
-//todo id generator must have
-    private static long seq = 0L;
 
     private long id;
     private boolean host;
-    private User user;
+    private String userId;
     private Integer score;
 
-    public UserPerGame(User user, Integer score) {
-        this.id = seq++;
-        this.user = user;
+    public UserPerGame(long id, boolean host, String userId, Integer score) {
+        this.id = id;
+        this.host = host;
+        this.userId = userId;
         this.score = score;
     }
 
     public long getId() {
         return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public boolean isHost() {
@@ -30,12 +33,12 @@ public class UserPerGame {
         this.host = host;
     }
 
-    public User getUser() {
-        return user;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public Integer getScore() {
@@ -45,4 +48,8 @@ public class UserPerGame {
     public void setScore(Integer score) {
         this.score = score;
     }
+
+    public UserPerGame() {
+    }
+
 }

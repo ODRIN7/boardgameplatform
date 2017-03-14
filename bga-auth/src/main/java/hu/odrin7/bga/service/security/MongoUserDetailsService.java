@@ -13,9 +13,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class MongoUserDetailsService implements UserDetailsService {
 
-    @Autowired
-    private UserRepository repository;
+    private final UserRepository repository;
     private final Logger log = LoggerFactory.getLogger(MongoUserDetailsService.class);
+
+    @Autowired
+    public MongoUserDetailsService(UserRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

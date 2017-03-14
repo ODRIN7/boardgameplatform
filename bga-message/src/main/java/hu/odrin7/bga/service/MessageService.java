@@ -9,17 +9,16 @@ public interface MessageService {
 
     void fillData();
 
+    List<Chat> getChats();
+
     Chat createChat(Chat chat);
 
-    boolean connectToChat(long chatId);
+    List<Message> getMessagesByChat(long chatId);
+
+    void connectToChat(long chatId);
 
     void discconnectFromChat(long chatId);
 
-    List<Message> getMessages(long chatId);
+    void writeMessage(long chatId, Message message);
 
-    Message getMessagesByUser(long userId);
-
-    Message writeMessage(Message message);
-
-    Message deleteMessage(Long messageId);
 }

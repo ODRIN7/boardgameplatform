@@ -1,6 +1,7 @@
 package hu.odrin7.bga.Controller;
 
 
+import hu.odrin7.bga.domain.message.Chat;
 import hu.odrin7.bga.domain.message.Message;
 import hu.odrin7.bga.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,39 +27,37 @@ public class MessageRestController {
         messageService.fillData();
     }
 
-    @RequestMapping(value = "/s", method = RequestMethod.GET)
-    public List<Message> getMessages() {
-        return messageService.getMessages(1);
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public List<Chat> getChats() {
+        return messageService.getChats();
     }
 
-    @RequestMapping(value = "/aaa", method = RequestMethod.GET)
-    public List<Message> getMessagesByUser() {
-        return messageService.getMessages(1);
+    @RequestMapping(value = "/", method = RequestMethod.POST)
+    public Chat createChat(@RequestBody Chat chat) {
+        return messageService.createChat(chat);
     }
 
-    @RequestMapping(value = "/aa", method = RequestMethod.POST)
-    public Message writeMessageByUser(@RequestBody Message message) {
-        return messageService.writeMessage(message);
+    @RequestMapping(value = "/{chatId}", method = RequestMethod.GET)
+    public List<Message> getMessagesByChat(@PathVariable("chatId") Long chatId) {
+        return messageService.getMessagesByChat(chatId);
     }
 
-    @RequestMapping(value = "/aaa", method = RequestMethod.POST)
-    public Message createChat(@RequestBody Message message) {
-        return messageService.writeMessage(message);
+    @RequestMapping(value = "/connect/{chatId}", method = RequestMethod.POST)
+    public boolean connectToChat(@PathVariable("chatId") long chatId) {
+        messageService.connectToChat(chatId);
+        return true;
     }
 
-    @RequestMapping(value = "/aaaa", method = RequestMethod.POST)
-    public Message connectToChat(@RequestBody Message message) {
-        return messageService.writeMessage(message);
+    @RequestMapping(value = "/disconnect/{chatId}", method = RequestMethod.POST)
+    public boolean discconectFromChat(@PathVariable("chatId") long chatId) {
+        messageService.discconnectFromChat(chatId);
+        return true;
     }
 
-    @RequestMapping(value = "/aaaaa", method = RequestMethod.POST)
-    public Message discconectFromChat(@RequestBody Message message) {
-        return messageService.writeMessage(message);
+    @RequestMapping(value = "/write/{chatId}/", method = RequestMethod.POST)
+    public boolean writeMessage(@PathVariable("chatId") long chatId,
+                                @RequestBody Message message) {
+        messageService.writeMessage(chatId, message);
+        return true;
     }
-
-    @RequestMapping(value = "/{messageId}", method = RequestMethod.DELETE)
-    public Message deleteMessage(@PathVariable("messageId") Long messageId) {
-        return messageService.deleteMessage(messageId);
-    }
-
 }

@@ -17,6 +17,7 @@ import static com.google.common.collect.Lists.newArrayList;
 @Service
 public class GameServiceImpl implements GameService {
     private static final String GAME_SEQ_KEY = "game";
+    private static final String USER_PER_GAME_SEQ_KEY = "userPerGame";
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final SequenceDao sequenceDao;
     private final GameRepository gameRepository;
@@ -32,9 +33,11 @@ public class GameServiceImpl implements GameService {
         List<Game> games = this.getGames();
         if (games.isEmpty()) {
             sequenceDao.saveNewKey(GAME_SEQ_KEY, 100);
+            sequenceDao.saveNewKey(USER_PER_GAME_SEQ_KEY, 150);
             for (long i = 1; i <= 10; i++) {
-                Game game = Game.create(sequenceDao.getNextSequenceId(GAME_SEQ_KEY), 300L, i,
-                    new User("username1", "password1", new ArrayList<>()), "title" + i);
+                Game game = Game.create(sequenceDao.getNextSequenceId(GAME_SEQ_KEY), 300L, 200 + i,
+                    new User("username1", "password1", new ArrayList<>()),
+                    "title" + i, sequenceDao.getNextSequenceId(USER_PER_GAME_SEQ_KEY));
                 gameRepository.save(game);
                 log.warn(game.toString());
             }
@@ -69,7 +72,7 @@ public class GameServiceImpl implements GameService {
     public boolean connectToGame(User user, long gameId) {
         Game game = gameRepository.findOne(gameId);
         if (game != null) {
-            game.newPlayerConnect(user);
+            game.newPlayerConnect(sequenceDao.getNextSequenceId(USER_PER_GAME_SEQ_KEY),user);
             return true;
         }
         return false;
