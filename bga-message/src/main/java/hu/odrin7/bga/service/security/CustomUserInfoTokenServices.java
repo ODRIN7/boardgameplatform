@@ -28,7 +28,7 @@ import java.util.*;
 
 public class CustomUserInfoTokenServices implements ResourceServerTokenServices {
 
-	protected final Log logger = LogFactory.getLog(getClass());
+	private final Log logger = LogFactory.getLog(getClass());
 
 	private static final String[] PRINCIPAL_KEYS = new String[] { "user", "username",
 			"userid", "user_id", "login", "id", "name" };
@@ -110,13 +110,20 @@ public class CustomUserInfoTokenServices implements ResourceServerTokenServices 
 
 	@SuppressWarnings({ "unchecked" })
 	private Map<String, Object> getMap(String path, String accessToken) {
-		this.logger.debug("Getting user info from: " + path);
+		this.logger.info("Getting user info from userInfoEndpointUrl: " + this.userInfoEndpointUrl);
+		this.logger.info("Getting user info from clientId: " + this.clientId);
+		this.logger.info("Getting user info from restTemplate: " + this.restTemplate);
+		this.logger.info("Getting user info from: BEARER_TYPE " + this.tokenType);
+		this.logger.info("Getting user info from:  authoritiesExtractor" + this.authoritiesExtractor);
+		this.logger.info("Getting user info from: " + path);
 		try {
 			OAuth2RestOperations restTemplate = this.restTemplate;
 			if (restTemplate == null) {
 				BaseOAuth2ProtectedResourceDetails resource = new BaseOAuth2ProtectedResourceDetails();
 				resource.setClientId(this.clientId);
-				restTemplate = new OAuth2RestTemplate(resource);
+                this.logger.info("Getting user info from resource: " + resource);
+
+                restTemplate = new OAuth2RestTemplate(resource);
 			}
 			OAuth2AccessToken existingToken = restTemplate.getOAuth2ClientContext()
 					.getAccessToken();
@@ -126,6 +133,7 @@ public class CustomUserInfoTokenServices implements ResourceServerTokenServices 
 				token.setTokenType(this.tokenType);
 				restTemplate.getOAuth2ClientContext().setAccessToken(token);
 			}
+            this.logger.info("=============" + restTemplate.getForEntity(path, Map.class).getBody());
 			return restTemplate.getForEntity(path, Map.class).getBody();
 		}
 		catch (Exception ex) {

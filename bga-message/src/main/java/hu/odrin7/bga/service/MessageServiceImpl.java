@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
@@ -99,6 +100,20 @@ public class MessageServiceImpl implements MessageService {
         Chat chat = chatRepository.findOne(chatId);
         if (chat != null) {
             chat.write(message);
+
+            chatRepository.save(chat);
+        }
+    }
+
+
+    @Override
+    public void writeMessage1(long chatId, Message message, Principal principal) {
+
+        Chat chat = chatRepository.findOne(chatId);
+        if (chat != null) {
+            chat.getMessages().get(0).setAuthorId(principal.getName());
+            chat.write(message);
+
             chatRepository.save(chat);
         }
     }

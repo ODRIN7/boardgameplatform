@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
+import java.security.Principal;
 import java.util.List;
 
 
@@ -60,4 +61,13 @@ public class MessageRestController {
         messageService.writeMessage(chatId, message);
         return true;
     }
+
+    @RequestMapping(value = "/write/{chatId}/act", method = RequestMethod.POST)
+    public boolean writeMessage1(@PathVariable("chatId") long chatId,
+                                @RequestBody Message message,
+                                Principal principal) {
+        messageService.writeMessage1(chatId, message,principal);
+        return true;
+    }
+
 }

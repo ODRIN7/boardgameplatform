@@ -9,9 +9,14 @@
 4.
 	mvn install -P dev -DskipTests
 5.
+
 	docker-compose -f docker-compose.origin.yml -f docker-compose.dev.origin.yml up -d
+
 	docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+
 	docker-compose -f docker-compose.all.yml -f docker-compose.dev.all.yml up -d
+
+	docker-compose -f docker-compose.all1.yml -f docker-compose.dev.all1.yml up -d
 
 
 

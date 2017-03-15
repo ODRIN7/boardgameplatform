@@ -3,6 +3,7 @@ package hu.odrin7.bga.service;
 import hu.odrin7.bga.domain.message.Chat;
 import hu.odrin7.bga.domain.message.Message;
 
+import java.security.Principal;
 import java.util.List;
 
 public interface MessageService {
@@ -21,4 +22,5 @@ public interface MessageService {
 
     void writeMessage(long chatId, Message message);
 
+     void writeMessage1(long chatId, Message message, Principal principal);
 }
