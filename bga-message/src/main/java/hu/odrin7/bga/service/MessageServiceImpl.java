@@ -1,17 +1,20 @@
 package hu.odrin7.bga.service;
 
-import hu.odrin7.bga.client.AuthServiceClient;
 import hu.odrin7.bga.domain.message.Chat;
 import hu.odrin7.bga.domain.message.ChatRepository;
 import hu.odrin7.bga.domain.message.Message;
+import hu.odrin7.bga.domain.message.ReadParam;
 import hu.odrin7.bga.seq.dao.SequenceDao;
+import hu.odrin7.bga.service.exceptions.UserNotConnectedToChat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static com.google.common.collect.Lists.newArrayList;
 
@@ -20,17 +23,14 @@ public class MessageServiceImpl implements MessageService {
 
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final ChatRepository chatRepository;
-    private final AuthServiceClient authServiceClient;
     private final SequenceDao sequenceDao;
     private static final String MESSAGE_SEQ_KEY = "message";
     private static final String CHAT_SEQ_KEY = "chat";
 
     @Autowired
     public MessageServiceImpl(ChatRepository chatRepository,
-                              AuthServiceClient authServiceClient,
                               SequenceDao sequenceDao) {
         this.chatRepository = chatRepository;
-        this.authServiceClient = authServiceClient;
         this.sequenceDao = sequenceDao;
     }
 
@@ -48,7 +48,7 @@ public class MessageServiceImpl implements MessageService {
                     chat.write(
                         Message.create(
                             sequenceDao.getNextSequenceId(MESSAGE_SEQ_KEY),
-                            "MessageTitle:" + j, "content of message" + j,
+                            "content of message" + j,
                             "username1",
                             chat.getConnectedUser()));
                 }
@@ -57,7 +57,6 @@ public class MessageServiceImpl implements MessageService {
                 log.warn(chat.toString());
             }
         }
-
     }
 
     @Override
@@ -66,55 +65,83 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public Chat createChat(Chat chat) {
+    public Chat createChat(Chat chat, Principal principal) {
+
+        setChatParams(chat, principal.getName());
         return chatRepository.save(chat);
     }
 
+
     @Override
-    public List<Message> getMessagesByChat(long chatId) {
-        return chatRepository.findOne(chatId).getMessages();
+    public List<Message> getMessagesByChat(long chatId, Principal principal) throws UserNotConnectedToChat {
+        Chat chat = chatRepository.findOne(chatId);
+        if (chat != null && isConnected(chat.getConnectedUser(), principal)) {
+            return chat.getMessages();
+        }
+        throw new UserNotConnectedToChat("UserNotConnectedToChat");
+    }
+
+    private boolean isConnected(List<String> AlreadyConnectedUser, Principal principal) {
+        return AlreadyConnectedUser.contains(principal.getName());
     }
 
     @Override
-    public void connectToChat(long chatId) {
+    public void connectToChat(long chatId, Principal principal) {
 
         Chat chat = chatRepository.findOne(chatId);
         if (chat != null) {
-            chat.connect("username1");;
+            chat.connect("username1");
             chatRepository.save(chat);
+            log.info(">>>>>>>>>>>>>Connected " + principal.getName() + " to  chat>>>>>>>>>>:" + chat.getId());
         }
     }
 
     @Override
-    public void discconnectFromChat(long chatId) {
+    public void disconnectFromChat(long chatId, Principal principal) {
         Chat chat = chatRepository.findOne(chatId);
         if (chat != null) {
-            chat.disconnect("username1");
+            chat.disconnect(principal.getName());
             chatRepository.save(chat);
+            log.info(">>>>>>>>>>>>>Disconnected " + principal.getName() + " from chat>>>>>>>>>>:" + chat.getId());
         }
     }
 
     @Override
-    public void writeMessage(long chatId, Message message) {
-
+    public void writeMessage(long chatId, Message message, Principal principal) {
+        log.info("/////////////////////////////NAME/////////////////////////////" + principal.getName());
+        log.info("/////////////////////////////ALL STRING/////////////////////////////" + principal.toString());
         Chat chat = chatRepository.findOne(chatId);
         if (chat != null) {
+            setMessageData(message, principal, chat.getConnectedUser());
             chat.write(message);
-
             chatRepository.save(chat);
+            log.info(">>>>>>>>>>>>>Message was sent>>>>>>>>>>:  " + message.toString());
         }
     }
 
+    private void setMessageData(Message message, Principal principal, List<String> connectedUser) {
+        message.setMessageId(sequenceDao.getNextSequenceId(MESSAGE_SEQ_KEY));
+        message.setAuthorId(principal.getName());
+        setReadParam(message, connectedUser, principal.getName());
+    }
 
-    @Override
-    public void writeMessage1(long chatId, Message message, Principal principal) {
-
-        Chat chat = chatRepository.findOne(chatId);
-        if (chat != null) {
-            chat.getMessages().get(0).setAuthorId(principal.getName());
-            chat.write(message);
-
-            chatRepository.save(chat);
+    private void setReadParam(Message message, List<String> connectedUser, String authorId) {
+        List<ReadParam> allUnreadParam = new ArrayList<>();
+        for (String username : connectedUser) {
+            if (Objects.equals(username, authorId)) {
+                allUnreadParam.add(new ReadParam(username, true));
+            }
+            allUnreadParam.add(new ReadParam(username, false));
         }
+        message.setReadParams(allUnreadParam);
+    }
+
+
+    private void setChatParams(Chat chat, String username) {
+        chat.setId(sequenceDao.getNextSequenceId(CHAT_SEQ_KEY));
+        chat.setConnectedUser(new ArrayList<>());
+        chat.setMessages(new ArrayList<>());
+        chat.setConnectedUser(new ArrayList<>());
+        chat.connect(username);
     }
 }

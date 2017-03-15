@@ -2,7 +2,9 @@ package hu.odrin7.bga.service;
 
 import hu.odrin7.bga.domain.boardgame.BoardGame;
 import hu.odrin7.bga.domain.boardgame.TypeOfBoardGame;
+import hu.odrin7.bga.service.exceptions.CannotFindBoardGameException;
 
+import java.security.Principal;
 import java.util.List;
 
 public interface BoardGameService {
@@ -15,9 +17,9 @@ public interface BoardGameService {
 
     List<BoardGame> getBoardGamesByIds(List<Long> boardGameIds);
 
-    BoardGame getBoardGameById(long boardGameId);
+    List<BoardGame> getUserBoardGames(String username);
 
-    List<BoardGame> filterBoardGame();
+    BoardGame getBoardGameById(long boardGameId) throws CannotFindBoardGameException;
 
     BoardGame saveBoardGame(BoardGame boardGame);
 

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -26,7 +27,7 @@ public class NotificationController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public List<Notification> getNotifications() {
+    public List<Notification> getNotifications(Principal principal) {
         return notificationService.getNotifications();
     }
 
@@ -36,7 +37,7 @@ public class NotificationController {
     }
 
     @RequestMapping(value = "/{notificationId}", method = RequestMethod.DELETE)
-    public Notification deleteNotification(@PathVariable("notificationId") Long notificationId) {
+    public Notification deleteNotification(@PathVariable("notificationId") Long notificationId, Principal principal) {
         return notificationService.deleteNotification(notificationId);
     }
 }

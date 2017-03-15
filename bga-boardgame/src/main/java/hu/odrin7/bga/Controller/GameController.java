@@ -2,22 +2,23 @@ package hu.odrin7.bga.Controller;
 
 
 import hu.odrin7.bga.domain.game.Game;
-import hu.odrin7.bga.domain.user.User;
 import hu.odrin7.bga.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
 @RequestMapping("/games")
 public class GameController {
 
-    @Autowired
-    private GameService gameService;
+    private final GameService gameService;
 
-    public GameController() {
+    @Autowired
+    public GameController(GameService gameService) {
+        this.gameService = gameService;
     }
 
     @PostConstruct
@@ -30,24 +31,34 @@ public class GameController {
         return gameService.getGames();
     }
 
+    @RequestMapping(value = "/opens", method = RequestMethod.GET)
+    public List<Game> getOpenGames() {
+        return gameService.getOpenGames();
+    }
+
+    @RequestMapping(value = "/users", method = RequestMethod.GET)
+    public List<Game> getOpenGamesByUser(Principal principal) {
+        return gameService.getOpenGamesByUserBoardGames(principal);
+    }
+
     @RequestMapping(value = "/{gameId}", method = RequestMethod.GET)
     public Game getGame(@PathVariable("gameId") Long gameId) {
         return gameService.getGameById(gameId);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public Game createNewGame(@RequestBody Game game) {
-        return gameService.createNewGame(game);
+    public Game createNewGame(@RequestBody Game game, Principal principal) {
+        return gameService.createNewGame(game, principal);
     }
 
     @RequestMapping(value = "/{gameId}", method = RequestMethod.DELETE)
-    public Game deletePost(@PathVariable("gameId") Long gameId) {
-        return gameService.deleteGame(gameId);
+    public Game deletePost(@PathVariable("gameId") Long gameId, Principal principal) {
+        return gameService.deleteGame(gameId, principal);
     }
 
-    @RequestMapping(value = "/{gameId}", method = RequestMethod.POST)
-    public Boolean connectToGame(@RequestBody User user,
-                                 @PathVariable("gameId") long gameId) {
-        return gameService.connectToGame(user, gameId);
+    @RequestMapping(value = "/{gameId}", method = RequestMethod.PUT)
+    public Boolean connectToGame(@PathVariable("gameId") long gameId,
+                                 Principal principal) {
+        return gameService.connectToGame(gameId, principal);
     }
 }

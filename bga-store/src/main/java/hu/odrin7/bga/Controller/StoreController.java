@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -30,29 +31,24 @@ public class StoreController {
         return storeService.getAllShoppingList();
     }
 
-    @RequestMapping(value = "/current/", method = RequestMethod.GET)
-    public List<Shopping> getShoppingListByCurrentUser() {
-        return storeService.getShoppingListByCurrentUser();
-    }
-
     @RequestMapping(value = "/byUser/{userId}", method = RequestMethod.GET)
-    public List<Shopping> getShoppingList(@PathVariable("userId") Long userId) {
-        return storeService.getShoppingListByUser(userId);
+    public List<Shopping> getShoppingList(Principal principal) {
+        return storeService.getShoppingListByUser(principal);
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public Shopping addToCard(@RequestBody Shopping shopping) {
-        return storeService.addToCard(shopping);
+    public Shopping addToCard(@RequestBody Shopping shopping, Principal principal) {
+        return storeService.addToCard(shopping, principal);
     }
 
     @RequestMapping(value = "/buy/{shoppingId}", method = RequestMethod.POST)
-    public Shopping buy(@PathVariable("shoppingId") Long shoppingId) {
-        return storeService.buy(shoppingId, shoppingId);
+    public Shopping buy(@PathVariable("shoppingId") Long shoppingId, Principal principal) {
+        return storeService.buy(shoppingId, principal);
     }
 
     @RequestMapping(value = "/{shoppingId}", method = RequestMethod.DELETE)
-    public Shopping deleteFromCard(@PathVariable("shoppingId") Long shoppingId) {
-        return storeService.deleteShopping(shoppingId);
+    public Shopping deleteFromCard(@PathVariable("shoppingId") Long shoppingId, Principal principal) {
+        return storeService.deleteShopping(shoppingId, principal);
     }
 
 

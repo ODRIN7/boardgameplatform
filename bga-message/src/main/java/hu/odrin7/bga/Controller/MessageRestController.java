@@ -1,16 +1,15 @@
 package hu.odrin7.bga.Controller;
 
-
 import hu.odrin7.bga.domain.message.Chat;
 import hu.odrin7.bga.domain.message.Message;
 import hu.odrin7.bga.service.MessageService;
+import hu.odrin7.bga.service.exceptions.UserNotConnectedToChat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
 import java.security.Principal;
 import java.util.List;
-
 
 @RestController
 @RequestMapping("/messages")
@@ -34,40 +33,29 @@ public class MessageRestController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
-    public Chat createChat(@RequestBody Chat chat) {
-        return messageService.createChat(chat);
+    public Chat createChat(@RequestBody Chat chat, Principal principal) {
+        return messageService.createChat(chat, principal);
     }
 
     @RequestMapping(value = "/{chatId}", method = RequestMethod.GET)
-    public List<Message> getMessagesByChat(@PathVariable("chatId") Long chatId) {
-        return messageService.getMessagesByChat(chatId);
+    public List<Message> getMessagesByChat(@PathVariable("chatId") Long chatId, Principal principal) throws UserNotConnectedToChat {
+        return messageService.getMessagesByChat(chatId, principal);
     }
 
     @RequestMapping(value = "/connect/{chatId}", method = RequestMethod.POST)
-    public boolean connectToChat(@PathVariable("chatId") long chatId) {
-        messageService.connectToChat(chatId);
-        return true;
+    public void connectToChat(@PathVariable("chatId") long chatId, Principal principal) {
+        messageService.connectToChat(chatId, principal);
     }
 
     @RequestMapping(value = "/disconnect/{chatId}", method = RequestMethod.POST)
-    public boolean discconectFromChat(@PathVariable("chatId") long chatId) {
-        messageService.discconnectFromChat(chatId);
-        return true;
+    public void discconectFromChat(@PathVariable("chatId") long chatId, Principal principal) {
+        messageService.disconnectFromChat(chatId, principal);
     }
 
     @RequestMapping(value = "/write/{chatId}/", method = RequestMethod.POST)
-    public boolean writeMessage(@PathVariable("chatId") long chatId,
-                                @RequestBody Message message) {
-        messageService.writeMessage(chatId, message);
-        return true;
-    }
-
-    @RequestMapping(value = "/write/{chatId}/act", method = RequestMethod.POST)
-    public boolean writeMessage1(@PathVariable("chatId") long chatId,
+    public void writeMessage(@PathVariable("chatId") long chatId,
                                 @RequestBody Message message,
                                 Principal principal) {
-        messageService.writeMessage1(chatId, message,principal);
-        return true;
+        messageService.writeMessage(chatId, message, principal);
     }
-
 }

@@ -17,19 +17,33 @@ public class Game {
     private long chatId;
     private String title;
     private long boardGameId;
-    private List<UserPerGame> userPerGame;
+    private List<UserPerGame> userPerGames;
     private Status status;
     private String winnerId;
+    private int maxPlayer;
 
-    public static Game create(long id, long chatId, long boardGameId, User host, String title, long userPerGameId) {
-        return new Game(id, chatId, boardGameId, host, title, userPerGameId);
+    public static Game create(long id,
+                              long chatId,
+                              long boardGameId,
+                              User host,
+                              String title,
+                              long userPerGameId,
+                              int maxPlayer) {
+        return new Game(id, chatId, boardGameId, host, title, userPerGameId, maxPlayer);
     }
 
-    public Game(long id, long chatId, long boardGameId, User host, String title, long userPerGameId) {
+    private Game(long id,
+                 long chatId,
+                 long boardGameId,
+                 User host,
+                 String title,
+                 long userPerGameId,
+                 int maxPlayer) {
         this.id = id;
         this.title = title;
         this.boardGameId = boardGameId;
         this.chatId = chatId;
+        this.maxPlayer = maxPlayer;
         init(userPerGameId, host);
     }
 
@@ -39,16 +53,16 @@ public class Game {
     private void init(long userPerGameId, User host) {
         winnerId = null;
         status = Status.CREATED;
-        userPerGame = new ArrayList<>();
-        userPerGame.add(new UserPerGame(userPerGameId, true, host.getUsername(), 0));
+        userPerGames = new ArrayList<>();
+        userPerGames.add(new UserPerGame(userPerGameId, true, host.getUsername(), 0));
     }
 
-    public Game(long id, long chatId, String title, long boardGameId, List<UserPerGame> userPerGame, Status status, String winnerId) {
+    public Game(long id, long chatId, String title, long boardGameId, List<UserPerGame> userPerGames, Status status, String winnerId) {
         this.id = id;
         this.chatId = chatId;
         this.title = title;
         this.boardGameId = boardGameId;
-        this.userPerGame = userPerGame;
+        this.userPerGames = userPerGames;
         this.status = status;
         this.winnerId = winnerId;
     }
@@ -62,8 +76,12 @@ public class Game {
         status = Status.END;
     }
 
-    public void newPlayerConnect(long userPerGameId, User player) {
-        userPerGame.add(new UserPerGame(userPerGameId, false, player.getUsername(), 0));
+    public void newPlayerConnect(long userPerGameId, String  username) {
+        userPerGames.add(new UserPerGame(userPerGameId, false, username, 0));
+    }
+
+    public boolean isOpen() {
+        return userPerGames.size() <= maxPlayer && status == Status.CREATED;
     }
 
     public long getId() {
@@ -78,8 +96,8 @@ public class Game {
         return boardGameId;
     }
 
-    public List<UserPerGame> getUserPerGame() {
-        return userPerGame;
+    public List<UserPerGame> getUserPerGames() {
+        return userPerGames;
     }
 
     public Status getStatus() {
@@ -106,8 +124,8 @@ public class Game {
         this.boardGameId = boardGameId;
     }
 
-    public void setUserPerGame(List<UserPerGame> userPerGame) {
-        this.userPerGame = userPerGame;
+    public void setUserPerGames(List<UserPerGame> userPerGames) {
+        this.userPerGames = userPerGames;
     }
 
     public void setStatus(Status status) {
@@ -118,6 +136,14 @@ public class Game {
         this.winnerId = winnerId;
     }
 
+    public int getMaxPlayer() {
+        return maxPlayer;
+    }
+
+    public void setMaxPlayer(int maxPlayer) {
+        this.maxPlayer = maxPlayer;
+    }
+
     @Override
     public String toString() {
         return Objects.toStringHelper(this)
@@ -125,9 +151,10 @@ public class Game {
             .add("chatId", chatId)
             .add("title", title)
             .add("boardGameId", boardGameId)
-            .add("userPerGame", userPerGame)
+            .add("userPerGames", userPerGames)
             .add("status", status)
             .add("winnerId", winnerId)
+            .add("maxPlayer", maxPlayer)
             .toString();
     }
 }

@@ -1,6 +1,5 @@
 package hu.odrin7.bga.service;
 
-import com.google.common.collect.Lists;
 import hu.odrin7.bga.client.AuthServiceClient;
 import hu.odrin7.bga.client.BoardGameServiceClient;
 import hu.odrin7.bga.domain.store.Shopping;
@@ -12,8 +11,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static hu.odrin7.bga.domain.store.Status.ALREADY_PAYED;
@@ -45,8 +46,7 @@ public class StoreServiceImpl implements StoreService {
         if (shoppings.isEmpty()) {
             sequenceDao.saveNewKey(SHOPPING_SEQ_KEY, 400);
             for (long i = 1; i <= 10; i++) {
-                Shopping shopping = new Shopping(sequenceDao.getNextSequenceId(SHOPPING_SEQ_KEY), 200L+i, i, LocalDate.now(), Status.ALREADY_PAYED);
-                addToCard(shopping);
+                Shopping shopping = new Shopping(sequenceDao.getNextSequenceId(SHOPPING_SEQ_KEY), 200L + i, i, LocalDate.now(), Status.ALREADY_PAYED);
                 log.warn(shopping.toString());
             }
         }
@@ -58,35 +58,43 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
-    public List<Shopping> getShoppingListByCurrentUser() {
-        return newArrayList(shoppingRepository.findAll());
+    public List<Shopping> getShoppingListByUser(Principal principal) {
+        return authServiceClient.getShoppingsByUser(principal.getName());
     }
 
     @Override
-    public List<Shopping> getShoppingListByUser(Long userId) {
-        return newArrayList(shoppingRepository.findAll());
-    }
-
-    @Override
-    public Shopping addToCard(Shopping shopping) {
+    public Shopping addToCard(Shopping shopping, Principal principal) {
+        authServiceClient.addToCard(principal.getName(), shopping);
         return shoppingRepository.save(shopping);
     }
 
     @Override
-    public Shopping deleteShopping(Long shoppingId) {
+    public Shopping deleteShopping(long shoppingId, Principal principal) {
         Shopping shopping = shoppingRepository.findOne(shoppingId);
-        if (shopping != null) {
+        if (shopping != null && isContainShopping(shoppingId, principal.getName())) {
+            authServiceClient.deleteShopping(principal.getName(), shopping);
             shoppingRepository.delete(shopping);
         }
         return shopping;
     }
 
     @Override
-    public Shopping buy(long userId, Long shoppingId) {
+    public Shopping buy(long shoppingId, Principal principal) {
+
         Shopping shopping = shoppingRepository.findOne(shoppingId);
         shopping.setStatus(ALREADY_PAYED);
+        authServiceClient
+            .buyShopping(principal.getName(),
+                shopping,
+                boardGameServiceClient.getBoardGame(shopping.getBoardGame()));
+
         shoppingRepository.save(shopping);
         return shopping;
+    }
+
+    private boolean isContainShopping(long shoppingId, String username) {
+        List<Long> shoppingIds = authServiceClient.getShoppingsByUser(username).stream().map(Shopping::getId).collect(Collectors.toList());
+        return shoppingIds.contains(shoppingId);
     }
 
 }

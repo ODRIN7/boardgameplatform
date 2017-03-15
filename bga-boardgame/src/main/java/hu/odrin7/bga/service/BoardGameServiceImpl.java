@@ -1,16 +1,17 @@
 package hu.odrin7.bga.service;
 
+import hu.odrin7.bga.client.AuthServiceClient;
 import hu.odrin7.bga.domain.boardgame.BoardGame;
 import hu.odrin7.bga.domain.boardgame.BoardGameRepository;
 import hu.odrin7.bga.domain.boardgame.TypeOfBoardGame;
 import hu.odrin7.bga.seq.dao.SequenceDao;
-import hu.odrin7.bga.seq.domain.SequenceIdRepository;
+import hu.odrin7.bga.service.exceptions.CannotFindBoardGameException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,12 +26,16 @@ public class BoardGameServiceImpl implements BoardGameService {
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final BoardGameRepository boardGameRepository;
     private final SequenceDao sequenceDao;
+    private final AuthServiceClient authServiceClient;
 
 
     @Autowired
-    public BoardGameServiceImpl(BoardGameRepository boardGameRepository, SequenceDao sequenceDao, SequenceIdRepository sequenceIdRepository) {
+    public BoardGameServiceImpl(BoardGameRepository boardGameRepository,
+                                SequenceDao sequenceDao,
+                                AuthServiceClient authServiceClient) {
         this.boardGameRepository = boardGameRepository;
         this.sequenceDao = sequenceDao;
+        this.authServiceClient = authServiceClient;
     }
 
     @Override
@@ -39,8 +44,9 @@ public class BoardGameServiceImpl implements BoardGameService {
         if (boardGames.isEmpty()) {
             sequenceDao.saveNewKey(BOARDGAME_SEQ_KEY, 200);
             for (int i = 1; i <= 10; i++) {
-                BoardGame boardGame = BoardGame.create(sequenceDao.getNextSequenceId(BOARDGAME_SEQ_KEY), "Boardgame name" + i, "http://lorempixel.com/40/40/people/" + i, "description",
-                    new ArrayList<>(), "", Arrays.asList(Logic, Card, Dice), 0L);
+                BoardGame boardGame = BoardGame.create(sequenceDao.getNextSequenceId(BOARDGAME_SEQ_KEY),
+                    "Boardgame name" + i, "http://lorempixel.com/40/40/people/" + i, "description",
+                    "", Arrays.asList(Logic, Card, Dice), 0L, i - 1, i + 1);
                 boardGameRepository.save(boardGame);
                 log.warn(boardGame.toString());
             }
@@ -67,17 +73,24 @@ public class BoardGameServiceImpl implements BoardGameService {
     }
 
     @Override
-    public BoardGame getBoardGameById(long boardGameId) {
-        return boardGameRepository.findOne(boardGameId);
+    public List<BoardGame> getUserBoardGames(String username) {
+        return getBoardGamesByIds(authServiceClient.getBoardGamesByUser(username));
     }
 
     @Override
-    public List<BoardGame> filterBoardGame() {
-        return getBoardGames();
+    public BoardGame getBoardGameById(long boardGameId) throws CannotFindBoardGameException {
+
+        BoardGame boardGame = boardGameRepository.findOne(boardGameId);
+        if(boardGame!=null){
+            return boardGame;
+        }
+        throw new CannotFindBoardGameException("Cannot find boardgame:"+ boardGameId);
     }
 
     @Override
     public BoardGame saveBoardGame(BoardGame boardGame) {
+        boardGame.setId(sequenceDao.getNextSequenceId(BOARDGAME_SEQ_KEY));
+        log.info(">>>>>>>>>>>>BoardGame was created>>>:" + boardGame.getName());
         return boardGameRepository.save(boardGame);
     }
 
@@ -97,6 +110,7 @@ public class BoardGameServiceImpl implements BoardGameService {
         BoardGame boardGame = boardGameRepository.findOne(boardGameId);
         if (boardGame != null) {
             boardGameRepository.delete(boardGame);
+            log.info(">>>>>>>>>>>>BoardGame was deleted>>>:" + boardGame.getName());
         }
         return boardGame;
     }

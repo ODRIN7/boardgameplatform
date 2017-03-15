@@ -4,10 +4,12 @@ package hu.odrin7.bga.Controller;
 import hu.odrin7.bga.domain.boardgame.BoardGame;
 import hu.odrin7.bga.domain.boardgame.TypeOfBoardGame;
 import hu.odrin7.bga.service.BoardGameService;
+import hu.odrin7.bga.service.exceptions.CannotFindBoardGameException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
+import java.security.Principal;
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
@@ -41,7 +43,7 @@ public class BoardGameController {
     }
 
     @RequestMapping(value = "/{boardGameId}", method = GET)
-    public BoardGame getBoardGame(@PathVariable("boardGameId") Long boardGameId) {
+    public BoardGame getBoardGame(@PathVariable("boardGameId") Long boardGameId) throws CannotFindBoardGameException {
         return boardGameService.getBoardGameById(boardGameId);
     }
 
@@ -65,4 +67,10 @@ public class BoardGameController {
                                   @RequestBody BoardGame boardGame) {
         return boardGameService.modifyById(boardGameId, boardGame);
     }
+
+    @RequestMapping(value = "/boardGameBy/{username}", method = RequestMethod.GET)
+    public List<BoardGame> getBoardGamesByUser(@PathVariable("username") Principal principal) {
+        return boardGameService.getUserBoardGames(principal.getName());
+    }
+
 }

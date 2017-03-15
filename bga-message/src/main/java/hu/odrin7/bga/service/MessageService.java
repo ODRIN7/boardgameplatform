@@ -2,6 +2,7 @@ package hu.odrin7.bga.service;
 
 import hu.odrin7.bga.domain.message.Chat;
 import hu.odrin7.bga.domain.message.Message;
+import hu.odrin7.bga.service.exceptions.UserNotConnectedToChat;
 
 import java.security.Principal;
 import java.util.List;
@@ -12,15 +13,13 @@ public interface MessageService {
 
     List<Chat> getChats();
 
-    Chat createChat(Chat chat);
+    Chat createChat(Chat chat,Principal principal);
 
-    List<Message> getMessagesByChat(long chatId);
+    List<Message> getMessagesByChat(long chatId, Principal principal) throws UserNotConnectedToChat;
 
-    void connectToChat(long chatId);
+    void connectToChat(long chatId, Principal principal);
 
-    void discconnectFromChat(long chatId);
+    void disconnectFromChat(long chatId, Principal principal);
 
-    void writeMessage(long chatId, Message message);
-
-     void writeMessage1(long chatId, Message message, Principal principal);
+     void writeMessage(long chatId, Message message, Principal principal);
 }

@@ -1,8 +1,8 @@
 package hu.odrin7.bga.service;
 
 import hu.odrin7.bga.domain.game.Game;
-import hu.odrin7.bga.domain.user.User;
 
+import java.security.Principal;
 import java.util.List;
 
 public interface GameService {
@@ -11,11 +11,15 @@ public interface GameService {
 
     List<Game> getGames();
 
+    List<Game> getOpenGames();
+
+    List<Game> getOpenGamesByUserBoardGames(Principal principal);
+
     Game getGameById(long gameId);
 
-    Game createNewGame(Game game);
+    Game createNewGame(Game game, Principal principal);
 
-    Game deleteGame(Long gameId);
+    Game deleteGame(Long gameId, Principal principal);
 
-    boolean connectToGame(User user, long gameId);
+    boolean connectToGame(long gameId, Principal principal);
 }
