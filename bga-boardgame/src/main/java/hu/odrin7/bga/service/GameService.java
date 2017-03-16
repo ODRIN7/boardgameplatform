@@ -22,4 +22,6 @@ public interface GameService {
     Game deleteGame(Long gameId, Principal principal);
 
     boolean connectToGame(long gameId, Principal principal);
+
+    boolean disconnectFromGame(long gameId, Principal principal);
 }

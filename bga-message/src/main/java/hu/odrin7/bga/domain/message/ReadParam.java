@@ -7,7 +7,15 @@ public class ReadParam {
 
     public ReadParam(String username, boolean isRead) {
         this.username = username;
-        this.isRead = false;
+        this.isRead = isRead;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setRead(boolean read) {
+        isRead = read;
     }
 
     public String getUsername() {

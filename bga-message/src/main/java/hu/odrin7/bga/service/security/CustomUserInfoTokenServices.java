@@ -103,11 +103,6 @@ public class CustomUserInfoTokenServices implements ResourceServerTokenServices 
 
 	@SuppressWarnings({ "unchecked" })
 	private Map<String, Object> getMap(String path, String accessToken) {
-		this.logger.info("Getting user info from userInfoEndpointUrl: " + this.userInfoEndpointUrl);
-		this.logger.info("Getting user info from clientId: " + this.clientId);
-		this.logger.info("Getting user info from restTemplate: " + this.restTemplate);
-		this.logger.info("Getting user info from: BEARER_TYPE " + this.tokenType);
-		this.logger.info("Getting user info from:  authoritiesExtractor" + this.authoritiesExtractor);
 		this.logger.info("Getting user info from: " + path);
 		try {
 			OAuth2RestOperations restTemplate = this.restTemplate;
@@ -126,7 +121,6 @@ public class CustomUserInfoTokenServices implements ResourceServerTokenServices 
 				token.setTokenType(this.tokenType);
 				restTemplate.getOAuth2ClientContext().setAccessToken(token);
 			}
-            this.logger.info("=============" + restTemplate.getForEntity(path, Map.class).getBody());
 			return restTemplate.getForEntity(path, Map.class).getBody();
 		}
 		catch (Exception ex) {

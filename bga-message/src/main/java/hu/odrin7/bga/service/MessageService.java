@@ -13,7 +13,7 @@ public interface MessageService {
 
     List<Chat> getChats();
 
-    Chat createChat(Chat chat,Principal principal);
+    Chat createChat(Chat chat,String username);
 
     List<Message> getMessagesByChat(long chatId, Principal principal) throws UserNotConnectedToChat;
 

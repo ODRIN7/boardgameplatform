@@ -7,11 +7,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.ArrayList;
 import java.util.List;
 
-
-@Document(collection = "chats")
 public class Chat {
 
-    @Id
     private long id;
     private String title;
     private long gameId;
@@ -21,11 +18,17 @@ public class Chat {
     private Chat() {
     }
 
-    private Chat(Long id, String title, long gameId, String createdUser) {
+    public Chat(long id, String title, long gameId, List<String> connectedUser, List<Message> messages) {
+        this.id = id;
         this.title = title;
         this.gameId = gameId;
         this.connectedUser = connectedUser;
         this.messages = messages;
+    }
+
+    private Chat(Long id, String title, long gameId, String createdUser) {
+        this.title = title;
+        this.gameId = gameId;
         this.id = id;
         init(createdUser);
     }

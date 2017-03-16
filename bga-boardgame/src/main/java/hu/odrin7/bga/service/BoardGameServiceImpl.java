@@ -5,7 +5,6 @@ import hu.odrin7.bga.domain.boardgame.BoardGame;
 import hu.odrin7.bga.domain.boardgame.BoardGameRepository;
 import hu.odrin7.bga.domain.boardgame.TypeOfBoardGame;
 import hu.odrin7.bga.seq.dao.SequenceDao;
-import hu.odrin7.bga.service.exceptions.CannotFindBoardGameException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,13 +77,13 @@ public class BoardGameServiceImpl implements BoardGameService {
     }
 
     @Override
-    public BoardGame getBoardGameById(long boardGameId) throws CannotFindBoardGameException {
+    public BoardGame getBoardGameById(long boardGameId) {
 
         BoardGame boardGame = boardGameRepository.findOne(boardGameId);
-        if(boardGame!=null){
+        if (boardGame != null) {
             return boardGame;
         }
-        throw new CannotFindBoardGameException("Cannot find boardgame:"+ boardGameId);
+        return null;
     }
 
     @Override
@@ -113,6 +112,12 @@ public class BoardGameServiceImpl implements BoardGameService {
             log.info(">>>>>>>>>>>>BoardGame was deleted>>>:" + boardGame.getName());
         }
         return boardGame;
+    }
+
+    @Override
+    public void deleteBoardGameByUser(long boardGameId, String  username) {
+        log.info(">>>>>>>>>>>>>User: " + username + " delete>>>>>>>>>>:" + boardGameId);
+        authServiceClient.deleteBoardGame(new String(username), boardGameId);
     }
 
 

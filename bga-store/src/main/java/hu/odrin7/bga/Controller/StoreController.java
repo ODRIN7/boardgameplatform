@@ -31,7 +31,7 @@ public class StoreController {
         return storeService.getAllShoppingList();
     }
 
-    @RequestMapping(value = "/byUser/{userId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
     public List<Shopping> getShoppingList(Principal principal) {
         return storeService.getShoppingListByUser(principal);
     }

@@ -25,6 +25,7 @@ import static java.util.stream.Collectors.toList;
 public class GameServiceImpl implements GameService {
     private static final String GAME_SEQ_KEY = "game";
     private static final String USER_PER_GAME_SEQ_KEY = "userPerGame";
+    private static final String CHAT_SEQ_KEY = "chat";
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final SequenceDao sequenceDao;
     private final GameRepository gameRepository;
@@ -48,8 +49,10 @@ public class GameServiceImpl implements GameService {
         if (games.isEmpty()) {
             sequenceDao.saveNewKey(GAME_SEQ_KEY, 100);
             sequenceDao.saveNewKey(USER_PER_GAME_SEQ_KEY, 150);
+            sequenceDao.saveNewKey(CHAT_SEQ_KEY, 300);
             for (long i = 1; i <= 10; i++) {
-                Game game = Game.create(sequenceDao.getNextSequenceId(GAME_SEQ_KEY), 300L + i, 200 + i,
+                Game game = Game.create(sequenceDao.getNextSequenceId(GAME_SEQ_KEY),
+                    sequenceDao.getNextSequenceId(CHAT_SEQ_KEY) + i, 200 + i,
                     new User("username1", "password1", new ArrayList<>()),
                     "title" + i, sequenceDao.getNextSequenceId(USER_PER_GAME_SEQ_KEY), 5);
                 gameRepository.save(game);
@@ -73,12 +76,13 @@ public class GameServiceImpl implements GameService {
     public List<Game> getOpenGamesByUserBoardGames(Principal principal) {
 
         List<BoardGame> usersBoardGames = boardGameService.getUserBoardGames(principal.getName());
+        List<Long> boardGameIds = usersBoardGames.stream().map(BoardGame::getId).collect(toList());
         if (!usersBoardGames.isEmpty()) {
             return newArrayList(gameRepository.findAll())
                 .stream()
                 .filter(game -> game
                     .isOpen() &&
-                    usersBoardGames.contains(game.getBoardGameId()))
+                    boardGameIds.contains(game.getBoardGameId()))
                 .collect(toList());
         } else {
             return newArrayList();
@@ -117,14 +121,27 @@ public class GameServiceImpl implements GameService {
         return false;
     }
 
+    @Override
+    public boolean disconnectFromGame(long gameId, Principal principal) {
+        Game game = gameRepository.findOne(gameId);
+        if (game != null) {
+            game.disconnect(principal.getName());
+            log.info(">>>>>>User disconnect " + principal.getName() + " from " + gameId);
+            chatServiceClient.discconectFromChat(game.getChatId(), principal);
+            return true;
+        }
+        return false;
+    }
+
     private void setGameParams(Game game, Principal principal) {
         game.setId(sequenceDao.getNextSequenceId(GAME_SEQ_KEY));
         game.setUserPerGames(new ArrayList<>());
         game.getUserPerGames().add(
             new UserPerGame(sequenceDao.getNextSequenceId(USER_PER_GAME_SEQ_KEY),
                 true, principal.getName(), 0));
-        chatServiceClient.createChat(
-            Chat.create(1L, game.getTitle(), game.getId(), principal.getName()), principal);
+        game.setChatId(sequenceDao.getNextSequenceId(CHAT_SEQ_KEY));
+        chatServiceClient.createChatByGameCreated(
+            Chat.create(game.getChatId(), game.getTitle(), game.getId(), principal.getName()));
     }
 
     private boolean isConnectedUser(String username, Game game) {

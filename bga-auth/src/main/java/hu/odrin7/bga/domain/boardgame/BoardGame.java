@@ -1,50 +1,56 @@
 package hu.odrin7.bga.domain.boardgame;
 
+import com.google.common.base.Objects;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
 public class BoardGame {
 
-    @Id
     private long id;
     private String icon;
     private String name;
     private List<TypeOfBoardGame> typeOfBoardGames;
     private String shortDescription;
-    private List<String> rules;
     private String pdfDescription;
     private long price;
+    private int maxplayer;
+    private int minplayer;
 
-
-    public BoardGame() {
+    private BoardGame() {
     }
 
     private BoardGame(long id,
                       String icon,
                       String name,
-                      List<TypeOfBoardGame> typeOfBoardGames, String shortDescription,
-                      List<String> rules,
-                      String pdfDescription, long price) {
+                      List<TypeOfBoardGame> typeOfBoardGames,
+                      String shortDescription,
+                      String pdfDescription,
+                      long price,
+                      int maxplayer,
+                      int minplayer) {
         this.id = id;
         this.icon = icon;
         this.name = name;
         this.typeOfBoardGames = typeOfBoardGames;
         this.shortDescription = shortDescription;
-        this.rules = rules;
         this.pdfDescription = pdfDescription;
         this.price = price;
+        this.maxplayer = maxplayer;
+        this.minplayer = minplayer;
     }
 
     public static BoardGame create(long id,
                                    String name,
                                    String icon,
                                    String shortDescription,
-                                   List<String> rules,
                                    String pdfDescription,
                                    List<TypeOfBoardGame> typeOfBoardGames,
-                                   long price) {
-        return new BoardGame(id, icon, name, typeOfBoardGames, shortDescription, rules, pdfDescription, price);
+                                   long price,
+                                   int maxplayer,
+                                   int minplayer) {
+        return new BoardGame(id, icon, name, typeOfBoardGames, shortDescription, pdfDescription, price, maxplayer, minplayer);
     }
 
     public void decorateTypeOfBoardGame(TypeOfBoardGame typeOfBoardGame) {
@@ -87,19 +93,42 @@ public class BoardGame {
         this.shortDescription = shortDescription;
     }
 
-    public List<String> getRules() {
-        return rules;
-    }
-
-    public void setRules(List<String> rules) {
-        this.rules = rules;
-    }
-
     public long getPrice() {
         return price;
     }
 
     public void setPrice(long price) {
         this.price = price;
+    }
+
+    public int getMaxplayer() {
+        return maxplayer;
+    }
+
+    public void setMaxplayer(int maxplayer) {
+        this.maxplayer = maxplayer;
+    }
+
+    public int getMinplayer() {
+        return minplayer;
+    }
+
+    public void setMinplayer(int minplayer) {
+        this.minplayer = minplayer;
+    }
+
+    @Override
+    public String toString() {
+        return Objects.toStringHelper(this)
+            .add("id", id)
+            .add("icon", icon)
+            .add("name", name)
+            .add("typeOfBoardGames", typeOfBoardGames)
+            .add("shortDescription", shortDescription)
+            .add("pdfDescription", pdfDescription)
+            .add("price", price)
+            .add("minplayer", minplayer)
+            .add("maxplayer", maxplayer)
+            .toString();
     }
 }

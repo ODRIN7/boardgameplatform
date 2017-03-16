@@ -1,13 +1,12 @@
 package hu.odrin7.bga.service;
 
 
-import hu.odrin7.bga.domain.boardgame.BoardGame;
 import hu.odrin7.bga.domain.shopping.Shopping;
+import hu.odrin7.bga.domain.shopping.Status;
 import hu.odrin7.bga.domain.user.Authority;
 import hu.odrin7.bga.domain.user.Role;
 import hu.odrin7.bga.domain.user.User;
 import hu.odrin7.bga.repository.UserRepository;
-import hu.odrin7.bga.service.exceptions.CannotFindUserException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,8 +44,12 @@ public class UserServiceImpl implements UserService {
                     Collections.singletonList(new Authority(Role.ADMIN_ROLE)),
                     "email" + i + "@email.com",
                     "http://lorempixel.com/40/40/people/" + i);
+                user.addMoney(1000000L);
+                for (int j = 0; j < 10; j++) {
+                    user.addToCard(new Shopping(500L + j, 200L + j, user.getUsername(), Status.NOT_PAYED, i * 100));
+                    user.getBoardGamesId().add(200L + j);
+                }
                 create(user);
-                log.warn(user.toString());
             }
         }
     }
@@ -79,21 +82,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Long> getBoardGamesByUser(String username) throws CannotFindUserException {
+    public List<Long> getBoardGamesByUser(String username) {
         User user = repository.findOne(username);
         if (user != null) {
             return user.getBoardGamesId();
         }
-        throw new CannotFindUserException("cannot Find User: " + username);
+        log.info("cannot Find User: " + username);
+        return null;
     }
 
     @Override
-    public List<Shopping> getShoppingsByUser(String username) throws CannotFindUserException {
+    public List<Shopping> getShoppingsByUser(String username) {
         User user = repository.findOne(username);
         if (user != null) {
             return user.getShoppings();
         }
-        throw new CannotFindUserException("cannot Find User: " + username);
+        log.info("cannot Find User: " + username);
+        return null;
     }
 
     @Override
@@ -106,46 +111,63 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean buy(String username, Shopping shopping, BoardGame boardGame) throws CannotFindUserException {
+    public boolean buy(Shopping shopping) {
 
-        User user = getUserByUsername(username);
+        User user = getUserByUsername(shopping.getUser());
         if (user != null) {
-
+            user.buy(shopping);
             Shopping oldShopping = user.getShoppings().stream()
                 .filter(shopping1 -> Objects.equals(shopping1.getId(), shopping.getId())).collect(toList()).get(0);
             user.getShoppings().remove(oldShopping);
             user.getShoppings().add(shopping);
-            user.buyBoardGame(boardGame);
             repository.save(user);
             return true;
         }
-        throw new CannotFindUserException("");
+        return false;
     }
 
     @Override
-    public boolean deleteShopping(String username, Shopping shopping) throws CannotFindUserException {
+    public boolean deleteShopping(Shopping shopping) {
 
-        User user = getUserByUsername(username);
+        User user = getUserByUsername(shopping.getUser());
         if (user != null) {
-
-            Shopping oldShopping = user.getShoppings().stream()
-                .filter(shopping1 -> Objects.equals(shopping1.getId(), shopping.getId())).collect(toList()).get(0);
-            user.getShoppings().remove(oldShopping);
+            user.removeShopping(shopping);
             repository.save(user);
             return true;
         }
-        throw new CannotFindUserException("");
+        return false;
     }
 
     @Override
-    public boolean addToCard(String username, Shopping shopping) throws CannotFindUserException {
-        User user = getUserByUsername(username);
+    public boolean addToCard(Shopping shopping) {
+        User user = getUserByUsername(shopping.getUser());
         if (user != null) {
             user.addToCard(shopping);
             repository.save(user);
             return true;
         }
-        throw new CannotFindUserException("");
+        return false;
+    }
+
+    @Override
+    public String getIcon(String username) {
+        return getUserByUsername(username).getIcon();
+    }
+
+    @Override
+    public String getEmail(String username) {
+        return getUserByUsername(username).getEmail();
+    }
+
+    @Override
+    public long deleteBoardGame(String username, long boardGameId) {
+        log.info(">>>>>>>>>>>>>User: " + username + " delete>>>>>>>>>>:" + boardGameId);
+        User user = getUserByUsername(username);
+        if (user != null) {
+            user.removeBoardGame(boardGameId);
+            repository.save(user);
+        }
+        return 0;
     }
 
     @Override
@@ -160,11 +182,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserByUsername(String username) throws CannotFindUserException {
+    public User getUserByUsername(String username) {
         User user = repository.findOne(username);
         if (user != null) {
             return user;
         }
-        throw new CannotFindUserException("cannot Find User: " + username);
+        log.info("cannot Find User: " + username);
+        return null;
     }
 }

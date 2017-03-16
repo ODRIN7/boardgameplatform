@@ -1,12 +1,14 @@
 package hu.odrin7.bga.controller;
 
 
-import hu.odrin7.bga.domain.boardgame.BoardGame;
 import hu.odrin7.bga.domain.shopping.Shopping;
 import hu.odrin7.bga.domain.user.Authority;
 import hu.odrin7.bga.domain.user.User;
 import hu.odrin7.bga.service.UserService;
+import hu.odrin7.bga.service.UserServiceImpl;
 import hu.odrin7.bga.service.exceptions.CannotFindUserException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +22,7 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @PostConstruct
     public void fillData() {
@@ -68,32 +71,44 @@ public class UserController {
     }
 
     @RequestMapping(value = "/boardGames/{username}", method = RequestMethod.GET)
-    public List<Long> getBoardGamesByUser(@PathVariable("username") String username) throws CannotFindUserException {
+    public List<Long> getBoardGamesByUser(@PathVariable("username") String username) {
         return userService.getBoardGamesByUser(username);
     }
 
+    @RequestMapping(value = "/boardGames/{boardGameId}", method = RequestMethod.POST)
+    public long deleteBoardGame(String username, @PathVariable("boardGameId") long boardGameId) {
+        log.info(">>>>>>>>>>>>>User: " + username + " delete>>>>>>>>>>:" + boardGameId);
+        return userService.deleteBoardGame(username, boardGameId);
+    }
+
     @RequestMapping(value = "/shoppings/{username}", method = RequestMethod.GET)
-    public List<Shopping> getShoppingsByUser(@PathVariable("username") String username) throws CannotFindUserException {
+    public List<Shopping> getShoppingsByUser(@PathVariable("username") String username) {
         return userService.getShoppingsByUser(username);
     }
 
-    @RequestMapping(value = "/shoppings/buy/{username}", method = RequestMethod.GET)
-    public boolean buyShopping(@PathVariable("username") String username,
-                       @RequestBody Shopping shopping,
-                       @RequestBody BoardGame boardGame) throws CannotFindUserException {
-        return userService.buy(username, shopping, boardGame);
+    @RequestMapping(value = "/shoppings/buy", method = RequestMethod.POST)
+    public boolean buyShopping(@RequestBody Shopping shopping) {
+        return userService.buy(shopping);
     }
 
-    @RequestMapping(value = "/shoppings/buy/{username}", method = RequestMethod.GET)
-    public boolean deleteShopping(@PathVariable("username") String username,
-                       @RequestBody Shopping shopping) throws CannotFindUserException {
-        return userService.deleteShopping(username, shopping);
+    @RequestMapping(value = "/shoppings/delete", method = RequestMethod.POST)
+    public boolean deleteShopping(@RequestBody Shopping shopping) {
+        return userService.deleteShopping(shopping);
     }
 
-    @RequestMapping(value = "/shoppings/addToCard/{username}", method = RequestMethod.GET)
-    public boolean addToCard(@PathVariable("username") String username,
-                       @RequestBody Shopping shopping) throws CannotFindUserException {
-        return userService.addToCard(username, shopping);
+    @RequestMapping(value = "/shoppings/addToCard", method = RequestMethod.POST)
+    public boolean addToCard(@RequestBody Shopping shopping) {
+        return userService.addToCard(shopping);
+    }
+
+    @RequestMapping(value = "/email/{username}", method = RequestMethod.GET)
+    public String getEmail(@PathVariable("username") String username) {
+        return userService.getEmail(username);
+    }
+
+    @RequestMapping(value = "/icon/{username}", method = RequestMethod.GET)
+    public String getIcon(@PathVariable("username") String username) {
+        return userService.getIcon(username);
     }
 }
 

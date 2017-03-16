@@ -1,8 +1,8 @@
 package hu.odrin7.bga.domain.user;
 
 import com.google.common.base.Objects;
-import hu.odrin7.bga.domain.boardgame.BoardGame;
 import hu.odrin7.bga.domain.shopping.Shopping;
+import hu.odrin7.bga.domain.shopping.Status;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -83,10 +83,11 @@ public class User implements UserDetails {
         init();
     }
 
-    public boolean buyBoardGame(BoardGame boardGame) {
-        if (this.money <= boardGame.getPrice()) {
-            boardGamesId.add(boardGame.getId());
-            this.money -= boardGame.getPrice();
+    public boolean buy(Shopping shopping) {
+        if (this.money <= shopping.getShoppingPrice()) {
+            boardGamesId.add(shopping.getBoardGameId());
+            this.money -= shopping.getShoppingPrice();
+            shopping.setStatus(Status.ALREADY_PAYED);
             return true;
         }
         return false;
@@ -98,6 +99,16 @@ public class User implements UserDetails {
 
     public void addToCard(Shopping shopping) {
         this.shoppings.add(shopping);
+    }
+
+    public long removeBoardGame(long boardGameId) {
+        getBoardGamesId().remove(boardGameId);
+        return boardGameId;
+    }
+
+    public Shopping removeShopping(Shopping shopping) {
+        getShoppings().remove(shopping);
+        return shopping;
     }
 
     private void init() {

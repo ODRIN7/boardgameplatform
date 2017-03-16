@@ -34,7 +34,12 @@ public class MessageRestController {
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public Chat createChat(@RequestBody Chat chat, Principal principal) {
-        return messageService.createChat(chat, principal);
+        return messageService.createChat(chat, principal.getName());
+    }
+
+    @RequestMapping(value = "/chat", method = RequestMethod.POST)
+    public Chat createChatByGameCreated(@RequestBody Chat chat) {
+        return messageService.createChat(chat, chat.getConnectedUser().get(0));
     }
 
     @RequestMapping(value = "/{chatId}", method = RequestMethod.GET)

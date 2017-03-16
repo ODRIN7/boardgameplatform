@@ -10,7 +10,6 @@ import java.util.List;
 
 @Document(collection = "games")
 public class Game {
-    //todo id generator must have
 
     @Id
     private long id;
@@ -76,8 +75,18 @@ public class Game {
         status = Status.END;
     }
 
-    public void newPlayerConnect(long userPerGameId, String  username) {
+    public void newPlayerConnect(long userPerGameId, String username) {
         userPerGames.add(new UserPerGame(userPerGameId, false, username, 0));
+    }
+
+    @SuppressWarnings("SuspiciousMethodCalls")
+    public void disconnect(String username) {
+        userPerGames
+            .remove(
+                userPerGames
+                    .stream()
+                    .filter(userPerGame -> java.util.Objects.equals(userPerGame.getUserId(), username))
+                    .findFirst());
     }
 
     public boolean isOpen() {

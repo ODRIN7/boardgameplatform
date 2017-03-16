@@ -1,41 +1,37 @@
 package hu.odrin7.bga.domain.store;
 
 import com.google.common.base.Objects;
-import hu.odrin7.bga.domain.boardgame.BoardGame;
-import org.codehaus.jackson.map.ext.JodaDeserializers;
-import org.codehaus.jackson.map.ext.JodaSerializers;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 
-@Document(collection = "shoppings")
 public class Shopping {
 
-    @Id
     private Long id;
     private Long boardGameId;
-    private Long userId;
+    private String userId;
     private LocalDate creationTime;
     private Status status;
+    private Integer shoppingPrice;
 
     public Shopping() {
     }
 
-    public Shopping(Long id, Long boardGameId, Long userId,  LocalDate creationTime, Status status) {
+    public Shopping(Long id, Long boardGameId, String userId, LocalDate creationTime, Status status, Integer shoppingPrice) {
         this.id = id;
         this.boardGameId = boardGameId;
         this.userId = userId;
         this.creationTime = creationTime;
         this.status = status;
+        this.shoppingPrice = shoppingPrice;
     }
 
-    public Shopping(Long id, Long boardGameId, Long userId, Status status) {
+    public Shopping(Long id, Long boardGameId, String userId, Status status, Integer shoppingPrice) {
         this.id = id;
         this.boardGameId = boardGameId;
         this.userId = userId;
         this.status = status;
+        this.shoppingPrice = shoppingPrice;
+        this.creationTime = LocalDate.now();
     }
 
     public Long getId() {
@@ -54,11 +50,11 @@ public class Shopping {
         this.boardGameId = boardGameId;
     }
 
-    public Long getUser() {
+    public String getUser() {
         return userId;
     }
 
-    public void setUser(Long userId) {
+    public void setUser(String userId) {
         this.userId = userId;
     }
 
@@ -78,6 +74,30 @@ public class Shopping {
         this.status = status;
     }
 
+    public Long getBoardGameId() {
+        return boardGameId;
+    }
+
+    public void setBoardGameId(Long boardGameId) {
+        this.boardGameId = boardGameId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public Integer getShoppingPrice() {
+        return shoppingPrice;
+    }
+
+    public void setShoppingPrice(Integer shoppingPrice) {
+        this.shoppingPrice = shoppingPrice;
+    }
+
     @Override
     public String toString() {
         return Objects.toStringHelper(this)
@@ -86,6 +106,7 @@ public class Shopping {
             .add("userId", userId)
             .add("creationTime", creationTime)
             .add("status", status)
+            .add("shoppingPrice", shoppingPrice)
             .toString();
     }
 }

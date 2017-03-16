@@ -4,7 +4,6 @@ package hu.odrin7.bga.Controller;
 import hu.odrin7.bga.domain.boardgame.BoardGame;
 import hu.odrin7.bga.domain.boardgame.TypeOfBoardGame;
 import hu.odrin7.bga.service.BoardGameService;
-import hu.odrin7.bga.service.exceptions.CannotFindBoardGameException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,18 +31,20 @@ public class BoardGameController {
     }
 
 
+
     @RequestMapping(value = "/", method = GET)
     public List<BoardGame> getBoardGames() {
         return boardGameService.getBoardGames();
     }
 
     @RequestMapping(value = "/types/{typeOfBoardGame}", method = GET)
-    public List<BoardGame> getBoardGamesByType(@PathVariable("typeOfBoardGame") TypeOfBoardGame typeOfBoardGame) {
+    public List<BoardGame> getBoardGamesByType(@PathVariable("typeOfBoardGame")
+                                                   TypeOfBoardGame typeOfBoardGame) {
         return boardGameService.getBoardGamesByType(typeOfBoardGame);
     }
 
     @RequestMapping(value = "/{boardGameId}", method = GET)
-    public BoardGame getBoardGame(@PathVariable("boardGameId") Long boardGameId) throws CannotFindBoardGameException {
+    public BoardGame getBoardGame(@PathVariable("boardGameId") Long boardGameId) {
         return boardGameService.getBoardGameById(boardGameId);
     }
 
@@ -52,25 +53,38 @@ public class BoardGameController {
         return boardGameService.getBoardGamesByIds(boardGameIds);
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
-    public BoardGame saveBoardGame(@RequestBody BoardGame boardGame) {
-        return boardGameService.saveBoardGame(boardGame);
-    }
 
-    @RequestMapping(value = "/{boardGameId}", method = RequestMethod.DELETE)
-    public BoardGame deletePost(@PathVariable("boardGameId") Long boardGameId) {
-        return boardGameService.deleteBoardGame(boardGameId);
+
+
+
+    @RequestMapping(value = "/", method = RequestMethod.POST)
+    public BoardGame saveBoardGame(@RequestBody BoardGame boardGame, Principal principal) {
+        return boardGameService.saveBoardGame(boardGame);
     }
 
     @RequestMapping(value = "/{boardGameId}", method = RequestMethod.PUT)
     public Boolean modifBoardGame(@PathVariable("boardGameId") long boardGameId,
-                                  @RequestBody BoardGame boardGame) {
+                                  @RequestBody BoardGame boardGame, Principal principal) {
         return boardGameService.modifyById(boardGameId, boardGame);
     }
 
-    @RequestMapping(value = "/boardGameBy/{username}", method = RequestMethod.GET)
-    public List<BoardGame> getBoardGamesByUser(@PathVariable("username") Principal principal) {
+    @RequestMapping(value = "/{boardGameId}", method = RequestMethod.DELETE)
+    public BoardGame deleteBoardGame(@PathVariable("boardGameId") Long boardGameId, Principal principal) {
+        return boardGameService.deleteBoardGame(boardGameId);
+    }
+
+
+
+
+
+
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
+    public List<BoardGame> getBoardGamesByUser(Principal principal) {
         return boardGameService.getUserBoardGames(principal.getName());
     }
 
+    @RequestMapping(value = "/user/{boardGameId}", method = RequestMethod.DELETE)
+    public void deleteBoardGamesByUser(@PathVariable("boardGameId") long boardGameId, Principal principal) {
+        boardGameService.deleteBoardGameByUser(boardGameId, principal.getName());
+    }
 }

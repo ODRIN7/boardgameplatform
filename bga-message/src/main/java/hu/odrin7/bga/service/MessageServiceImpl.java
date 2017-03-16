@@ -65,9 +65,9 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public Chat createChat(Chat chat, Principal principal) {
+    public Chat createChat(Chat chat, String  username) {
 
-        setChatParams(chat, principal.getName());
+        setChatParams(chat, username);
         return chatRepository.save(chat);
     }
 
@@ -138,7 +138,6 @@ public class MessageServiceImpl implements MessageService {
 
 
     private void setChatParams(Chat chat, String username) {
-        chat.setId(sequenceDao.getNextSequenceId(CHAT_SEQ_KEY));
         chat.setConnectedUser(new ArrayList<>());
         chat.setMessages(new ArrayList<>());
         chat.setConnectedUser(new ArrayList<>());
