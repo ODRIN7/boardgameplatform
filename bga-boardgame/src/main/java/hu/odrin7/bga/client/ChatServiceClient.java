@@ -16,11 +16,11 @@ public interface ChatServiceClient {
     @RequestMapping(value = "/messages/chat", method = RequestMethod.POST)
     Chat createChatByGameCreated(@RequestBody Chat chat);
 
-    @RequestMapping(value = "/disconnect/{username}/{chatId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/messages/disconnect/{username}/{chatId}", method = RequestMethod.POST)
     ResponseEntity discconectFromChat(@PathVariable("chatId") long chatId,
                                              @PathVariable("username")  String username);
 
-    @RequestMapping(value = "/connect/{username}/{chatId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/messages/connect/{username}/{chatId}", method = RequestMethod.POST)
     ResponseEntity connectToChat(@PathVariable("chatId") long chatId,
                                         @PathVariable("username")  String username);
 

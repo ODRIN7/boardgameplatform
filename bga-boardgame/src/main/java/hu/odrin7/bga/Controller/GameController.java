@@ -2,7 +2,6 @@ package hu.odrin7.bga.Controller;
 
 
 import hu.odrin7.bga.domain.game.Game;
-import hu.odrin7.bga.domain.message.Message;
 import hu.odrin7.bga.service.GameService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,16 +61,15 @@ public class GameController {
     }
 
 
-    @RequestMapping(value = "/connect/{gameId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/connect/{username}/{gameId}", method = RequestMethod.POST)
     public Boolean connectToGame(@PathVariable("gameId") long gameId,
-                                 Principal principal) {
-        return gameService.connectToGame(gameId, principal.getName());
+                                 @PathVariable("username") String username) {
+        return gameService.connectToGame(gameId, username);
     }
 
-    @RequestMapping(value = "/disconnect/{gameId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/disconnect/{username}/{gameId}", method = RequestMethod.POST)
     public Boolean disconnectFromGame(@PathVariable("gameId") long gameId,
-                                      Principal principal) {
-        log.info(gameId + ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;" + principal);
-        return gameService.disconnectFromGame(gameId, principal.getName());
+                                      @PathVariable("username") String username) {
+        return gameService.disconnectFromGame(gameId, username);
     }
 }

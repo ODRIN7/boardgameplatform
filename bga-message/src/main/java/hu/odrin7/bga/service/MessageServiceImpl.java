@@ -91,7 +91,7 @@ public class MessageServiceImpl implements MessageService {
 
         Chat chat = chatRepository.findOne(chatId);
         if (chat != null) {
-            chat.connect("username1");
+            chat.connect(username);
             chatRepository.save(chat);
             log.info(">>>>>>>>>>>>>Connected " + username + " to  chat>>>>>>>>>>:" + chat.getId());
         }

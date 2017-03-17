@@ -18,7 +18,6 @@ import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFacto
 
 import java.security.KeyPair;
 
-@SuppressWarnings("SpringFacetCodeInspection")
 @Configuration
 @EnableAuthorizationServer
 public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdapter {
@@ -43,22 +42,10 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
             .withClient("ui-service")
             .secret("ui-service")
             .authorities("ROLE_TRUSTED_CLIENT")
-            .authorizedGrantTypes("implicit", "authorization_code", "refresh_token", "password")
+            .authorizedGrantTypes("client_credentials", "implicit", "authorization_code", "refresh_token", "password")
             .accessTokenValiditySeconds(600)
             .scopes("openid")
-            .autoApprove(true)
-            .and()
-            .withClient("api-service")
-            .secret("api-service")
-            .authorities("ROLE_TRUSTED_CLIENT")
-            .authorizedGrantTypes("client_credentials", "refresh_token")
-            .scopes("server")
-            .and()
-            .withClient("store-service")
-            .secret("store-service")
-            .authorities("ROLE_TRUSTED_CLIENT")
-            .authorizedGrantTypes("client_credentials", "refresh_token")
-            .scopes("server");
+            .autoApprove(true);
 
     }
 
@@ -66,9 +53,10 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints
             .tokenStore(tokenStore)
+            .accessTokenConverter(jwtAccessTokenConverter())
             .authenticationManager(authenticationManager)
-            .userDetailsService(userDetailsService)
-            .accessTokenConverter(jwtAccessTokenConverter());
+            .userDetailsService(userDetailsService);
+
     }
 
     @Override

@@ -120,6 +120,7 @@ public class GameServiceImpl implements GameService {
             game.newPlayerConnect(sequenceDao.getNextSequenceId(USER_PER_GAME_SEQ_KEY), username);
             log.info(">>>>>>User connected " + username + " to " + gameId);
             chatServiceClient.connectToChat(game.getChatId(),username);
+            gameRepository.save(game);
             return true;
         }
         return false;
@@ -127,13 +128,11 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public boolean disconnectFromGame(long gameId, String username) {
-        log.info(">>>>>>User disconnect " + username + " from " + gameId);
         Game game = gameRepository.findOne(gameId);
         if (game != null) {
-            log.info(">>>>>>User disconnect " + username + " from " + gameId);
             game.disconnect(username);
-            log.info(">>>>>>User disconnect " + username + " from " + gameId);
             chatServiceClient.discconectFromChat(game.getChatId(), username);
+            gameRepository.save(game);
             return true;
         }
         return false;

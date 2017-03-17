@@ -2,14 +2,11 @@ package hu.odrin7.bga.domain.game;
 
 import com.google.common.base.Objects;
 import hu.odrin7.bga.domain.user.User;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Document(collection = "games")
 public class Game {
@@ -84,12 +81,13 @@ public class Game {
     }
 
     public void disconnect(String username) {
-       UserPerGame user =  userPerGames
-            .stream()
-            .filter(userPerGame -> username == userPerGame.getUserId())
-            .collect(Collectors.toList()).get(0);
-        userPerGames
-            .remove(user);
+        UserPerGame foundedUser = null;
+        for (UserPerGame userPerGame : userPerGames) {
+            if (userPerGame.getUserId().equals(username)) {
+                foundedUser = userPerGame;
+            }
+        }
+        userPerGames.remove(foundedUser);
     }
 
     public boolean isOpen() {
