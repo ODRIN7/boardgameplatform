@@ -26,5 +26,5 @@ public interface BoardGameService {
 
     BoardGame deleteBoardGame(Long postId);
 
-    void deleteBoardGameByUser(long boardGameId,String  username);
+    long deleteBoardGameByUser(long boardGameId,String  username);
 }

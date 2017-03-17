@@ -17,11 +17,11 @@ public interface GameService {
 
     Game getGameById(long gameId);
 
-    Game createNewGame(Game game, Principal principal);
+    Game createNewGame(Game game, String username);
 
     Game deleteGame(Long gameId, Principal principal);
 
-    boolean connectToGame(long gameId, Principal principal);
+    boolean connectToGame(long gameId, String username);
 
-    boolean disconnectFromGame(long gameId, Principal principal);
+    boolean disconnectFromGame(long gameId, String username);
 }

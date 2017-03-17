@@ -2,14 +2,18 @@ package hu.odrin7.bga.domain.game;
 
 import com.google.common.base.Objects;
 import hu.odrin7.bga.domain.user.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Document(collection = "games")
 public class Game {
+
 
     @Id
     private long id;
@@ -79,14 +83,13 @@ public class Game {
         userPerGames.add(new UserPerGame(userPerGameId, false, username, 0));
     }
 
-    @SuppressWarnings("SuspiciousMethodCalls")
     public void disconnect(String username) {
+       UserPerGame user =  userPerGames
+            .stream()
+            .filter(userPerGame -> username == userPerGame.getUserId())
+            .collect(Collectors.toList()).get(0);
         userPerGames
-            .remove(
-                userPerGames
-                    .stream()
-                    .filter(userPerGame -> java.util.Objects.equals(userPerGame.getUserId(), username))
-                    .findFirst());
+            .remove(user);
     }
 
     public boolean isOpen() {

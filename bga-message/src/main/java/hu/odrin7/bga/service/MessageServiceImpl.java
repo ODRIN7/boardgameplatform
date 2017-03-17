@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -86,43 +87,42 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public void connectToChat(long chatId, Principal principal) {
+    public void connectToChat(long chatId, String username) {
 
         Chat chat = chatRepository.findOne(chatId);
         if (chat != null) {
             chat.connect("username1");
             chatRepository.save(chat);
-            log.info(">>>>>>>>>>>>>Connected " + principal.getName() + " to  chat>>>>>>>>>>:" + chat.getId());
+            log.info(">>>>>>>>>>>>>Connected " + username + " to  chat>>>>>>>>>>:" + chat.getId());
         }
     }
 
     @Override
-    public void disconnectFromChat(long chatId, Principal principal) {
+    public void disconnectFromChat(long chatId, String username) {
         Chat chat = chatRepository.findOne(chatId);
         if (chat != null) {
-            chat.disconnect(principal.getName());
+            chat.disconnect(username);
             chatRepository.save(chat);
-            log.info(">>>>>>>>>>>>>Disconnected " + principal.getName() + " from chat>>>>>>>>>>:" + chat.getId());
+            log.info(">>>>>>>>>>>>>Disconnected " + username + " from chat>>>>>>>>>>:" + chat.getId());
         }
     }
 
     @Override
-    public void writeMessage(long chatId, Message message, Principal principal) {
-        log.info("/////////////////////////////NAME/////////////////////////////" + principal.getName());
-        log.info("/////////////////////////////ALL STRING/////////////////////////////" + principal.toString());
+    public void writeMessage(long chatId, Message message, String username) {
         Chat chat = chatRepository.findOne(chatId);
         if (chat != null) {
-            setMessageData(message, principal, chat.getConnectedUser());
+            setMessageData(message, username, chat.getConnectedUser());
             chat.write(message);
             chatRepository.save(chat);
             log.info(">>>>>>>>>>>>>Message was sent>>>>>>>>>>:  " + message.toString());
         }
     }
 
-    private void setMessageData(Message message, Principal principal, List<String> connectedUser) {
+    private void setMessageData(Message message, String username, List<String> connectedUser) {
         message.setMessageId(sequenceDao.getNextSequenceId(MESSAGE_SEQ_KEY));
-        message.setAuthorId(principal.getName());
-        setReadParam(message, connectedUser, principal.getName());
+        message.setAuthorId(username);
+        message.setTimestamp(LocalDateTime.now());
+        setReadParam(message, connectedUser, username);
     }
 
     private void setReadParam(Message message, List<String> connectedUser, String authorId) {

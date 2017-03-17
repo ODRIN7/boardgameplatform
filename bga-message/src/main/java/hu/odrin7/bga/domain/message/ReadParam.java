@@ -10,6 +10,9 @@ public class ReadParam {
         this.isRead = isRead;
     }
 
+    public ReadParam() {
+    }
+
     public void setUsername(String username) {
         this.username = username;
     }

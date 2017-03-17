@@ -4,22 +4,14 @@ services:
   rabbitmq:
     ports:
       - 5672:5672
-
-
   config-service:
     build: bga-config
     ports:
       - 8888:8888
-
-
-
   discovery-service:
     build: bga-discovery
     ports:
       - 8081:8081
-
-
-
   gateway-service:
     build: bga-gateway
 
@@ -56,5 +48,6 @@ services:
     build: bga-mongodb
     ports:
       - 26000:27017
+
 
 

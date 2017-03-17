@@ -75,9 +75,8 @@ public class UserController {
         return userService.getBoardGamesByUser(username);
     }
 
-    @RequestMapping(value = "/boardGames/{boardGameId}", method = RequestMethod.POST)
-    public long deleteBoardGame(String username, @PathVariable("boardGameId") long boardGameId) {
-        log.info(">>>>>>>>>>>>>User: " + username + " delete>>>>>>>>>>:" + boardGameId);
+    @RequestMapping(value = "/boardGames/{username}/{boardGameId}", method = RequestMethod.POST)
+    public long deleteBoardGame( @PathVariable("username") String username, @PathVariable("boardGameId") long boardGameId) {
         return userService.deleteBoardGame(username, boardGameId);
     }
 

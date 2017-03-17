@@ -2,7 +2,10 @@ package hu.odrin7.bga.Controller;
 
 
 import hu.odrin7.bga.domain.game.Game;
+import hu.odrin7.bga.domain.message.Message;
 import hu.odrin7.bga.service.GameService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/games")
 public class GameController {
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
     private final GameService gameService;
 
@@ -49,7 +53,7 @@ public class GameController {
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public Game createNewGame(@RequestBody Game game, Principal principal) {
-        return gameService.createNewGame(game, principal);
+        return gameService.createNewGame(game, principal.getName());
     }
 
     @RequestMapping(value = "/{gameId}", method = RequestMethod.DELETE)
@@ -58,16 +62,16 @@ public class GameController {
     }
 
 
-
     @RequestMapping(value = "/connect/{gameId}", method = RequestMethod.POST)
     public Boolean connectToGame(@PathVariable("gameId") long gameId,
                                  Principal principal) {
-        return gameService.connectToGame(gameId, principal);
+        return gameService.connectToGame(gameId, principal.getName());
     }
 
     @RequestMapping(value = "/disconnect/{gameId}", method = RequestMethod.POST)
     public Boolean disconnectFromGame(@PathVariable("gameId") long gameId,
                                       Principal principal) {
-        return gameService.disconnectFromGame(gameId, principal);
+        log.info(gameId + ";;;;;;;;;;;;;;;;;;;;;;;;;;;;;;" + principal);
+        return gameService.disconnectFromGame(gameId, principal.getName());
     }
 }

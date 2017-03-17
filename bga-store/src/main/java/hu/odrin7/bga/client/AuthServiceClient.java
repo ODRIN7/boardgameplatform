@@ -20,8 +20,7 @@ public interface AuthServiceClient {
 
 
     @RequestMapping(value = "/users/shoppings/delete", method = RequestMethod.POST)
-    public boolean deleteShopping(
-        @RequestBody Shopping shopping);
+    boolean deleteShopping(@RequestBody Shopping shopping);
 
     @RequestMapping(value = "/users/shoppings/addToCard", method = RequestMethod.POST)
     boolean addToCard(@RequestBody Shopping shopping);

@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -115,9 +114,9 @@ public class BoardGameServiceImpl implements BoardGameService {
     }
 
     @Override
-    public void deleteBoardGameByUser(long boardGameId, String  username) {
+    public long deleteBoardGameByUser(long boardGameId, String username) {
         log.info(">>>>>>>>>>>>>User: " + username + " delete>>>>>>>>>>:" + boardGameId);
-        authServiceClient.deleteBoardGame(new String(username), boardGameId);
+        return authServiceClient.deleteBoardGame(username, boardGameId);
     }
 
 

@@ -95,8 +95,11 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public Game createNewGame(Game game, Principal principal) {
-        setGameParams(game, principal);
+    public Game createNewGame(Game game, String username) {
+        setGameParams(game, username);
+
+        chatServiceClient.createChatByGameCreated(
+            Chat.create(game.getChatId(), game.getTitle(), game.getId(), username));
         return gameRepository.save(game);
     }
 
@@ -111,37 +114,38 @@ public class GameServiceImpl implements GameService {
     }
 
     @Override
-    public boolean connectToGame(long gameId, Principal principal) {
+    public boolean connectToGame(long gameId, String username) {
         Game game = gameRepository.findOne(gameId);
         if (game != null) {
-            game.newPlayerConnect(sequenceDao.getNextSequenceId(USER_PER_GAME_SEQ_KEY), principal.getName());
-            log.info(">>>>>>User connected " + principal.getName() + " to " + gameId);
+            game.newPlayerConnect(sequenceDao.getNextSequenceId(USER_PER_GAME_SEQ_KEY), username);
+            log.info(">>>>>>User connected " + username + " to " + gameId);
+            chatServiceClient.connectToChat(game.getChatId(),username);
             return true;
         }
         return false;
     }
 
     @Override
-    public boolean disconnectFromGame(long gameId, Principal principal) {
+    public boolean disconnectFromGame(long gameId, String username) {
+        log.info(">>>>>>User disconnect " + username + " from " + gameId);
         Game game = gameRepository.findOne(gameId);
         if (game != null) {
-            game.disconnect(principal.getName());
-            log.info(">>>>>>User disconnect " + principal.getName() + " from " + gameId);
-            chatServiceClient.discconectFromChat(game.getChatId(), principal);
+            log.info(">>>>>>User disconnect " + username + " from " + gameId);
+            game.disconnect(username);
+            log.info(">>>>>>User disconnect " + username + " from " + gameId);
+            chatServiceClient.discconectFromChat(game.getChatId(), username);
             return true;
         }
         return false;
     }
 
-    private void setGameParams(Game game, Principal principal) {
+    private void setGameParams(Game game, String  username) {
         game.setId(sequenceDao.getNextSequenceId(GAME_SEQ_KEY));
         game.setUserPerGames(new ArrayList<>());
         game.getUserPerGames().add(
             new UserPerGame(sequenceDao.getNextSequenceId(USER_PER_GAME_SEQ_KEY),
-                true, principal.getName(), 0));
+                true, username, 0));
         game.setChatId(sequenceDao.getNextSequenceId(CHAT_SEQ_KEY));
-        chatServiceClient.createChatByGameCreated(
-            Chat.create(game.getChatId(), game.getTitle(), game.getId(), principal.getName()));
     }
 
     private boolean isConnectedUser(String username, Game game) {

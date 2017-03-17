@@ -24,8 +24,6 @@ public class Chat {
     private Chat(Long id, String title, long gameId, String createdUser) {
         this.title = title;
         this.gameId = gameId;
-        this.connectedUser = connectedUser;
-        this.messages = messages;
         this.id = id;
         init(createdUser);
     }

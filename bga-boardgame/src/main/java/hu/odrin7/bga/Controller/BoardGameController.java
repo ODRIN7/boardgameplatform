@@ -4,6 +4,8 @@ package hu.odrin7.bga.Controller;
 import hu.odrin7.bga.domain.boardgame.BoardGame;
 import hu.odrin7.bga.domain.boardgame.TypeOfBoardGame;
 import hu.odrin7.bga.service.BoardGameService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -84,7 +86,7 @@ public class BoardGameController {
     }
 
     @RequestMapping(value = "/user/{boardGameId}", method = RequestMethod.DELETE)
-    public void deleteBoardGamesByUser(@PathVariable("boardGameId") long boardGameId, Principal principal) {
-        boardGameService.deleteBoardGameByUser(boardGameId, principal.getName());
+    public long deleteBoardGamesByUser(@PathVariable("boardGameId") long boardGameId, Principal principal) {
+       return boardGameService.deleteBoardGameByUser(boardGameId, principal.getName());
     }
 }

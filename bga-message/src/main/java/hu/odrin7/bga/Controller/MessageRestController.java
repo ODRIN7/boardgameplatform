@@ -5,6 +5,8 @@ import hu.odrin7.bga.domain.message.Message;
 import hu.odrin7.bga.service.MessageService;
 import hu.odrin7.bga.service.exceptions.UserNotConnectedToChat;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
@@ -47,20 +49,25 @@ public class MessageRestController {
         return messageService.getMessagesByChat(chatId, principal);
     }
 
-    @RequestMapping(value = "/connect/{chatId}", method = RequestMethod.POST)
-    public void connectToChat(@PathVariable("chatId") long chatId, Principal principal) {
-        messageService.connectToChat(chatId, principal);
+    @RequestMapping(value = "/connect/{username}/{chatId}", method = RequestMethod.POST)
+    public ResponseEntity connectToChat(@PathVariable("chatId") long chatId,
+                                        @PathVariable("username")  String username) {
+        messageService.connectToChat(chatId, username);
+        return new ResponseEntity<String>(HttpStatus.ACCEPTED);
     }
 
-    @RequestMapping(value = "/disconnect/{chatId}", method = RequestMethod.POST)
-    public void discconectFromChat(@PathVariable("chatId") long chatId, Principal principal) {
-        messageService.disconnectFromChat(chatId, principal);
+    @RequestMapping(value = "/disconnect/{username}/{chatId}", method = RequestMethod.POST)
+    public ResponseEntity discconectFromChat(@PathVariable("chatId") long chatId,
+                                             @PathVariable("username")  String username) {
+        messageService.disconnectFromChat(chatId, username);
+        return new ResponseEntity<String>(HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(value = "/write/{chatId}/", method = RequestMethod.POST)
-    public void writeMessage(@PathVariable("chatId") long chatId,
-                                @RequestBody Message message,
-                                Principal principal) {
-        messageService.writeMessage(chatId, message, principal);
+    public Message writeMessage(@PathVariable("chatId") long chatId,
+                                       @RequestBody Message message,
+                                       Principal principal) {
+        messageService.writeMessage(chatId, message, principal.getName());
+        return message;
     }
 }
