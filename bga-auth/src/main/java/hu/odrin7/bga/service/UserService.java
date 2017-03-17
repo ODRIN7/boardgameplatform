@@ -1,6 +1,5 @@
 package hu.odrin7.bga.service;
 
-import hu.odrin7.bga.domain.shopping.Shopping;
 import hu.odrin7.bga.domain.user.Authority;
 import hu.odrin7.bga.domain.user.User;
 
@@ -16,7 +15,7 @@ public interface UserService {
 
     List<Long> getBoardGamesByUser(String username);
 
-    List<Shopping> getShoppingsByUser(String username);
+    List<Long> getShoppingsByUser(String username);
 
     void create(User user);
 
@@ -26,11 +25,13 @@ public interface UserService {
 
     User deleteUser(String username);
 
-    boolean buy(Shopping shopping);
+    boolean buy(Long shoppingId, long price, String username);
 
-    boolean deleteShopping(Shopping shopping);
+    boolean deleteShopping(Long shopping, String username);
 
-    boolean addToCard(Shopping shopping);
+    boolean deleteShoppings(List<Long> shoppings, String username);
+
+    boolean addToCard(Long shopping, String username);
 
     String getIcon(String username);
 

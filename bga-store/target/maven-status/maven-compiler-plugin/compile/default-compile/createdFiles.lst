@@ -1,6 +1,7 @@
 hu\odrin7\bga\Controller\StoreController.class
 hu\odrin7\bga\BGAStoreApplication.class
 hu\odrin7\bga\service\security\CustomUserInfoTokenServices.class
+hu\odrin7\bga\client\BoardGameServiceClient.class
 hu\odrin7\bga\domain\user\User.class
 hu\odrin7\bga\seq\dao\SequenceDao.class
 hu\odrin7\bga\domain\boardgame\TypeOfBoardGame.class

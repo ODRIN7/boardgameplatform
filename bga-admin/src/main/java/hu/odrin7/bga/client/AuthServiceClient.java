@@ -25,14 +25,14 @@ public interface AuthServiceClient {
     List<User> getUsers();
 
     @RequestMapping(value = "/users/{username}", method = RequestMethod.GET)
-    public User getUserByUsername(@PathVariable("username") String username);
+     User getUserByUsername(@PathVariable("username") String username);
 
     @RequestMapping(value = "/users/{username}", method = RequestMethod.DELETE)
-    public User deleteUser(@PathVariable("username") String username);
+     User deleteUser(@PathVariable("username") String username);
 
     @RequestMapping(value = "/users/{username}", method = RequestMethod.PUT)
-    public Boolean modifUser(@PathVariable("username") String username, @RequestBody User user);
+     Boolean modifUser(@PathVariable("username") String username, @RequestBody User user);
 
     @RequestMapping(value = "/authority/{authority}", method = RequestMethod.GET)
-    public List<User> getUserByAuthority(@PathVariable("authority") Authority authority );
+     List<User> getUserByAuthority(@PathVariable("authority") Authority authority );
 }

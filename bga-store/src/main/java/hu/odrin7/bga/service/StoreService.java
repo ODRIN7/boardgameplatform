@@ -2,7 +2,6 @@ package hu.odrin7.bga.service;
 
 import hu.odrin7.bga.domain.store.Shopping;
 
-import java.security.Principal;
 import java.util.List;
 
 public interface StoreService {
@@ -11,12 +10,12 @@ public interface StoreService {
 
     List<Shopping> getAllShoppingList();
 
-    List<Shopping> getShoppingListByUser(Principal principal);
+    List<Shopping> getShoppingListByUser(String username);
 
-    Shopping addToCard(Shopping shopping,Principal principal);
+    Shopping addToCard(Shopping shopping, String username);
 
-    Shopping buy(long shoppingId,Principal principal);
+    void buy(List<Long> buyIds, String username);
 
-    Shopping deleteShopping(long shoppingId,Principal principal);
+    void deleteShoppings(List<Long> deletedIds, String username);
 
 }

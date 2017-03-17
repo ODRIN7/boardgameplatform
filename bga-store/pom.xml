@@ -15,7 +15,9 @@
         <artifactId>boardgamearena</artifactId>
         <version>1.0.0</version>
     </parent>
-
+    <properties>
+        <jackson.version>2.8.1</jackson.version>
+    </properties>
 	<dependencyManagement>
 		<dependencies>
 			<dependency>

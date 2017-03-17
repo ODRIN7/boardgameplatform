@@ -1,7 +1,6 @@
 package hu.odrin7.bga.controller;
 
 
-import hu.odrin7.bga.domain.shopping.Shopping;
 import hu.odrin7.bga.domain.user.Authority;
 import hu.odrin7.bga.domain.user.User;
 import hu.odrin7.bga.service.UserService;
@@ -10,6 +9,8 @@ import hu.odrin7.bga.service.exceptions.CannotFindUserException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.PostConstruct;
@@ -76,29 +77,37 @@ public class UserController {
     }
 
     @RequestMapping(value = "/boardGames/{username}/{boardGameId}", method = RequestMethod.POST)
-    public long deleteBoardGame( @PathVariable("username") String username, @PathVariable("boardGameId") long boardGameId) {
+    public long deleteBoardGame(@PathVariable("username") String username, @PathVariable("boardGameId") long boardGameId) {
         return userService.deleteBoardGame(username, boardGameId);
     }
 
     @RequestMapping(value = "/shoppings/{username}", method = RequestMethod.GET)
-    public List<Shopping> getShoppingsByUser(@PathVariable("username") String username) {
+    public List<Long> getShoppingsByUser(@PathVariable("username") String username) {
         return userService.getShoppingsByUser(username);
     }
 
-    @RequestMapping(value = "/shoppings/buy", method = RequestMethod.POST)
-    public boolean buyShopping(@RequestBody Shopping shopping) {
-        return userService.buy(shopping);
+    @RequestMapping(value = "/shoppings/buy/{username}/{price}", method = RequestMethod.POST)
+    public ResponseEntity buyShopping(@PathVariable("username") String username,
+                                      @PathVariable("price") long price,
+                                      @RequestBody Long shopping) {
+        userService.buy(shopping, price, username);
+        return new ResponseEntity<String>(HttpStatus.ACCEPTED);
     }
 
-    @RequestMapping(value = "/shoppings/delete", method = RequestMethod.POST)
-    public boolean deleteShopping(@RequestBody Shopping shopping) {
-        return userService.deleteShopping(shopping);
+    @RequestMapping(value = "/shoppings/delete/{username}", method = RequestMethod.POST)
+    public ResponseEntity deleteShoppings(@PathVariable("username") String username,
+                                          @RequestBody List<Long> shoppings) {
+        userService.deleteShoppings(shoppings, username);
+        return new ResponseEntity<String>(HttpStatus.ACCEPTED);
     }
 
-    @RequestMapping(value = "/shoppings/addToCard", method = RequestMethod.POST)
-    public boolean addToCard(@RequestBody Shopping shopping) {
-        return userService.addToCard(shopping);
+    @RequestMapping(value = "/shoppings/addToCard/{username}", method = RequestMethod.POST)
+    public ResponseEntity addToCard(@PathVariable("username") String username,
+                                    @RequestBody Long shopping) {
+        userService.addToCard(shopping, username);
+        return new ResponseEntity<String>(HttpStatus.ACCEPTED);
     }
+
 
     @RequestMapping(value = "/email/{username}", method = RequestMethod.GET)
     public String getEmail(@PathVariable("username") String username) {

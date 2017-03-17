@@ -1,8 +1,6 @@
 package hu.odrin7.bga.domain.user;
 
 import com.google.common.base.Objects;
-import hu.odrin7.bga.domain.shopping.Shopping;
-import hu.odrin7.bga.domain.shopping.Status;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +18,7 @@ public class User implements UserDetails {
     private String icon;
     private List<Authority> authorities;
     private List<Long> boardGamesId;
-    private List<Shopping> shoppings;
+    private List<Long> shoppings;
     private long money;
 
     @Override
@@ -74,7 +72,11 @@ public class User implements UserDetails {
     public User() {
     }
 
-    public User(String username, String password, List<Authority> authorities, String email, String icon) {
+    public User(String username,
+                String password,
+                List<Authority> authorities,
+                String email,
+                String icon) {
         this.username = username;
         this.password = password;
         this.authorities = authorities;
@@ -83,11 +85,28 @@ public class User implements UserDetails {
         init();
     }
 
-    public boolean buy(Shopping shopping) {
-        if (this.money <= shopping.getShoppingPrice()) {
-            boardGamesId.add(shopping.getBoardGameId());
-            this.money -= shopping.getShoppingPrice();
-            shopping.setStatus(Status.ALREADY_PAYED);
+    public User(String username,
+                String password,
+                String email,
+                String icon,
+                List<Authority> authorities,
+                List<Long> boardGamesId,
+                List<Long> shoppings,
+                long money) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.icon = icon;
+        this.authorities = authorities;
+        this.boardGamesId = boardGamesId;
+        this.shoppings = shoppings;
+        this.money = money;
+    }
+
+    public boolean buy(Long shoppingId, long price) {
+        if (this.money <= price) {
+            boardGamesId.add(shoppingId);
+            this.money -= price;
             return true;
         }
         return false;
@@ -97,8 +116,8 @@ public class User implements UserDetails {
         this.money = money;
     }
 
-    public void addToCard(Shopping shopping) {
-        this.shoppings.add(shopping);
+    public void addToCard(Long shoppingID) {
+        this.shoppings.add(shoppingID);
     }
 
     public long removeBoardGame(long boardGameId) {
@@ -106,9 +125,9 @@ public class User implements UserDetails {
         return boardGameId;
     }
 
-    public Shopping removeShopping(Shopping shopping) {
-        getShoppings().remove(shopping);
-        return shopping;
+    public Long removeShopping(Long shoppingID) {
+        getShoppings().remove(shoppingID);
+        return shoppingID;
     }
 
     private void init() {
@@ -141,11 +160,11 @@ public class User implements UserDetails {
         this.boardGamesId = boardGamesId;
     }
 
-    public List<Shopping> getShoppings() {
+    public List<Long> getShoppings() {
         return shoppings;
     }
 
-    public void setShoppings(List<Shopping> shoppings) {
+    public void setShoppings(List<Long> shoppings) {
         this.shoppings = shoppings;
     }
 
@@ -157,16 +176,6 @@ public class User implements UserDetails {
         this.money = money;
     }
 
-    public User(String username, String password, String email, String icon, List<Authority> authorities, List<Long> boardGamesId, List<Shopping> shoppings, long money) {
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.icon = icon;
-        this.authorities = authorities;
-        this.boardGamesId = boardGamesId;
-        this.shoppings = shoppings;
-        this.money = money;
-    }
 
     @Override
     public String toString() {

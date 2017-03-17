@@ -1,8 +1,6 @@
 package hu.odrin7.bga.service;
 
 
-import hu.odrin7.bga.domain.shopping.Shopping;
-import hu.odrin7.bga.domain.shopping.Status;
 import hu.odrin7.bga.domain.user.Authority;
 import hu.odrin7.bga.domain.user.Role;
 import hu.odrin7.bga.domain.user.User;
@@ -16,7 +14,6 @@ import org.springframework.util.Assert;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 import static com.google.common.collect.Lists.newArrayList;
 import static java.util.stream.Collectors.toList;
@@ -37,7 +34,7 @@ public class UserServiceImpl implements UserService {
     public void fillData() {
         List<User> users = this.getUsers();
         if (users.isEmpty()) {
-            for (int i = 1; i <= 10; i++) {
+            for (long i = 1; i <= 10; i++) {
                 User user = new User(
                     "username" + i,
                     "password" + i,
@@ -46,7 +43,7 @@ public class UserServiceImpl implements UserService {
                     "http://lorempixel.com/40/40/people/" + i);
                 user.addMoney(1000000L);
                 for (int j = 0; j < 10; j++) {
-                    user.addToCard(new Shopping(500L + j, 200L + j, user.getUsername(), Status.NOT_PAYED, i * 100));
+                    user.addToCard(i);
                     user.getBoardGamesId().add(200L + j);
                 }
                 create(user);
@@ -92,7 +89,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<Shopping> getShoppingsByUser(String username) {
+    public List<Long> getShoppingsByUser(String username) {
         User user = repository.findOne(username);
         if (user != null) {
             return user.getShoppings();
@@ -111,15 +108,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean buy(Shopping shopping) {
+    public boolean buy(Long shoppingId, long price, String username) {
 
-        User user = getUserByUsername(shopping.getUser());
+        User user = getUserByUsername(username);
         if (user != null) {
-            user.buy(shopping);
-            Shopping oldShopping = user.getShoppings().stream()
-                .filter(shopping1 -> Objects.equals(shopping1.getId(), shopping.getId())).collect(toList()).get(0);
-            user.getShoppings().remove(oldShopping);
-            user.getShoppings().add(shopping);
+            user.buy(shoppingId, price);
             repository.save(user);
             return true;
         }
@@ -127,11 +120,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean deleteShopping(Shopping shopping) {
+    public boolean deleteShopping(Long shoppingId, String username) {
 
-        User user = getUserByUsername(shopping.getUser());
+        User user = getUserByUsername(username);
         if (user != null) {
-            user.removeShopping(shopping);
+            user.removeShopping(shoppingId);
             repository.save(user);
             return true;
         }
@@ -139,10 +132,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean addToCard(Shopping shopping) {
-        User user = getUserByUsername(shopping.getUser());
+    public boolean deleteShoppings(List<Long> shoppings, String username) {
+
+        for (Long shopping : shoppings) {
+            User user = getUserByUsername(username);
+            if (user != null) {
+                user.removeShopping(shopping);
+                repository.save(user);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean addToCard(Long shoppingId, String username) {
+        User user = getUserByUsername(username);
         if (user != null) {
-            user.addToCard(shopping);
+            user.addToCard(shoppingId);
             repository.save(user);
             return true;
         }

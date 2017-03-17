@@ -10,9 +10,12 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
+import org.springframework.cloud.netflix.feign.FeignFormatterRegistrar;
 import org.springframework.cloud.security.oauth2.client.feign.OAuth2FeignRequestInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.format.FormatterRegistry;
+import org.springframework.format.datetime.standard.DateTimeFormatterRegistrar;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.client.DefaultOAuth2ClientContext;
@@ -69,4 +72,13 @@ public class BGAStoreApplication extends ResourceServerConfigurerAdapter {
             .antMatchers("/shoppings/**").permitAll()
             .anyRequest().authenticated();
     }
+    @Bean
+    public FeignFormatterRegistrar localDateFeignFormatterRegistrar() {
+        return formatterRegistry -> {
+            DateTimeFormatterRegistrar registrar = new DateTimeFormatterRegistrar();
+            registrar.setUseIsoFormat(true);
+            registrar.registerFormatters(formatterRegistry);
+        };
+    }
+
 }

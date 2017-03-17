@@ -1,22 +1,32 @@
 package hu.odrin7.bga.domain.store;
 
 import com.google.common.base.Objects;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
+@Document(collection = "shoppings")
 public class Shopping {
 
-    private Long id;
-    private Long boardGameId;
+    @Id
+    private long id;
+    private long boardGameId;
     private String userId;
-    private LocalDate creationTime;
+    private LocalDateTime creationTime;
     private Status status;
     private Integer shoppingPrice;
+
 
     public Shopping() {
     }
 
-    public Shopping(Long id, Long boardGameId, String userId, LocalDate creationTime, Status status, Integer shoppingPrice) {
+    public Shopping(long id,
+                    long boardGameId,
+                    String userId,
+                    LocalDateTime creationTime,
+                    Status status,
+                    Integer shoppingPrice) {
         this.id = id;
         this.boardGameId = boardGameId;
         this.userId = userId;
@@ -25,60 +35,28 @@ public class Shopping {
         this.shoppingPrice = shoppingPrice;
     }
 
-    public Shopping(Long id, Long boardGameId, String userId, Status status, Integer shoppingPrice) {
-        this.id = id;
-        this.boardGameId = boardGameId;
-        this.userId = userId;
-        this.status = status;
-        this.shoppingPrice = shoppingPrice;
-        this.creationTime = LocalDate.now();
+    public static Shopping create(long id,
+                                  long boardGameId,
+                                  String userId,
+                                  LocalDateTime creationTime,
+                                  Status status,
+                                  Integer shoppingPrice) {
+        return new Shopping(id, boardGameId, userId, creationTime, status, shoppingPrice);
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public Long getBoardGame() {
+    public long getBoardGameId() {
         return boardGameId;
     }
 
-    public void setBoardGame(Long boardGameId) {
-        this.boardGameId = boardGameId;
-    }
-
-    public String getUser() {
-        return userId;
-    }
-
-    public void setUser(String userId) {
-        this.userId = userId;
-    }
-
-    public LocalDate getCreationTime() {
-        return creationTime;
-    }
-
-    public void setCreationTime(LocalDate creationTime) {
-        this.creationTime = creationTime;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public Long getBoardGameId() {
-        return boardGameId;
-    }
-
-    public void setBoardGameId(Long boardGameId) {
+    public void setBoardGameId(long boardGameId) {
         this.boardGameId = boardGameId;
     }
 
@@ -88,6 +66,22 @@ public class Shopping {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public LocalDateTime getCreationTime() {
+        return creationTime;
+    }
+
+    public void setCreationTime(LocalDateTime creationTime) {
+        this.creationTime = creationTime;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     public Integer getShoppingPrice() {
