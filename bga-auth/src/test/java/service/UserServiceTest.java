@@ -1,7 +1,7 @@
 package service;
 
 import hu.odrin7.bga.domain.user.User;
-import hu.odrin7.bga.repository.UserRepository;
+import hu.odrin7.bga.domain.user.UserRepository;
 import hu.odrin7.bga.service.UserServiceImpl;
 import org.junit.Before;
 import org.junit.Test;

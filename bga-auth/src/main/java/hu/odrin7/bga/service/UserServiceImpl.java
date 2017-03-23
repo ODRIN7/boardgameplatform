@@ -4,7 +4,7 @@ package hu.odrin7.bga.service;
 import hu.odrin7.bga.domain.user.Authority;
 import hu.odrin7.bga.domain.user.Role;
 import hu.odrin7.bga.domain.user.User;
-import hu.odrin7.bga.repository.UserRepository;
+import hu.odrin7.bga.domain.user.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

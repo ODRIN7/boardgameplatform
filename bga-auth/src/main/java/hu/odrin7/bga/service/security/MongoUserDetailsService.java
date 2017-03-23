@@ -1,7 +1,7 @@
 package hu.odrin7.bga.service.security;
 
 import hu.odrin7.bga.domain.user.User;
-import hu.odrin7.bga.repository.UserRepository;
+import hu.odrin7.bga.domain.user.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class MongoUserDetailsService implements UserDetailsService {
 
 
         User user = repository.findOne(username);
-
+        log.info("We find user: " + user);
         if (user == null) {
             throw new UsernameNotFoundException(username);
         }

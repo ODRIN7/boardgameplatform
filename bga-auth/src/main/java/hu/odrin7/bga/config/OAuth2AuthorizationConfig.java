@@ -35,7 +35,6 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
         tokenStore = new InMemoryTokenStore();
     }
 
-    //todo make new grant types!!!
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
@@ -45,7 +44,13 @@ public class OAuth2AuthorizationConfig extends AuthorizationServerConfigurerAdap
             .authorizedGrantTypes("client_credentials", "implicit", "authorization_code", "refresh_token", "password")
             .accessTokenValiditySeconds(600)
             .scopes("openid")
-            .autoApprove(true);
+            .autoApprove(true)
+        .and()
+            .withClient("boardGame-service")
+            .secret("boardGame-service")
+            .authorities("ROLE_TRUSTED_CLIENT")
+            .authorizedGrantTypes("client_credentials", "implicit", "authorization_code", "refresh_token", "password")
+            .scopes("server");
 
     }
 

@@ -3,12 +3,14 @@ package hu.odrin7.bga.service;
 import com.google.common.collect.Lists;
 import hu.odrin7.bga.domain.notification.Notification;
 import hu.odrin7.bga.domain.notification.NotificationRepository;
+import hu.odrin7.bga.domain.user.User;
 import hu.odrin7.bga.seq.dao.SequenceDao;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -30,8 +32,9 @@ public class NotificationServiceImpl implements NotificationService{
         List<Notification> notifications = this.getNotifications();
         if (notifications.isEmpty()) {
             sequenceDao.saveNewKey(NOTIFICATION_SEQ_KEY, 500);
-            for (int i = 1; i <= 10; i++) {
-                Notification post = new Notification("Sample message post title #" + i, "Sample message post content #" + i);
+            for (long i = 1; i <= 10; i++) {
+                Notification post = new Notification( i,
+                    "Sample message post content #" + i, LocalDateTime.now(), new User());
                 notificationRepository.save(post);
                 log.warn(post.toString());
             }

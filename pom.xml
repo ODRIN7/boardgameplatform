@@ -22,6 +22,7 @@
         <module>bga-store</module>
         <module>bga-message</module>
         <module>bga-admin</module>
+        <module>bga-monitoring</module>
     </modules>
 
     <properties>

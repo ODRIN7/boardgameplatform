@@ -18,9 +18,6 @@ public interface AuthServiceClient {
     @RequestMapping(method = RequestMethod.POST, value = "/users", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     void createUser(User user);
 
-    @RequestMapping(value = "/users/current", method = RequestMethod.GET)
-    Principal getUser();
-
     @RequestMapping(value = "/users/", method = RequestMethod.GET)
     List<User> getUsers();
 

@@ -4,10 +4,7 @@ package hu.odrin7.bga.controller;
 import hu.odrin7.bga.domain.user.Authority;
 import hu.odrin7.bga.domain.user.User;
 import hu.odrin7.bga.service.UserService;
-import hu.odrin7.bga.service.UserServiceImpl;
 import hu.odrin7.bga.service.exceptions.CannotFindUserException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +20,6 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
-    private final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @PostConstruct
     public void fillData() {
@@ -101,6 +97,7 @@ public class UserController {
         return new ResponseEntity<String>(HttpStatus.ACCEPTED);
     }
 
+    //    @PreAuthorize("#oauth2.hasScope('server')")
     @RequestMapping(value = "/shoppings/addToCard/{username}", method = RequestMethod.POST)
     public ResponseEntity addToCard(@PathVariable("username") String username,
                                     @RequestBody Long shopping) {

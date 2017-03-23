@@ -18,6 +18,7 @@ import org.springframework.format.FormatterRegistry;
 import org.springframework.format.datetime.standard.DateTimeFormatterRegistrar;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.oauth2.client.DefaultOAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
 import org.springframework.security.oauth2.client.token.grant.client.ClientCredentialsResourceDetails;
@@ -67,9 +68,32 @@ public class BGAStoreApplication extends ResourceServerConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-            .antMatchers("/" ).permitAll()
-            .antMatchers("/shoppings/**").permitAll()
+        http  .httpBasic()
+            .and()
+            .csrf().disable()
+            .sessionManagement()
+            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            .and()
+            .authorizeRequests()
+            .antMatchers("/actuator").permitAll()
+            .antMatchers("/autoconfig").permitAll()
+            .antMatchers("/beans").permitAll()
+            .antMatchers("/configprops").permitAll()
+            .antMatchers("/dump").permitAll()
+            .antMatchers("/env").permitAll()
+            .antMatchers("/flyway").permitAll()
+            .antMatchers("/health").permitAll()
+            .antMatchers("/info").permitAll()
+            .antMatchers("/liquibase").permitAll()
+            .antMatchers("/metrics").permitAll()
+            .antMatchers("/mappings").permitAll()
+            .antMatchers("/shutdown").denyAll()
+            .antMatchers("/trace").permitAll()
+            .antMatchers("/docs").permitAll()
+            .antMatchers("/heapdump").permitAll()
+            .antMatchers("/jolokia").permitAll()
+            .antMatchers("/logfile").permitAll()
+            .antMatchers("/shoppings/**", "/").permitAll()
             .anyRequest().authenticated();
     }
     @Bean
