@@ -8,9 +8,8 @@ import org.springframework.cloud.config.server.EnableConfigServer;
 @SpringBootApplication
 @EnableConfigServer
 public class BGAConfigApplication {
-
     public static void main(String[] args) {
+
         SpringApplication.run(BGAConfigApplication.class, args);
     }
-
 }
