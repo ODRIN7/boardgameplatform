@@ -118,6 +118,15 @@ public class MessageServiceImpl implements MessageService {
         }
     }
 
+    @Override
+    public void read(long chatId, String username) {
+        Chat chat = chatRepository.findOne(chatId);
+        if (chat != null) {
+
+            log.info(">>>>>>>>>>>>>Messages read>>>>>>>>>>:  ");
+        }
+    }
+
     private void setMessageData(Message message, String username, List<String> connectedUser) {
         message.setMessageId(sequenceDao.getNextSequenceId(MESSAGE_SEQ_KEY));
         message.setAuthorId(username);

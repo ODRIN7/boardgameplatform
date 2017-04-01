@@ -51,23 +51,31 @@ public class MessageRestController {
 
     @RequestMapping(value = "/connect/{username}/{chatId}", method = RequestMethod.POST)
     public ResponseEntity connectToChat(@PathVariable("chatId") long chatId,
-                                        @PathVariable("username")  String username) {
+                                        @PathVariable("username") String username) {
         messageService.connectToChat(chatId, username);
         return new ResponseEntity<String>(HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(value = "/disconnect/{username}/{chatId}", method = RequestMethod.POST)
     public ResponseEntity discconectFromChat(@PathVariable("chatId") long chatId,
-                                             @PathVariable("username")  String username) {
+                                             @PathVariable("username") String username) {
         messageService.disconnectFromChat(chatId, username);
         return new ResponseEntity<String>(HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(value = "/write/{chatId}/", method = RequestMethod.POST)
     public Message writeMessage(@PathVariable("chatId") long chatId,
-                                       @RequestBody Message message,
-                                       Principal principal) {
+                                @RequestBody Message message,
+                                Principal principal) {
         messageService.writeMessage(chatId, message, principal.getName());
+        return message;
+    }
+
+    @RequestMapping(value = "/read/{chatId}/", method = RequestMethod.POST)
+    public Message read(@PathVariable("chatId") long chatId,
+                        @RequestBody Message message,
+                        Principal principal) {
+        messageService.read(chatId, principal.getName());
         return message;
     }
 }

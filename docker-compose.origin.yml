@@ -19,7 +19,6 @@ services:
       options:
         max-size: "10m"
         max-file: "10"
-
   discovery-service:
     image: bga/bga-discovery
     ports:
@@ -29,7 +28,9 @@ services:
       options:
         max-size: "10m"
         max-file: "10"
-    entrypoint: ./wait-for-service.sh http://config-service:8888/health
+    mem_limit: 500MB
+    entrypoint: ./wait-for-service.sh
+                http://config-service:8888/health
 
   monitoring-service:
     image: bga/bga-monitoring
