@@ -1,6 +1,7 @@
 package hu.odrin7.bga.service;
 
 import hu.odrin7.bga.client.AuthServiceClient;
+import hu.odrin7.bga.domain.BOARDGAME_DUMMY_CREATOR;
 import hu.odrin7.bga.domain.boardgame.BoardGame;
 import hu.odrin7.bga.domain.boardgame.BoardGameRepository;
 import hu.odrin7.bga.domain.boardgame.TypeOfBoardGame;
@@ -10,12 +11,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.google.common.collect.Lists.newArrayList;
-import static hu.odrin7.bga.domain.boardgame.TypeOfBoardGame.*;
 
 @Service
 public class BoardGameServiceImpl implements BoardGameService {
@@ -41,13 +40,16 @@ public class BoardGameServiceImpl implements BoardGameService {
         List<BoardGame> boardGames = this.getBoardGames();
         if (boardGames.isEmpty()) {
             sequenceDao.saveNewKey(BOARDGAME_SEQ_KEY, 200);
-            for (int i = 1; i <= 10; i++) {
-                BoardGame boardGame = BoardGame.create(sequenceDao.getNextSequenceId(BOARDGAME_SEQ_KEY),
-                    "Boardgame name" + i, "http://lorempixel.com/40/40/people/" + i, "description",
-                    "", Arrays.asList(Logic, Card, Dice), 0L, i - 1, i + 1);
-                boardGameRepository.save(boardGame);
-                log.warn(boardGame.toString());
-            }
+            boardGameRepository.save(BOARDGAME_DUMMY_CREATOR.getMemoire(sequenceDao.getNextSequenceId(BOARDGAME_SEQ_KEY)));
+            boardGameRepository.save(BOARDGAME_DUMMY_CREATOR.getCattan(sequenceDao.getNextSequenceId(BOARDGAME_SEQ_KEY)));
+            boardGameRepository.save(BOARDGAME_DUMMY_CREATOR.getRISIKO(sequenceDao.getNextSequenceId(BOARDGAME_SEQ_KEY)));
+            boardGameRepository.save(BOARDGAME_DUMMY_CREATOR.getCarverna(sequenceDao.getNextSequenceId(BOARDGAME_SEQ_KEY)));
+            boardGameRepository.save(BOARDGAME_DUMMY_CREATOR.getCarcassone(sequenceDao.getNextSequenceId(BOARDGAME_SEQ_KEY)));
+            boardGameRepository.save(BOARDGAME_DUMMY_CREATOR.getChess(sequenceDao.getNextSequenceId(BOARDGAME_SEQ_KEY)));
+            boardGameRepository.save(BOARDGAME_DUMMY_CREATOR.getRobinsonCrouso(sequenceDao.getNextSequenceId(BOARDGAME_SEQ_KEY)));
+            boardGameRepository.save(BOARDGAME_DUMMY_CREATOR.getSevenWOnders(sequenceDao.getNextSequenceId(BOARDGAME_SEQ_KEY)));
+            boardGameRepository.save(BOARDGAME_DUMMY_CREATOR.getTERAMISTICA(sequenceDao.getNextSequenceId(BOARDGAME_SEQ_KEY)));
+            boardGameRepository.save(BOARDGAME_DUMMY_CREATOR.getTexasHoldem(sequenceDao.getNextSequenceId(BOARDGAME_SEQ_KEY)));
         }
     }
 
