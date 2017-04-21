@@ -13,7 +13,7 @@ public interface MessageService {
 
     List<Chat> getChats();
 
-    Chat createChat(Chat chat,String username);
+    Chat createChat(Chat chat, String username);
 
     List<Message> getMessagesByChat(long chatId, Principal principal) throws UserNotConnectedToChat;
 
@@ -21,5 +21,7 @@ public interface MessageService {
 
     void disconnectFromChat(long chatId, String usernmae);
 
-     void writeMessage(long chatId, Message message, String username);
+    void writeMessage(long chatId, Message message, String username);
+
+    void read(long chatId, String username);
 }

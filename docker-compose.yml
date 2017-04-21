@@ -1,70 +1,41 @@
 version: '2'
 services:
-  message-service:
-    environment:
-      MONGODB_PASSWORD: odrin7
-    image: bga/bga-message
+  config-service:
+    image: bga/bga-config
     ports:
-      - 8086:8086
+         - 8888:8888
     restart: always
     logging:
       options:
         max-size: "10m"
         max-file: "10"
-    entrypoint: ./wait-for-service.sh http://discovery-service:8081/health
-
-  message-mongodb:
-    environment:
-      INIT_DUMP: nothing.js
-      MONGODB_NAME: boardGameArena
-      MONGODB_ROLE: readWrite
-      MONGODB_PASSWORD: odrin7
-      MONGODB_USER: odrin7
-    image: bga/message-mongodb
+  discovery-service:
+    image: bga/bga-discovery
+    ports:
+        - 8081:8081
     restart: always
     logging:
       options:
         max-size: "10m"
         max-file: "10"
-
-  ui-service:
-    image: bga/bga-ui
-    ports:
-     - 8080:8080
     depends_on:
-     - discovery-service
-     - auth-service
-     - gateway-service
+        - config-service
     links:
-     - discovery-service
-     - gateway-service
-     - auth-service
-     - config-service
-    entrypoint: ./wait-for-service.sh http://discovery-service:8081/health
-
-  admin-service:
-    environment:
-      MONGODB_PASSWORD: odrin7
-    image: bga/bga-admin
+        - config-service
+    entrypoint: ./wait-for-service.sh http://config-service:8888/health
+  gateway-service:
+    image: bga/bga-gateway
     ports:
-      - 8095:8095
+      - 8090:8090
     restart: always
     logging:
       options:
         max-size: "10m"
         max-file: "10"
+    depends_on:
+      - discovery-service
+    links:
+      - discovery-service
+      - config-service
     entrypoint: ./wait-for-service.sh http://discovery-service:8081/health
 
-  admin-mongodb:
-    environment:
-      INIT_DUMP: nothing.js
-      MONGODB_NAME: boardGameArena
-      MONGODB_ROLE: readWrite
-      MONGODB_PASSWORD: odrin7
-      MONGODB_USER: odrin7
-    image: bga/admin-mongodb
-    restart: always
-    logging:
-      options:
-        max-size: "10m"
-        max-file: "10"
